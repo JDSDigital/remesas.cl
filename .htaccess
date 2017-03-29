@@ -1,9 +1,9 @@
-Options -Indexes
-
-RewriteEngine on
-#if the request is not to the backend, route it to /frontend/web
-RewriteCond %{REQUEST_URI} !^/backend
-RewriteRule ^(.*)$ /frontend/web/$1 [L]
-
-#otherwise route the request to the backend
-RewriteRule ^backend/(.*)$ backend/web/$1 [L]
+#Options -Indexes
+#
+#RewriteEngine on
+##if the request is not to the backend, route it to /frontend/web
+#RewriteCond %{REQUEST_URI} !^/backend
+#RewriteRule ^(.*)$ /frontend/web/$1 [L]
+#
+##otherwise route the request to the backend
+#RewriteRule ^backend/(.*)$ backend/web/$1 [L]
