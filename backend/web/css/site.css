@@ -1,8 +1,8 @@
 html,
 body {
     height: 100%;
+    background-color: #F5F5F5 !important;
 }
-
 .wrap {
     min-height: 100%;
     height: auto;
@@ -11,14 +11,16 @@ body {
 }
 
 .wrap > .container {
-    padding: 70px 15px 20px;
+    padding: 60px 15px 20px;
 }
 
 .footer {
     height: 60px;
+    width: 100%;
     background-color: #f5f5f5;
     border-top: 1px solid #ddd;
     padding-top: 20px;
+    position : inherit;
 }
 
 .jumbotron {
@@ -55,7 +57,21 @@ a.asc:after {
 a.desc:after {
     content: /*"\e114"*/ "\e152";
 }
-
+a:hover, a:focus {
+    text-decoration: none !important;
+}
+.media-body > .media-heading > a {
+    color: rgba(255,255,255,0.75);
+    -webkit-transition: background .15s linear,color .15s linear;
+    -o-transition: background .15s linear,color .15s linear;
+    transition: background .15s linear,color .15s linear;
+}
+.media-body > .media-heading > a:hover {
+    color: rgba(255,255,255,1);
+    -webkit-transition: background .15s linear,color .15s linear;
+    -o-transition: background .15s linear,color .15s linear;
+    transition: background .15s linear,color .15s linear;
+}
 .sort-numerical a.asc:after {
     content: "\e153";
 }
@@ -75,7 +91,6 @@ a.desc:after {
 .grid-view td {
     white-space: nowrap;
 }
-
 .grid-view .filters input,
 .grid-view .filters select {
     min-width: 50px;
@@ -117,4 +132,59 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+.list-inline {
+    flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+}
+.site-login {
+    color: white;
+    background-color: rgba(0,0,0,0.3);
+    padding: 50px 50px 30px 50px;
+}
+.body-login {
+    background-image: url('../images/boxed_bg.png');
+    background-repeat: repeat;
+}
+.vertical-center {
+    min-height: 100%;  /* Fallback for vh unit */
+    min-height: 100vh; /* You might also want to use
+                        'height' property instead.
+
+                        Note that for percentage values of
+                        'height' or 'min-height' properties,
+                        the 'height' of the parent element
+                        should be specified explicitly.
+
+                        In this case the parent of '.vertical-center'
+                        is the <body> element */
+
+    /* Make it a flex container */
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    /* Align the bootstrap's container vertically */
+    -webkit-box-align : center;
+    -webkit-align-items : center;
+    -moz-box-align : center;
+    -ms-flex-align : center;
+    align-items : center;
+
+    /* In legacy web browsers such as Firefox 9
+       we need to specify the width of the flex container */
+    width: 100%;
+
+    /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
+       hence the bootstrap's container won't be aligned to the center anymore.
+
+       Therefore, we should use the following declarations to get it centered again */
+    -webkit-box-pack : center;
+    -moz-box-pack : center;
+    -ms-flex-pack : center;
+    -webkit-justify-content : center;
+    justify-content : center;
 }

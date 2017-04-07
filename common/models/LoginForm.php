@@ -10,10 +10,12 @@ use yii\base\Model;
 class LoginForm extends Model
 {
     public $username;
+    public $email;
     public $password;
     public $rememberMe = true;
 
     private $_user;
+    private $_email;
 
 
     /**
@@ -74,5 +76,19 @@ class LoginForm extends Model
         }
 
         return $this->_user;
+    }
+
+    /**
+     * Finds user by [[email]]
+     *
+     * @return User|null
+     */
+    protected function getEmail()
+    {
+        if ($this->_email === null) {
+            $this->_email = User::findByEmail($this->email);
+        }
+
+        return $this->_email;
     }
 }
