@@ -15,6 +15,7 @@ class AppAsset extends AssetBundle
         'css/master.css',
         'css/core.min.css',
         'css/components.min.css',
+        'css/colors.min.css',
         'css/icons.css',
         'css/site.css',
     ];

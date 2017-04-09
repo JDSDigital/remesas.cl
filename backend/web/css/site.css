@@ -60,13 +60,13 @@ a.desc:after {
 a:hover, a:focus {
     text-decoration: none !important;
 }
-.media-body > .media-heading > a {
+.media-body > .media-heading > a, button.btn.btn-link.logout {
     color: rgba(255,255,255,0.75);
     -webkit-transition: background .15s linear,color .15s linear;
     -o-transition: background .15s linear,color .15s linear;
     transition: background .15s linear,color .15s linear;
 }
-.media-body > .media-heading > a:hover {
+.media-body > .media-heading > a:hover, button.btn.btn-link.logout:hover {
     color: rgba(255,255,255,1);
     -webkit-transition: background .15s linear,color .15s linear;
     -o-transition: background .15s linear,color .15s linear;
@@ -187,4 +187,7 @@ a:hover, a:focus {
     -ms-flex-pack : center;
     -webkit-justify-content : center;
     justify-content : center;
+}
+.breadcrumb, .breadcrumb-line {
+    background-color: inherit !important;
 }
