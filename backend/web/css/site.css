@@ -191,3 +191,9 @@ a:hover, a:focus {
 .breadcrumb, .breadcrumb-line {
     background-color: inherit !important;
 }
+.site-index a {
+    color : #23527c;
+}
+.site-index a:hover {
+    color : #0277BD;
+}

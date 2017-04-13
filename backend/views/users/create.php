@@ -33,6 +33,10 @@ $this->title = 'Geknology';
                     <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
                     <?= $form->field($model, 'email') ?>
                     <?= $form->field($model, 'password')->passwordInput() ?>
+                    <?= $form->field($model, 'role')->dropDownList([
+                        'admin' => 'Administrador',
+                        'user'  => 'Usuario',
+                    ], ['class' => 'form-control']) ?>
                     <div class="form-group">
                         <?= Html::submitButton('Crear Usuario', ['class' => 'btn btn-primary', 'name' => 'form-user-button']) ?>
                     </div>

@@ -12,7 +12,6 @@ use common\widgets\Alert;
 use backend\assets\AppAsset;
 use yii\widgets\Menu;
 
-
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Yii::getAlias('@web') . '/images/logo.png']);
 AppAsset::register($this);
 ?>
@@ -31,37 +30,35 @@ AppAsset::register($this);
 <div class="wrap">
 	<div class="row">
 		<?php
-		NavBar::begin([
-			'brandLabel'   => Html::img(Yii::getAlias('@web') . '/images/logo-text.png', ['class' => 'img-fluid']),
-			'brandOptions' => ['class' => 'p5'],
-			'brandUrl'     => Yii::$app->homeUrl,
-			'options'      => [
-				'class' => 'navbar bg-slate-800 navbar-fixed-top',
-			],
-		]);
-		if(Yii::$app->user->isGuest){
-			$menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-		} else {
-			$menuItems[] = '<li>'
+        NavBar::begin([
+            'brandLabel'   => Html::img(Yii::getAlias('@web') . '/images/logo-text.png', ['class' => 'img-fluid']),
+            'brandOptions' => ['class' => 'p5'],
+            'brandUrl'     => Yii::$app->homeUrl,
+            'options'      => [
+                'class' => 'navbar bg-slate-800 navbar-fixed-top',
+            ],
+        ]);
+        if (Yii::$app->user->isGuest) {
+            $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        } else {
+            $menuItems[] = '<li>'
 				. Html::beginForm(['/site/logout'], 'post')
-				. Html::submitButton(
-					'Cerrar Sesión (' . Yii::$app->user->identity->username . ')',
-					['class' => 'btn btn-link logout']
-				)
+				. Html::submitButton('Cerrar Sesión (' . Yii::$app->user->identity->username . ')',
+					['class' => 'btn btn-link logout'])
 				. Html::endForm()
 				. '</li>';
-		}
-		echo Nav::widget([
-			'options' => ['class' => 'navbar-nav navbar-right list-inline'],
-			'items'   => $menuItems,
-		]);
-		NavBar::end();
-		?>
+        }
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right list-inline'],
+            'items'   => $menuItems,
+        ]);
+        NavBar::end();
+        ?>
 
-		<?= Breadcrumbs::widget([
-			'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-		]) ?>
-		<?= Alert::widget() ?>
+        <?= Breadcrumbs::widget([
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        ]) ?>
+        <?= Alert::widget() ?>
 	</div>
 	<div class="row m0">
 		<!-- Main sidebar -->
@@ -74,8 +71,7 @@ AppAsset::register($this);
 						<div class="category-content">
 							<div class="row">
 								<div class="col-xs-3">
-									<?= Html::a(Html::img(Yii::getAlias('@web') . '/images/user.png', ['class' => 'img-fluid']),
-										['users/profile']) ?>
+									<?= Html::a(Html::img(Yii::getAlias('@web') . '/images/user.png', ['class' => 'img-fluid']), ['users/profile']) ?>
 								</div>
 								<div class="col-xs-8 my-auto">
 									<div class="media-body">
@@ -87,28 +83,33 @@ AppAsset::register($this);
 							</div>
 						</div>
 					</div>
-					<!-- /user menu -->
-					<!-- Main navigation -->
+                    <!-- /user menu -->
+                    <!-- Main navigation -->
 					<div class="sidebar-category sidebar-category-visible">
 						<div class="category-content p0">
 							<?php
-							echo Menu::widget([
-								'items'        => [
+							(Yii::$app->user->identity->role == 'admin')
+								? $items = [
 									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['site/index']],
 									['label' => '<i class="icon-user"></i>Usuarios', 'url' => ['users/index']],
-								],
-								'options'      => ['class' => 'navigation navigation-main navigation-accordion'],
-								'encodeLabels' => false,
-							]);
-							?>
+								]
+								: $items = [
+									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['site/index']],
+								];
+                            echo Menu::widget([
+                                'items'        => $items,
+                                'options'      => ['class' => 'navigation navigation-main navigation-accordion'],
+                                'encodeLabels' => false,
+                            ]);
+                            ?>
 						</div>
 					</div>
-					<!-- /main navigation -->
+                    <!-- /main navigation -->
 
 				</div>
 			</div>
 		</div>
-		<!-- /main sidebar -->
+        <!-- /main sidebar -->
 		<div class="col-md-10 p0 mt20">
 			<?= $content ?>
 		</div>
