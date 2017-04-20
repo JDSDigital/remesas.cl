@@ -9,20 +9,18 @@ use yii\helpers\Html;
 
 $this->title = 'Geknology';
 ?>
-<div class="site-index">
-    <div class="page-header no-border mb0">
-        <div class="page-header-content">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="page-title">
-                        <h3><?= Html::encode('Usuarios') ?></h3>
-                    </div>
+<div class="site-index panel">
+    <div class="page-header panel-heading mb0">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="page-title">
+                    <h3><?= Html::encode('Usuarios') ?></h3>
                 </div>
-                <div class="col-md-6">
-                    <p class="text-right mt35 mb30">
-                        <?= Html::a('<i class="icon-user-plus mr5"></i>' . Html::encode('Agregar Usuario'), ['create']) ?>
-                    </p>
-                </div>
+            </div>
+            <div class="col-md-6">
+                <p class="text-right mt20">
+                    <?= Html::a('<i class="icon-user-plus mr5"></i>' . Html::encode('Agregar Usuario'), ['create'])?>
+                </p>
             </div>
         </div>
     </div>
@@ -60,7 +58,13 @@ $this->title = 'Geknology';
                     'attribute' => 'status',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->status, ['update', 'id' => $model->id]);
+                        $check = ($model->status == 1) ? "checked='checked'" : null;
+                        $_csrf = Yii::$app->request->getCsrfToken();
+                        $disabled = ($model->id == 1) ? 'disabled' : '';
+
+                        return "<div class='switchery-xs m0'>
+                                    <input id='status-$model->id' type='checkbox' class='switchery switchStatus' _csrf='$_csrf' $check $disabled>
+                                </div>";
                     },
                 ],
                 [
@@ -73,3 +77,4 @@ $this->title = 'Geknology';
         ?>
     </div>
 </div>
+<?php $this->registerJs('listenerChangeStatus();') ?>

@@ -197,3 +197,9 @@ a:hover, a:focus {
 .site-index a:hover {
     color : #0277BD;
 }
+.form-group > select {
+    height: 34px !important;
+}
+.content-group > legend {
+    font-size: 12px !important;
+}

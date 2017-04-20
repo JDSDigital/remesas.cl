@@ -28,7 +28,7 @@ class UsersController extends Controller
                         'allow'   => true,
                     ],
                     [
-                        'actions' => ['index', 'profile', 'create', 'update', 'delete', 'logout'],
+                        'actions' => ['index', 'profile', 'create', 'update', 'delete', 'logout', 'status'],
                         'allow'   => true,
                         'roles'   => ['admin'],
                     ],
@@ -71,7 +71,7 @@ class UsersController extends Controller
                 'pageSize' => 20,
             ],
         ]);
-        
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
@@ -130,8 +130,7 @@ class UsersController extends Controller
             $model->update();
 
             return $this->redirect(['index']);
-        }
-        else {
+        } else {
             return $this->render('update', [
                 'model' => $model,
             ]);
@@ -160,17 +159,20 @@ class UsersController extends Controller
      *
      * @return string
      */
-    public function actionChangeStatus($id)
+    public function actionStatus()
     {
-        $model = UserForm::findOne($id);
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
 
-        if ($model->status)
-            $model->status = 0;
-        else
-            $model->status = 1;
+            $model = UserForm::findOne($data['id']);
 
-        $model->save();
+            if ($model->status)
+                $model->status = 0;
+            else
+                $model->status = 1;
 
-        return $this->refresh();
+            $model->save();
+        }
+//        return $this->refresh();
     }
 }

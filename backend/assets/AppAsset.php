@@ -20,7 +20,11 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
+//        'js/uniform.min.js',
+        'js/switchery.min.js',
+        'js/switch.min.js',
         'js/app.js',
+        'js/script.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

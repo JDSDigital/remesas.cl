@@ -7,11 +7,13 @@ use yii\helpers\Html;
 
 $this->title = 'Geknology';
 ?>
-<div class="site-index">
-    <div class="page-header no-border mb0">
-        <div class="page-header-content">
-            <div class="page-title pb0">
-                <h3><?= Html::encode('Perfil') ?></h3>
+<div class="site-index panel">
+    <div class="page-header panel-heading mb0">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="page-title">
+                    <h3><?= Html::encode('Mi Perfil') ?></h3>
+                </div>
             </div>
         </div>
     </div>
