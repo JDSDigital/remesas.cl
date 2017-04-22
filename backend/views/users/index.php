@@ -26,6 +26,7 @@ $this->title = 'Geknology';
     </div>
     <!-- /page header -->
     <div class="body-content">
+        <?= Yii::$app->session->getFlash('success'); ?>
         <?=
         GridView::widget([
             'dataProvider'   => $dataProvider,

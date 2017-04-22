@@ -174,5 +174,6 @@ class UsersController extends Controller
             $model->save();
         }
 //        return $this->refresh();
+        return null;
     }
 }

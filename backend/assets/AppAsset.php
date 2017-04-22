@@ -13,24 +13,18 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/master.css',
-        'css/core.min.css',
-        'css/components.min.css',
-        'css/colors.min.css',
-        'css/icons.css',
         'css/site.css',
     ];
     public $js = [
-//        'js/uniform.min.js',
-        'js/switchery.min.js',
-        'js/switch.min.js',
-        'js/app.js',
+        'js/yii_overrides.js',
         'js/script.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
+        'app\assets\ThemeAsset',
         'app\assets\TetherAsset',
         'app\assets\BootstrapAsset',
+        'app\assets\SweetAlertAsset',
         'app\assets\FontAwesomeAsset',
-//        'yii\bootstrap\BootstrapAsset',
     ];
 }
