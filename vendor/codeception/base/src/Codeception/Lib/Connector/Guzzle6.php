@@ -54,7 +54,7 @@ class Guzzle6 extends Client
      * Sets the request header to the passed value.  The header will be
      * sent along with the next request.
      *
-     * Passing an empty value clears the header, which is the equivelant
+     * Passing an empty value clears the header, which is the equivalent
      * of calling deleteHeader.
      *
      * @param string $name the name of the header
@@ -158,7 +158,7 @@ class Guzzle6 extends Client
     public function getAbsoluteUri($uri)
     {
         $baseUri = $this->client->getConfig('base_uri');
-        if (strpos($uri, '://') === false) {
+        if (strpos($uri, '://') === false && strpos($uri, '//') !== 0) {
             if (strpos($uri, '/') === 0) {
                 $baseUriPath = $baseUri->getPath();
                 if (!empty($baseUriPath) && strpos($uri, $baseUriPath) === 0) {
@@ -226,7 +226,7 @@ class Guzzle6 extends Client
 
     protected function extractFormData(BrowserKitRequest $request)
     {
-        if (!in_array(strtoupper($request->getMethod()), ['POST', 'PUT', 'PATCH'])) {
+        if (!in_array(strtoupper($request->getMethod()), ['POST', 'PUT', 'PATCH', 'DELETE'])) {
             return null;
         }
 
@@ -321,7 +321,7 @@ class Guzzle6 extends Client
         }
         return new CookieJar(false, $jar);
     }
-    
+
     public static function createHandler($handler)
     {
         if ($handler === 'curl') {

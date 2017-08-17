@@ -114,6 +114,16 @@ In case your ORM expects a related record itself (Doctrine) then you should use 
 
 ## Actions
 
+### assertArraySubset
+ 
+Checks that array contains subset.
+
+ * `param array`  $subset
+ * `param array`  $array
+ * `param bool`   $strict
+ * `param string` $message
+
+
 ### have
  
 Generates and saves a record,.
@@ -146,4 +156,4 @@ $I->haveMultiple('User', 10, ['is_active' => true]); // create 10 active users
 
  * `return` \object[]
 
-<p>&nbsp;</p><div class="alert alert-warning">Module reference is taken from the source code. <a href="https://github.com/Codeception/Codeception/tree/2.2/src/Codeception/Module/DataFactory.php">Help us to improve documentation. Edit module reference</a></div>
+<p>&nbsp;</p><div class="alert alert-warning">Module reference is taken from the source code. <a href="https://github.com/Codeception/Codeception/tree/2.3/src/Codeception/Module/DataFactory.php">Help us to improve documentation. Edit module reference</a></div>

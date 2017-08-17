@@ -53,7 +53,7 @@ class Guzzle extends Client
      * Sets the request header to the passed value.  The header will be
      * sent along with the next request.
      *
-     * Passing an empty value clears the header, which is the equivelant
+     * Passing an empty value clears the header, which is the equivalent
      * of calling deleteHeader.
      *
      * @param string $name the name of the header
@@ -159,7 +159,7 @@ class Guzzle extends Client
     public function getAbsoluteUri($uri)
     {
         $baseUri = $this->baseUri;
-        if (strpos($uri, '://') === false) {
+        if (strpos($uri, '://') === false && strpos($uri, '//') !== 0) {
             if (strpos($uri, '/') === 0) {
                 $baseUriPath = parse_url($baseUri, PHP_URL_PATH);
                 if (!empty($baseUriPath) && strpos($uri, $baseUriPath) === 0) {

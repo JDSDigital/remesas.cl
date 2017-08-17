@@ -90,9 +90,9 @@ AppAsset::register($this);
 							<?php
 							(Yii::$app->user->identity->role == 'admin')
 								? $items = [
-									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['site/index']],
-									['label' => '<i class="icon-wrench"></i>Sistema', 'url' => ['system/index']],
-									['label' => '<i class="icon-user"></i>Usuarios', 'url' => ['users/index']],
+									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['//site/index']],
+									['label' => '<i class="icon-wrench"></i>Sistema', 'url' => ['//gSystem/system/index']],
+									['label' => '<i class="icon-user"></i>Usuarios', 'url' => ['//gUsers/users/index']],
 								]
 								: $items = [
 									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['site/index']],

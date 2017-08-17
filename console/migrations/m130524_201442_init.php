@@ -2,6 +2,7 @@
 
 use yii\db\Migration;
 
+
 class m130524_201442_init extends Migration
 {
     public function up()
@@ -22,8 +23,8 @@ class m130524_201442_init extends Migration
             'email'                => $this->string()->notNull()->unique(),
 
             'status'     => $this->smallInteger()->notNull()->defaultValue(1),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'created_at' => $this->integer()->null(),
+            'updated_at' => $this->integer()->null(),
         ], $tableOptions);
 
         $this->insert('{{%gsystem_users}}', [

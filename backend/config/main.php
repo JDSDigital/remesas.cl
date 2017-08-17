@@ -11,23 +11,30 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'gSystem' => [
+            'class' => 'backend\modules\gSystem\Module',
+        ],
+        'gUsers' => [
+            'class' => 'backend\modules\gUsers\Module',
+        ],
+    ],
     'components' => [
-//        'assetManager' => [
-//            'bundles' => [
-//                'yii\bootstrap\BootstrapAsset'       => [
-//                    'sourcePath' => null,
-//                    'css'        => [],
-//                ],
-//                'yii\bootstrap\BootstrapPluginAsset' => [
-//                    'sourcePath' => null,
-//                    'js'         => [],
-//                ],
-//            ],
-//        ],
+        /*'assetManager' => [
+            'bundles' => [
+                'yii\bootstrap\BootstrapAsset'       => [
+                    'sourcePath' => null,
+                    'css'        => [],
+                ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'sourcePath' => null,
+                    'js'         => [],
+                ],
+            ],
+        ],*/
         'request' => [
             'csrfParam' => '_csrf-backend',
-//            'baseUrl' => '',
+            // 'baseUrl' => '',
         ],
         'user' => [
             'identityClass' => 'common\models\User',

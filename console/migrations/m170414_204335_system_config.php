@@ -41,8 +41,8 @@ class m170414_204335_system_config extends Migration
             'smtpPort'       => $this->string()->null(),
             'smtpEncryption' => $this->string()->null(),
 
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'created_at' => $this->integer()->null(),
+            'updated_at' => $this->integer()->null(),
         ], $tableOptions);
 
         $this->insert('{{%gsystem_config}}', [
