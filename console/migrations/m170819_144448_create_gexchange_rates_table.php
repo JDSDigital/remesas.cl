@@ -2,7 +2,10 @@
 
 use yii\db\Migration;
 
-class m170818_193800_exchange_rates_table extends Migration
+/**
+ * Handles the creation of table `gexchange_rates`.
+ */
+class m170819_144448_create_gexchange_rates_table extends Migration
 {
     public function up(){
         $tableOptions = null;

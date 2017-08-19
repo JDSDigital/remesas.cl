@@ -2,9 +2,13 @@
 
 use yii\db\Migration;
 
-class m170818_150021_banks_table extends Migration
+/**
+ * Handles the creation of table `gbanks`.
+ */
+class m170819_143838_create_gbanks_table extends Migration
 {
-    $tableOptions = null;
+    public function up(){
+        $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }

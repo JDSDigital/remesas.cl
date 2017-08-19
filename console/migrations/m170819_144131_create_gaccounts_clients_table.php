@@ -2,7 +2,10 @@
 
 use yii\db\Migration;
 
-class m170817_210644_accounts_client_table extends Migration
+/**
+ * Handles the creation of table `gaccounts_clients`.
+ */
+class m170819_144131_create_gaccounts_clients_table extends Migration
 {
     public function up(){
         $tableOptions = null;
@@ -12,7 +15,7 @@ class m170817_210644_accounts_client_table extends Migration
 
         $this->createTable('{{%gaccounts_clients}}', [
             'id'             => $this->primaryKey(),
-            'clienId'        => $this->integer()->notNull()->comment("Client who owns the bank account."),
+            'clientId'        => $this->integer()->notNull()->comment("Client who owns the bank account."),
             'bankId'         => $this->integer()->notNull()->comment("Bank of the account."),
             'number'         => $this->string()->notNull()->comment("Number of the bank account"),
             'type'           => $this->string()->notNull()->comment("Type of account"),

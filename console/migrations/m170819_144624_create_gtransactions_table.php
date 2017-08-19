@@ -2,7 +2,10 @@
 
 use yii\db\Migration;
 
-class m170818_152056_transaction_table extends Migration
+/**
+ * Handles the creation of table `gtransactions`.
+ */
+class m170819_144624_create_gtransactions_table extends Migration
 {
     public function up(){
         $tableOptions = null;
@@ -12,16 +15,16 @@ class m170818_152056_transaction_table extends Migration
 
         $this->createTable('{{%gtransactions}}', [
             'id'                    => $this->primaryKey(),
-            'clienId'               => $this->integer()->notNull()->comment("Client who asks for the transaction"),
-            'accountClientId'       => $this->integer()->notNull()->comment("Client\'s account involved in the transaction."),
-            'accountAdminId'        => $this->integer()->null()->comment("Admin\'s account involved in the transaction."),
+            'clientId'               => $this->integer()->notNull()->comment("Client who asks for the transaction"),
+            'accountClientId'       => $this->integer()->notNull()->comment("Account involved in the transaction."),
+            'accountAdminId'        => $this->integer()->null()->comment("Account involved in the transaction."),
             'amountFrom'            => $this->double(2)->notNull()->comment("Transfered amount of money to be converted"),
             'amountTo'              => $this->double(2)->null()->comment("Amount of money after being converted and transfered to the client."),
             'exchangeId'            => $this->integer()->null()->comment("Exchange rate used for the transaction"),
             'userId'                => $this->integer()->null()->comment("Admin user who completes and approves the transaction"),
-            'clientBankTransaction' => $this->integer()->null()->comment("Client\'s bank transaction Id"),
-            'adminBankTransaction'  => $this->integer()->null()->comment("Admin\'s bank transaction Id"),
-            'observation'           => $this->string()->null()->comment("Administrator's observation."),
+            'clientBankTransaction' => $this->integer()->null()->comment("Bank transaction Id"),
+            'adminBankTransaction'  => $this->integer()->null()->comment("Bank transaction Id"),
+            'observation'           => $this->string()->null()->comment("Administrator observation."),
             'status'                => $this->integer()->notNull()->comment("Status of the transaction: pending, done, cancelled."),
             
             'created_at'            => $this->integer()->null()->comment("Creation date of the transaction."),

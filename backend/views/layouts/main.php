@@ -93,9 +93,16 @@ AppAsset::register($this);
 									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['//site/index']],
 									['label' => '<i class="icon-wrench"></i>Sistema', 'url' => ['//gSystem/system/index']],
 									['label' => '<i class="icon-user"></i>Usuarios', 'url' => ['//gUsers/users/index']],
+                                    ['label' => '<i class="icon-user"></i>Clientes', 'url' => ['//client/index']],
+                                    ['label' => '<i class="icon-user"></i>Transacciones', 'url' => ['//transaction/index']],
+                                    ['label' => '<i class="icon-user"></i>Tasas de cambio', 'url' => ['//exchange-rate/index']],
+                                    ['label' => '<i class="icon-user"></i>Países', 'url' => ['//country/index']],
+                                    ['label' => '<i class="icon-user"></i>Bancos', 'url' => ['//bank/index']],
+                                    ['label' => '<i class="icon-user"></i>Monedas', 'url' => ['//currency/index']],
 								]
 								: $items = [
 									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['site/index']],
+                                    ['label' => '<i class="icon-user"></i>Tasas de cambio', 'url' => ['//exchange-rate/index']],
 								];
                             echo Menu::widget([
                                 'items'        => $items,
