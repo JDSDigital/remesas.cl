@@ -51,12 +51,12 @@ class ExchangeRate extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'currencyIdFrom' => 'Currency Id From',
-            'currencyIdTo' => 'Currency Id To',
+            'currencyNameFrom' => 'Currency Name From',
+            'currencyNameTo' => 'Currency Name To',
             'value' => 'Value',
             'description' => 'Description',
             'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'updated_at' => 'Updated At'
         ];
     }
 
@@ -65,7 +65,13 @@ class ExchangeRate extends \yii\db\ActiveRecord
      */
     public function getCurrencyFrom()
     {
-        return $this->hasOne(Currency::className(), ['id' => 'currencyIdFrom']);
+        return $this->hasOne(Currency::className(), ['id' => 'currencyIdFrom'])
+                    ->from(Currency::tableName() . ' cf');
+    }
+    
+    /* Getter for currency from name */
+    public function getCurrencyNameFrom() {
+        return $this->currencyFrom->name;
     }
 
     /**
@@ -73,7 +79,13 @@ class ExchangeRate extends \yii\db\ActiveRecord
      */
     public function getCurrencyTo()
     {
-        return $this->hasOne(Currency::className(), ['id' => 'currencyIdTo']);
+        return $this->hasOne(Currency::className(), ['id' => 'currencyIdTo'])
+                    ->from(Currency::tableName() . ' ct');
+    }
+    
+    /* Getter for currency to name */
+    public function getCurrencyNameTo() {
+        return $this->currencyTo->name;
     }
 
     /**

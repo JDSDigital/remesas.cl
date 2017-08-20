@@ -45,7 +45,7 @@ class Bank extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'countryId' => 'Country ID',
+            'countryName' => 'Country',
             'name' => 'Name',
         ];
     }
@@ -72,5 +72,10 @@ class Bank extends \yii\db\ActiveRecord
     public function getCountry()
     {
         return $this->hasOne(Country::className(), ['id' => 'countryId']);
+    }
+    
+    /* Getter for country name */
+    public function getCountryName() {
+        return $this->country->name;
     }
 }

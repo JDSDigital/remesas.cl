@@ -56,7 +56,7 @@ class AccountAdmin extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'bankId' => 'Bank ID',
+            'bankName' => 'Bank',
             'number' => 'Number',
             'type' => 'Type',
             'description' => 'Description',
@@ -66,7 +66,7 @@ class AccountAdmin extends \yii\db\ActiveRecord
             'email' => 'Email',
             'minAmount' => 'Min Amount',
             'maxAmount' => 'Max Amount',
-            'currencyId' => 'Currency ID',
+            'currencyName' => 'Currency',
             'status' => 'Status',
         ];
     }
