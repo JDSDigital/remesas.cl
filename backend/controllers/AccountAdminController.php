@@ -52,7 +52,6 @@ class AccountAdminController extends Controller
     public function actionCreate()
     {
         $model = new AccountAdmin();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {

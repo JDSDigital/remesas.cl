@@ -78,6 +78,10 @@ class AccountAdmin extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Bank::className(), ['id' => 'bankId']);
     }
+    
+    public function getBankName() {
+        return $this->bank->name;
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -85,6 +89,10 @@ class AccountAdmin extends \yii\db\ActiveRecord
     public function getCurrency()
     {
         return $this->hasOne(Currency::className(), ['id' => 'currencyId']);
+    }
+    
+    public function getCurrencyName() {
+        return $this->currency->name;
     }
 
     /**

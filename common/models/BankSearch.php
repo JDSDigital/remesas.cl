@@ -53,7 +53,7 @@ class BankSearch extends Bank
             'query' => $query,
         ]);
 
-         $dataProvider->setSort([
+        $dataProvider->setSort([
             'attributes' => [
                 'id',
                 'name',

@@ -12,6 +12,9 @@ use common\models\AccountAdmin;
  */
 class AccountAdminSearch extends AccountAdmin
 {
+    public $bankName;
+    public $currencyName;
+    
     /**
      * @inheritdoc
      */
@@ -19,7 +22,7 @@ class AccountAdminSearch extends AccountAdmin
     {
         return [
             [['id', 'bankId', 'minAmount', 'maxAmount', 'currencyId', 'status'], 'integer'],
-            [['number', 'type', 'description', 'name', 'lastname', 'rut', 'email'], 'safe'],
+            [['number', 'type', 'description', 'name', 'lastname', 'rut', 'email', 'bankName', 'currencyName'], 'safe'],
         ];
     }
 
@@ -42,11 +45,34 @@ class AccountAdminSearch extends AccountAdmin
     public function search($params)
     {
         $query = AccountAdmin::find();
+        $query->joinWith(['bank']);
+        $query->joinWith(['currency']);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+        ]);
+        
+        $dataProvider->setSort([
+            'attributes' => [
+                'id',
+                'description',
+                'type',
+                'maxAmount',
+                'minAmount',
+                'status',
+                'bankName' => [
+                    'asc' => ['gbanks.name' => SORT_ASC],
+                    'desc' => ['gbanks.name' => SORT_DESC],
+                    'label' => 'Banco'
+                ],
+                'currencyName' => [
+                    'asc' => ['gcurrencies.name' => SORT_ASC],
+                    'desc' => ['gcurrencies.name' => SORT_DESC],
+                    'label' => 'Moneda'
+                ]
+            ]
         ]);
 
         $this->load($params);
@@ -74,6 +100,14 @@ class AccountAdminSearch extends AccountAdmin
             ->andFilterWhere(['like', 'lastname', $this->lastname])
             ->andFilterWhere(['like', 'rut', $this->rut])
             ->andFilterWhere(['like', 'email', $this->email]);
+            
+        $query->joinWith(['bank' => function ($q) {
+            $q->where('gbanks.name LIKE "%' . $this->bankName . '%"');
+        }]);
+        
+        $query->joinWith(['currency' => function ($q) {
+            $q->where('gcurrencies.name LIKE "%' . $this->currencyName . '%"');
+        }]);
 
         return $dataProvider;
     }

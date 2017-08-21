@@ -27,7 +27,7 @@ class m170819_144232_create_gaccounts_admin_table extends Migration
             'minAmount'     => $this->integer()->notNull()->comment("Minimal amount for the transactions with this account."),
             'maxAmount'     => $this->integer()->notNull()->comment("Maximum amount for the transactions with this account."),
             'currencyId'    => $this->integer()->notNull()->comment("Currency of the account."),
-            'status'        => $this->boolean()->notNull()->defaultValue(true)->comment("Status. Indicates if the account is available for transactions.")
+            'status'        => $this->boolean()->notNull()->defaultValue(false)->comment("Status. Indicates if the account is available for transactions.")
         ], $tableOptions);
         
         // Bank

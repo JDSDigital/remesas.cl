@@ -44,12 +44,65 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'columns'        => [
                 [
-                    'label'     => 'Banco',
-                    'attribute' => 'name',
+                    'label'     => 'Descripcion',
+                    'attribute' => 'description',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->name, ['update', 'id' => $model->id]);
+                        return Html::a($model->description, ['update', 'id' => $model->id]);
                     },
+                ],
+                [
+                    'label'     => 'Banco',
+                    'attribute' => 'bankName',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                        return Html::a($model->bank->name, ['update', 'id' => $model->id]);
+                    },
+                ],
+                [
+                    'label'     => 'Tipo',
+                    'attribute' => 'type',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                        return Html::a($model->type, ['update', 'id' => $model->id]);
+                    },
+                ],
+                [
+                    'label'     => 'Moneda',
+                    'attribute' => 'currencyName',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                        return Html::a($model->currency->name, ['update', 'id' => $model->id]);
+                    },
+                ],
+                [
+                    'label'     => 'Cantidad Minima',
+                    'attribute' => 'minAmount',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                        return Html::a($model->minAmount, ['update', 'id' => $model->id]);
+                    },
+                ],
+                [
+                    'label'     => 'Cantidad Maxima',
+                    'attribute' => 'maxAmount',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                        return Html::a($model->maxAmount, ['update', 'id' => $model->id]);
+                    },
+                ],
+                [
+                    'label'     => 'Estado',
+                    'attribute' => 'status',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                        $check = ($model->status == 1) ? "checked='checked'" : null;
+                        $_csrf = Yii::$app->request->getCsrfToken();
+
+                        return "<div class='switchery-xs m0'>
+                                    <input id='status-$model->id' type='checkbox' class='switchery switchStatus' _csrf='$_csrf' $check>
+                                </div>";
+                    }
                 ],
                 [
                     'class'          => ActionColumn::className(),
