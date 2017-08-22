@@ -25,7 +25,10 @@ class m170819_144624_create_gtransactions_table extends Migration
             'clientBankTransaction' => $this->integer()->null()->comment("Bank transaction Id"),
             'adminBankTransaction'  => $this->integer()->null()->comment("Bank transaction Id"),
             'observation'           => $this->string()->null()->comment("Administrator observation."),
+            'exchangeValue'          => $this->double(2)->notNull()->comment("Exchange rate value used for the transaction."),
+            'winnings'              => $this->double(2)->null()->comment("Winnings for this transaction."),
             'status'                => $this->integer()->notNull()->comment("Status of the transaction: pending, done, cancelled."),
+            'transactionDate'       => $this->integer()->notNull()->comment("Date when the transaction was made."),
             
             'created_at'            => $this->integer()->null()->comment("Creation date of the transaction."),
             'updated_at'            => $this->integer()->null()->comment("Update date of the transaction.")

@@ -35,9 +35,9 @@ class AccountClient extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['clientId', 'bankId', 'number', 'type', 'currencyId'], 'required'],
+            [['clientId', 'bankId', 'number', 'type', 'currencyId','description'], 'required'],
             [['clientId', 'bankId', 'currencyId'], 'integer'],
-            [['number', 'type'], 'string', 'max' => 255],
+            [['number', 'type', 'description'], 'string', 'max' => 255],
             [['bankId'], 'exist', 'skipOnError' => true, 'targetClass' => Bank::className(), 'targetAttribute' => ['bankId' => 'id']],
             [['clientId'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['clientId' => 'id']],
             [['currencyId'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyId' => 'id']],
@@ -52,10 +52,10 @@ class AccountClient extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'clientId' => 'Client ID',
-            'bankId' => 'Bank ID',
+            'bankName' => 'Bank',
             'number' => 'Number',
             'type' => 'Type',
-            'currencyId' => 'Currency ID',
+            'currencyName' => 'Currency',
         ];
     }
 
@@ -65,6 +65,10 @@ class AccountClient extends \yii\db\ActiveRecord
     public function getBank()
     {
         return $this->hasOne(Bank::className(), ['id' => 'bankId']);
+    }
+    
+    public function getBankName() {
+        return $this->bank->name;
     }
 
     /**
@@ -81,6 +85,10 @@ class AccountClient extends \yii\db\ActiveRecord
     public function getCurrency()
     {
         return $this->hasOne(Currency::className(), ['id' => 'currencyId']);
+    }
+    
+    public function getCurrencyName() {
+        return $this->currency->name;
     }
 
     /**

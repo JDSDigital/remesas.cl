@@ -26,7 +26,6 @@ class m170819_144027_create_gclients_table extends Migration
             'auth_key'              => $this->string(32)->notNull(),
             'password_hash'         => $this->string()->notNull()->comment("Webpage password"),
             'password_reset_token'  => $this->string()->unique(),
-            'email'                 => $this->string()->notNull()->unique(),
             'status'                => $this->smallInteger()->notNull()->defaultValue(0)->comment("Status. It depends on the activation after the client registers on the webpage."),
             'blocked'               => $this->smallInteger()->notNull()->defaultValue(0)->comment("It indicates if the client has been blocked by the webmaster for various reasons."),
 

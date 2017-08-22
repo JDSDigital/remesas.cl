@@ -19,7 +19,8 @@ class m170819_144131_create_gaccounts_clients_table extends Migration
             'bankId'         => $this->integer()->notNull()->comment("Bank of the account."),
             'number'         => $this->string()->notNull()->comment("Number of the bank account"),
             'type'           => $this->string()->notNull()->comment("Type of account"),
-            'currencyId'    => $this->integer()->notNull()->comment("Currency of the account.")
+            'currencyId'    => $this->integer()->notNull()->comment("Currency of the account."),
+            'description'   => $this->string()->notNull()->comment("Description of the account"),
         ], $tableOptions);
         
         // Client
