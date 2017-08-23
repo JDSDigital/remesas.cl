@@ -4,6 +4,8 @@ namespace common\models;
 
 use Yii;
 
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "gtransactions".
  *
@@ -18,7 +20,10 @@ use Yii;
  * @property integer $clientBankTransaction
  * @property integer $adminBankTransaction
  * @property string $observation
+ * @property double $exchangeValue
+ * @property double $winnings
  * @property integer $status
+ * @property integer $transactionDate
  * @property integer $created_at
  * @property integer $updated_at
  *
@@ -28,14 +33,34 @@ use Yii;
  * @property ExchangeRate $exchangeRate
  * @property User $user
  */
-class Transaction extends \yii\db\ActiveRecord
+class Transaction extends ActiveRecord
 {
+    const STATUS_PENDING = 0;
+    const STATUS_CANCELLED = 1;
+    const STATUS_DONE = 2;
+    
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'gtransactions';
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class'      => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ]
+        ];
     }
 
     /**
@@ -44,15 +69,17 @@ class Transaction extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['clientId', 'accountClientId', 'amountFrom', 'status'], 'required'],
+            [['clientId', 'accountClientId', 'amountFrom', 'exchangeValue', 'transactionDate'], 'required'],
             [['clientId', 'accountClientId', 'accountAdminId', 'exchangeId', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['amountFrom', 'amountTo'], 'number'],
+            [['amountFrom', 'amountTo', 'exchangeValue', 'winnings'], 'number'],
             [['observation'], 'string', 'max' => 255],
             [['accountAdminId'], 'exist', 'skipOnError' => true, 'targetClass' => AccountAdmin::className(), 'targetAttribute' => ['accountAdminId' => 'id']],
             [['accountClientId'], 'exist', 'skipOnError' => true, 'targetClass' => AccountClient::className(), 'targetAttribute' => ['accountClientId' => 'id']],
             [['clientId'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['clientId' => 'id']],
             [['exchangeId'], 'exist', 'skipOnError' => true, 'targetClass' => ExchangeRate::className(), 'targetAttribute' => ['exchangeId' => 'id']],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
+            ['status', 'default', 'value' => self::STATUS_PENDING],
+            ['status', 'in', 'range' => [self::STATUS_PENDING, self::STATUS_CANCELLED, self::STATUS_DONE]],
         ];
     }
 
@@ -73,7 +100,10 @@ class Transaction extends \yii\db\ActiveRecord
             'clientBankTransaction' => 'Client Bank Transaction',
             'adminBankTransaction' => 'Admin Bank Transaction',
             'observation' => 'Observation',
+            'exchangeValue' => 'Exchange Value',
+            'winnings' => 'Winnings',
             'status' => 'Status',
+            'transactionDate' => 'Transaction Date',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
