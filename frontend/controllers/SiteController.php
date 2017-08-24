@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\ClientLoginForm;
+use common\models\Client;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -146,17 +147,34 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionSignup()
-    {
+    public function actionSignup(){
+        
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
+            $email = \Yii::$app->mailer->compose()
+                    ->setTo($user->email)
+                    ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+                    ->setSubject('Signup Confirmation')
+                    ->setTextBody("
+                        Click this link ".\yii\helpers\Html::a('confirm',
+                                                                Yii::$app->urlManager->createAbsoluteUrl(
+                                                                    ['site/confirm?id='.$user->id.'&key='.$user->auth_key]
+                                                                )
+                                                               )
+                    )
+                    ->send();
+                    
+                    if($email){
+                        Yii::$app->getSession()->setFlash('success','Check Your email!');
+                    }
+                    else{
+                        Yii::$app->getSession()->setFlash('warning','Failed, contact Admin!');
+                    }
                     return $this->goHome();
-                }
             }
         }
-
+         
         return $this->render('signup', [
             'model' => $model,
         ]);
@@ -209,5 +227,22 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+    
+    /**
+     * Confirm Client's email address 
+     */
+    public function actionConfirm($id, $key){
+        $user = Client::find()->where(['id'=>$id, 'auth_key'=>$key, 'status'=>0])->one();
+
+        if (!empty($user)){
+            $user->status = 1;
+            $user->save();
+            Yii::$app->getSession()->setFlash('success','Success!');
+        }
+        else {
+            Yii::$app->getSession()->setFlash('warning','Failed!');
+        }
+        return $this->goHome();
     }
 }
