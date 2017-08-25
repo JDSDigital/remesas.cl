@@ -1,9 +1,8 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
 use Yii;
-use common\models\ExchangeRate;
 use common\models\Transaction;
 use common\models\TransactionSearch;
 use yii\web\Controller;
@@ -38,7 +37,6 @@ class TransactionController extends Controller
     {
         $searchModel = new TransactionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->where('gtransactions.clientId = '.Yii::$app->user->id);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -63,29 +61,13 @@ class TransactionController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate(){
+    public function actionCreate()
+    {
         $model = new Transaction();
-        
-        if ($model->load(Yii::$app->request->post())){
-            $load = Yii::$app->request->post();
-           
-            // Exchange Rate Used
-            $er = ExchangeRate::find()->where(['id' => $load['Transaction']['exchangeId']])->one();
-        
-            $model->clientId = Yii::$app->user->id;
-            $model->exchangeValue = $er->value;
-            $model->transactionDate = Yii::$app->formatter->asDate($_POST['Transaction']['transactionDate'], 'yyyy-MM-dd');
-            
-            if ($model->save()){
-                return $this->redirect(['index']);
-            }
-            else {
-                return $this->render('create', [
-                    'model' => $model,
-                ]);
-            }
-        }
-        else {
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        } else {
             return $this->render('create', [
                 'model' => $model,
             ]);

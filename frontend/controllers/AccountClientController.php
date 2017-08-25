@@ -5,6 +5,8 @@ namespace frontend\controllers;
 use Yii;
 use common\models\AccountClient;
 use common\models\AccountClientSearch;
+use common\models\Bank;
+use common\models\Client;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -39,7 +41,7 @@ class AccountClientController extends Controller
         $searchModel = new AccountClientSearch();
         $searchModel->clientId = Yii::$app->user->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+      
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -53,15 +55,25 @@ class AccountClientController extends Controller
      */
     public function actionCreate()
     {
-        $model = new AccountClient();
-        $model->clientId = Yii::$app->user->id;
+        // Check the number of accounts of the current client
+        $ac = AccountClient::find()->where(['clientId' => Yii::$app->user->id])->count();
         
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        // If the Client has less than three accounts created...
+        if ($ac < 3){
+            $model = new AccountClient();
+            $model->clientId = Yii::$app->user->id;
+            
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['index']);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }
+        else {
+            Yii::$app->getSession()->setFlash('error','Usted posee tres cuentas bancarias agregadas, si desea agregar una cuenta nueva debe eliminar alguna de las anteriores.');
             return $this->redirect(['index']);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
     }
 
@@ -110,6 +122,27 @@ class AccountClientController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    
+    // List banks according to the selected country
+    public function actionListb($id){
+        $countBanks = Bank::find()
+                    ->where(['countryId' => $id])
+                    ->count();
+                    
+        $banks = Bank::find()
+                ->where(['countryId' => $id])
+                ->orderBy('name')
+                ->all();
+
+        if ($countBanks>0){
+            foreach($banks as $bank){
+                echo "<option value='".$bank->id."'>".$bank->name."</option>";
+            }
+        }
+        else{
+            echo "<option>-</option>";
         }
     }
 }

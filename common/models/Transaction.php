@@ -122,7 +122,8 @@ class Transaction extends ActiveRecord
      */
     public function getAccountClient()
     {
-        return $this->hasOne(AccountClient::className(), ['id' => 'accountClientId']);
+        return $this->hasOne(AccountClient::className(), ['id' => 'accountClientId'])
+                     ->from(AccountClient::tableName() . ' ac');
     }
 
     /**
@@ -130,7 +131,8 @@ class Transaction extends ActiveRecord
      */
     public function getClient()
     {
-        return $this->hasOne(Client::className(), ['id' => 'clientId']);
+        return $this->hasOne(Client::className(), ['id' => 'clientId'])
+                    ->from(Client::tableName() . ' c');
     }
 
     /**

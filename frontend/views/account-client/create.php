@@ -5,8 +5,8 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 
 use common\models\Bank;
+use common\models\Country;
 use common\models\Currency;
-
 
 /* @var $this yii\web\View */
 /* @var $model common\models\AccountClient */
@@ -20,9 +20,16 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-account-client']); ?>
                 <?= $form->field($model, 'description')->label("Descripcion")->textInput(['autofocus' => true]) ?>
-                <?= $form->field($model, 'bankId')->label("Banco")->dropDownList(
-                    ArrayHelper::map(Bank::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
-                ) ?>
+                <?= Html::dropDownList('countryId', null, ArrayHelper::map(Country::find()->orderBy('name')->all(), 'id', 'name'), 
+                                      [
+                                        'class' => 'form-control',
+                                        'onchange'=>'
+                                                $.post( "listb?id="+$(this).val(), function( data ) {
+                                                  $( "#accountclient-bankid" ).html( data );
+                                                });'
+                                      ]) 
+                ?>
+                <?= $form->field($model, 'bankId')->dropDownList(ArrayHelper::map(Bank::find()->all(), 'id', 'name'), ['class' => 'form-control']); ?> 
                 <?= $form->field($model, 'type')->dropDownList([
                     'ahorro' => 'Ahorro',
                     'corriente'  => 'Corriente',

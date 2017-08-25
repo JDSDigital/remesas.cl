@@ -251,6 +251,11 @@ class Client extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(AccountClient::className(), ['clientId' => 'id']);
     }
+    
+    public function getAccountsClientsCount()
+    {
+        return AccountClient::find()->where(['clientId' => $this->id])->count();
+    }
 
     /**
      * @return \yii\db\ActiveQuery

@@ -15,7 +15,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?= Yii::$app->session->getFlash('success'); ?>
     <p>
-        <?= Html::a('Agregar Cuenta Bancaria', ['create'], ['class' => 'btn']) ?>
+        <?php
+            // Allow adding a new account only if the Client has added less than three accounts
+            if ($dataProvider->getTotalCount() < 3){      
+                echo Html::a('Agregar Cuenta Bancaria', ['create'], ['class' => 'btn']); 
+            } 
+        ?>
     </p>
     <?= GridView::widget([
             'dataProvider'   => $dataProvider,

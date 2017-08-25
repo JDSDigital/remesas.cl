@@ -14,6 +14,7 @@ class TransactionSearch extends Transaction
 {
     public $exchangeRateDescription;
     public $accountClientDescription;
+    //public $clientName;
     
     /**
      * @inheritdoc
@@ -23,7 +24,7 @@ class TransactionSearch extends Transaction
         return [
             [['id', 'clientId', 'accountClientId', 'accountAdminId', 'exchangeId', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'transactionDate', 'created_at', 'updated_at'], 'integer'],
             [['amountFrom', 'amountTo', 'exchangeValue', 'winnings'], 'number'],
-            [['observation', 'exchangeRateDescription', 'accountClientDescription'], 'safe'],
+            [['observation', 'exchangeRateDescription', 'accountClientDescription'/*, 'clientName'*/], 'safe'],
         ];
     }
 
@@ -48,6 +49,7 @@ class TransactionSearch extends Transaction
         $query = Transaction::find();
         $query->joinWith(['exchangeRate']);
         $query->joinWith(['accountClient']);
+        $query->joinWith(['client']);
 
         // add conditions that should always apply here
 
@@ -71,10 +73,20 @@ class TransactionSearch extends Transaction
                     'label' => 'Tasa'
                 ],
                 'accountClientDescription' => [
-                    'asc' => ['gaccount_client.description' => SORT_ASC],
-                    'desc' => ['gaccount_client.description' => SORT_DESC],
+                    'asc' => ['ac.description' => SORT_ASC],
+                    'desc' => ['ac.description' => SORT_DESC],
                     'label' => 'Cuenta'
+                ]/*,
+                'clientName' => [
+                    'asc' => ['c.name' => SORT_ASC],
+                    'desc' => ['c.name' => SORT_DESC],
+                    'label' => 'Nombre del Cliente'
                 ],
+                'clientLastName' => [
+                    'asc' => ['c.lastName' => SORT_ASC],
+                    'desc' => ['c.lastName' => SORT_DESC],
+                    'label' => 'Apellido del Cliente'
+                ],*/
             ]
         ]);
 
@@ -113,8 +125,12 @@ class TransactionSearch extends Transaction
         }]);
         
         $query->joinWith(['accountClient' => function ($q) {
-            $q->where('gaccounts_clients.description LIKE "%' . $this->accountClientDescription . '%"');
+            $q->where('ac.description LIKE "%' . $this->accountClientDescription . '%"');
         }]);
+        
+        /*$query->joinWith(['client' => function ($q) {
+            $q->where('c.name LIKE "%' . $this->clientName . '%"');
+        }]);*/
 
         return $dataProvider;
     }

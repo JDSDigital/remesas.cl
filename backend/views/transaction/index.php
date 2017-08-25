@@ -5,19 +5,26 @@ use yii\grid\GridView;
 use yii\grid\ActionColumn;
 
 /* @var $this yii\web\View */
+/* @var $searchModel common\models\TransactionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Transacciones';
+$this->title = 'Geknology';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="account-client-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?= Yii::$app->session->getFlash('success'); ?>
-    <p>
-        <?= Html::a('Solicitar transacción', ['create'], ['class' => 'btn']) ?>
-    </p>
-    <?= GridView::widget([
+<div class="site-index panel">
+    <div class="page-header panel-heading mb0">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="page-title">
+                    <h3><?= Html::encode('Transacciones') ?></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+    <div class="body-content">
+        <?= Yii::$app->session->getFlash('success'); ?>
+        <?= GridView::widget([
             'dataProvider'   => $dataProvider,
             'layout'         => '{items}{pager}{summary}',
             'options'        => [
@@ -39,6 +46,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 ],
                 [
+                    'label'     => 'Cliente',
+                    'attribute' => 'clientName',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                        return Html::a($model->client->name." ".$model->client->lastName, ['update', 'id' => $model->id]);
+                    },
+                ],
+                [
                     'label'     => 'Conversión',
                     'attribute' => 'exchangeRateDescription',
                     'format'    => 'raw',
@@ -51,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'amountFrom',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->amountFrom." ".$model->exchangeRate->currencyFrom->symbol, ['update', 'id' => $model->id]);
+                        return Html::a($model->amountFrom, ['update', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -71,30 +86,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 ],
                 [
-                    'label'     => 'Cuenta',
-                    'attribute' => 'accountClientDescription',
-                    'format'    => 'raw',
-                    'value'     => function ($model) {
-                        return Html::a($model->accountClient->description, ['update', 'id' => $model->id]);
-                    },
-                ],
-                [
-                    'label'     => 'Número Dep/Transf',
-                    'attribute' => 'clientBankTransaction',
-                    'format'    => 'raw',
-                    'value'     => function ($model) {
-                        return Html::a($model->clientBankTransaction, ['update', 'id' => $model->id]);
-                    },
-                ],
-                [
-                    'label'     => 'Fecha Dep/Transf',
-                    'attribute' => 'transactionDate',
-                    'format'    => 'raw',
-                    'value'     => function ($model) {
-                        return Html::a(Yii::$app->formatter->asDate($model->transactionDate, 'dd-MM-yyyy'), ['update', 'id' => $model->id]);
-                    },
-                ],
-                [
                     'label'     => 'Estado',
                     'attribute' => 'status',
                     'format'    => 'raw',
@@ -109,4 +100,5 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]); ?>
+    </div>
 </div>
