@@ -38,13 +38,15 @@ AppAsset::register($this);
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'About', 'url' => ['/site/about']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
+        
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = ['label' => 'Cuentas', 'url' => ['/account-client/index']];
-        $menuItems[] = ['label' => 'Transacciones', 'url' => ['/transaction/index']];
+        $menuItems[] = ['label' => 'Cuentas bancarias', 'url' => ['/site/accounts']];
+        $menuItems[] = ['label' => 'Mis Cuentas', 'url' => ['/account-client/index']];
+        $menuItems[] = ['label' => 'Mis Transacciones', 'url' => ['/transaction/index']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

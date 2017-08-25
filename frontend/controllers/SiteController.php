@@ -7,6 +7,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use common\models\AccountAdmin;
 use common\models\ClientLoginForm;
 use common\models\Client;
 use frontend\models\PasswordResetRequestForm;
@@ -244,5 +245,17 @@ class SiteController extends Controller
             Yii::$app->getSession()->setFlash('warning','Failed!');
         }
         return $this->goHome();
+    }
+    
+    /**
+     * List of the site's available bank accounts 
+     */
+    public function actionAccounts(){
+        $model = new AccountAdmin();
+        $accounts = $model->getActiveAccounts();
+        
+        return $this->render('accounts', [
+            'accounts' => $accounts,
+        ]);
     }
 }

@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-account-client']); ?>
                 <?= $form->field($model, 'description')->label("Descripcion")->textInput(['autofocus' => true]) ?>
+                <?= Html::label("País") ?>
                 <?= Html::dropDownList('countryId', null, ArrayHelper::map(Country::find()->orderBy('name')->all(), 'id', 'name'), 
                                       [
                                         'class' => 'form-control',
@@ -29,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 });'
                                       ]) 
                 ?>
-                <?= $form->field($model, 'bankId')->dropDownList(ArrayHelper::map(Bank::find()->all(), 'id', 'name'), ['class' => 'form-control']); ?> 
-                <?= $form->field($model, 'type')->dropDownList([
+                <?= $form->field($model, 'bankId')->label("Banco")->dropDownList(ArrayHelper::map(Bank::find()->all(), 'id', 'name'), ['class' => 'form-control']); ?> 
+                <?= $form->field($model, 'type')->label("Tipo de cuenta")->dropDownList([
                     'ahorro' => 'Ahorro',
                     'corriente'  => 'Corriente',
                 ], ['class' => 'form-control']) ?>

@@ -102,10 +102,19 @@ class AccountClientController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
+    public function actionDelete($id){
+        
+        // Check wether the account is being used in any transaction
+        $model = $this->findModel($id);
+        $transactions = $model->getTransactions()->count();
+        
+        if ($transactions > 0){
+            Yii::$app->getSession()->setFlash('error','La cuenta no puede ser borrada ya que usted ha hecho transacciones en Remesas con ella.');
+        }
+        else {
+            $this->findModel($id)->delete();
+        }
+        
         return $this->redirect(['index']);
     }
 

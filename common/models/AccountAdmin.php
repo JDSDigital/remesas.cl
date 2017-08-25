@@ -102,4 +102,11 @@ class AccountAdmin extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Transaction::className(), ['accountAdminId' => 'id']);
     }
+    
+    /**
+     * Get active accounts
+     */
+    public function getActiveAccounts(){
+        return $this->find()->where(['status'=>1])->joinWith('bank', '`gbanks`.`id` = `gaccounts_clients`.`bankId`')->viaTable('gcountries', ['gbanks.countryId' => 'id'])->all();
+    }
 }
