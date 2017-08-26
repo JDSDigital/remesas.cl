@@ -12,6 +12,8 @@ use common\models\Client;
  */
 class ClientSearch extends Client
 {
+    public $displayName;
+    
     /**
      * @inheritdoc
      */
@@ -19,7 +21,7 @@ class ClientSearch extends Client
     {
         return [
             [['id', 'status', 'blocked', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'lastName', 'rut', 'phone', 'mobile', 'email', 'username', 'role', 'auth_key', 'password_hash', 'password_reset_token'], 'safe'],
+            [['name', 'lastName', 'rut', 'phone', 'mobile', 'email', 'username', 'role', 'auth_key', 'password_hash', 'password_reset_token', 'displayName'], 'safe'],
         ];
     }
 
@@ -49,6 +51,17 @@ class ClientSearch extends Client
             'query' => $query,
         ]);
 
+        $dataProvider->setSort([
+            'attributes' => [
+                'id',
+                'name',
+                'lastName',
+                'displayName',
+                'status',
+                'blocked'
+            ]
+        ]);
+        
         $this->load($params);
 
         if (!$this->validate()) {

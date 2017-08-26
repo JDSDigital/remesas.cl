@@ -30,21 +30,6 @@ class ClientController extends Controller
     }
 
     /**
-     * Lists all Client models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new ClientSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
      * Displays a single Client model.
      * @param integer $id
      * @return mixed

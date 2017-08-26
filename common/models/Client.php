@@ -264,4 +264,8 @@ class Client extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Transaction::className(), ['clientId' => 'id']);
     }
+    
+    public function getDisplayName(){
+        return $this->name." ".$this->lastName;
+    }
 }
