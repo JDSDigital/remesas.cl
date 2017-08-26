@@ -46,6 +46,7 @@ AppAsset::register($this);
     } else {
         $menuItems[] = ['label' => 'Cuentas bancarias', 'url' => ['/site/accounts']];
         $menuItems[] = ['label' => 'Mis Cuentas', 'url' => ['/account-client/index']];
+        $menuItems[] = ['label' => 'Calculadora', 'url' => ['/site/calculator']];
         $menuItems[] = ['label' => 'Mis Transacciones', 'url' => ['/transaction/index']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')

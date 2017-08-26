@@ -10,6 +10,8 @@ use yii\filters\AccessControl;
 use common\models\AccountAdmin;
 use common\models\ClientLoginForm;
 use common\models\Client;
+use common\models\Currency;
+use common\models\ExchangeRate;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -256,6 +258,51 @@ class SiteController extends Controller
         
         return $this->render('accounts', [
             'accounts' => $accounts,
+        ]);
+    }
+    
+    /**
+     * Helps the user to make some exchange calculations before making a transaction 
+     */
+    public function actionCalculator(){
+        
+        $model = new ExchangeRate();
+        $result = null;
+        $amount = 1;
+        
+        // Get $_POST data
+        $load = Yii::$app->request->post();
+        
+        if ($load != null){
+            $model->currencyIdFrom = $load['currencyIdFrom'];
+            $model->currencyIdTo = $load['currencyIdTo'];
+            $amount = $load['amount'];
+            
+            if ($load['amount'] == ""){
+                Yii::$app->getSession()->setFlash('error','Debe introducir una cantidad a convertir');
+            }
+            else if ($load['currencyIdFrom'] == $load['currencyIdTo']){
+                Yii::$app->getSession()->setFlash('error','Las monedas de conversión deben ser diferentes');
+            }
+            else {
+                // Search for an exchange rate with these conditions
+                $er = $model->getExchangeRateByCurrencies();
+                $ct = Currency::find()->where(['id' => $model->currencyIdTo])->one();
+                
+                if ($er != null){
+                    $calculate = $load['amount']*$er['value'];
+                    $result = $calculate." ".$ct->symbol;
+                }
+                else {
+                    Yii::$app->getSession()->setFlash('error','Lo sentimos. La tasa de cambio solicitada no está disponible. Por favos intente más tarde.'); 
+                }
+            } 
+        }
+        
+        return $this->render('calculator', [
+            'model' => $model,
+            'result' => $result,
+            'amount' => $amount
         ]);
     }
 }

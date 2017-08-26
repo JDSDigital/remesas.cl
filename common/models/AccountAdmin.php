@@ -107,6 +107,16 @@ class AccountAdmin extends \yii\db\ActiveRecord
      * Get active accounts
      */
     public function getActiveAccounts(){
-        return $this->find()->where(['status'=>1])->joinWith('bank', '`gbanks`.`id` = `gaccounts_clients`.`bankId`')->viaTable('gcountries', ['gbanks.countryId' => 'id'])->all();
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand("
+            SELECT b.name as bank, c.name as country, ac.number, 
+            ac.name, ac.lastname, ac.rut, ac.email, ac.type  
+            FROM gaccounts_admin ac 
+            LEFT JOIN gbanks b ON (ac.bankId = b.id) 
+            LEFT JOIN gcountries c ON (b.countryId = c.id) 
+            WHERE ac.status = 1");
+
+        $result = $command->queryAll();
+        return $result;
     }
 }
