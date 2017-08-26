@@ -95,8 +95,6 @@ class Client extends ActiveRecord implements IdentityInterface
             'auth_key' => 'Auth Key',
             'password_hash' => 'Password Hash',
             'password_reset_token' => 'Password Reset Token',
-            'status' => 'Status',
-            'blocked' => 'Blocked',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

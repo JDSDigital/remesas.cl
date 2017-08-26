@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'created_at',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a(Yii::$app->formatter->asDate($model->created_at, 'dd-MM-yyyy'), ['update', 'id' => $model->id]);
+                        return Html::a(Yii::$app->formatter->asDate($model->created_at, 'dd-MM-yyyy'), ['view', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'exchangeRateDescription',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->exchangeRate->description, ['update', 'id' => $model->id]);
+                        return Html::a($model->exchangeRate->description, ['view', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'amountFrom',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->amountFrom." ".$model->exchangeRate->currencyFrom->symbol, ['update', 'id' => $model->id]);
+                        return Html::a($model->amountFrom." ".$model->exchangeRate->currencyFrom->symbol, ['view', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'exchangeValue',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->exchangeValue, ['update', 'id' => $model->id]);
+                        return Html::a($model->exchangeValue, ['view', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'amountTo',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->amountTo, ['update', 'id' => $model->id]);
+                        return Html::a($model->amountTo, ['view', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'accountClientDescription',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->accountClient->description, ['update', 'id' => $model->id]);
+                        return Html::a($model->accountClient->description, ['view', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -83,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'clientBankTransaction',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->clientBankTransaction, ['update', 'id' => $model->id]);
+                        return Html::a($model->clientBankTransaction, ['view', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'transactionDate',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a(Yii::$app->formatter->asDate($model->transactionDate, 'dd-MM-yyyy'), ['update', 'id' => $model->id]);
+                        return Html::a(Yii::$app->formatter->asDate($model->transactionDate, 'dd-MM-yyyy'), ['view', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -99,13 +99,25 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'status',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->status, ['update', 'id' => $model->id]);
+                                    $check = "Pendiente";
+                                    
+                                    if ($model->status == 1)
+                                        $check = "Cancelada";
+                                    else if ($model->status == 2)
+                                        $check = "Realizada";
+                                    
+                                    return Html::a($check, ['view', 'id' => $model->id]);
                     },
                 ],
                 [
                     'class'          => ActionColumn::className(),
-                    'template'       => '{update} {delete} {upload}',
+                    'template'       => '{upload}',
                     'contentOptions' => ['style' => 'width: 80px;min-width: 80px'],
+                    'buttons'=>[
+                        'upload' => function ($url, $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-copy"></span>', ['upload', 'id'=>$model->id],['title'=>'Subir comprobante']);
+                        },
+                     ], 
                 ],
             ],
         ]); ?>

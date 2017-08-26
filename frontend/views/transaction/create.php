@@ -5,6 +5,7 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
 
+use common\models\AccountAdmin;
 use common\models\AccountClient;
 use common\models\ExchangeRate;
 
@@ -25,11 +26,15 @@ $this->params['breadcrumbs'][] = $this->title;
             
                 <?= $form->field($model, 'amountFrom')->label("Monto a convertir") ?>
                 
-                <?= $form->field($model, 'accountClientId')->label("Desde el banco")->dropDownList(
-                    ArrayHelper::map(AccountClient::find()->orderBy('description')->all(), 'id', 'description'), ['class' => 'form-control']
+                <?= $form->field($model, 'accountAdminId')->label("Cuenta a donde transfirió el dinero")->dropDownList(
+                    ArrayHelper::map(AccountAdmin::find()->orderBy('description')->all(), 'id', 'description'), ['class' => 'form-control']
                 ) ?>
                 
                 <?= $form->field($model, 'clientBankTransaction')->label("Numero de Depósito o Transferencia") ?>
+                
+                <?= $form->field($model, 'accountClientId')->label("Banco para recibir la transaccion")->dropDownList(
+                    ArrayHelper::map(AccountClient::find()->orderBy('description')->all(), 'id', 'description'), ['class' => 'form-control']
+                )?>
                 
                 <?= $form->field($model, 'transactionDate')->widget(DatePicker::classname(), [
                          'language' => 'es',

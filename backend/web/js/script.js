@@ -40,3 +40,16 @@ function listenerChangeStatus(){
         });
     });
 }
+
+function listenerChangeBlocked(){
+
+    $(".switchBlocked").change(function(){
+        $.ajax({
+            url: 'blocked',
+            type: 'post',
+            data: {
+                id: $(this).attr("id").replace(/blocked-/g, '')
+            }
+        });
+    });
+}

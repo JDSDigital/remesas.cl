@@ -24,9 +24,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'login')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'role')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'password_hash')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'password_reset_token')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status')->textInput() ?>
 

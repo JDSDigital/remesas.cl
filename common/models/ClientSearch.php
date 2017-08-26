@@ -56,9 +56,16 @@ class ClientSearch extends Client
                 'id',
                 'name',
                 'lastName',
-                'displayName',
-                'status',
-                'blocked'
+                'displayName' => [
+                    'asc' => ['name' => SORT_ASC, 'lastName' => SORT_ASC],
+                    'desc' => ['name' => SORT_DESC, 'lastName' => SORT_DESC],
+                    'label' => 'Nombre',
+                    'default' => SORT_ASC
+                ],
+                'phone',
+                'mobile',
+                'rut',
+                'email'
             ]
         ]);
         
@@ -90,6 +97,10 @@ class ClientSearch extends Client
             ->andFilterWhere(['like', 'auth_key', $this->auth_key])
             ->andFilterWhere(['like', 'password_hash', $this->password_hash])
             ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token]);
+            
+        $query->andWhere('name LIKE "%' . $this->displayName . '%" ' .
+            'OR lastName LIKE "%' . $this->displayName . '%"'
+        );
 
         return $dataProvider;
     }

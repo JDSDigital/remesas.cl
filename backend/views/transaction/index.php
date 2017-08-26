@@ -90,12 +90,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'status',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->status, ['update', 'id' => $model->id]);
+                                    $check = "Pendiente";
+                                    
+                                    if ($model->status == 1)
+                                        $check = "Cancelada";
+                                    else if ($model->status == 2)
+                                        $check = "Realizada";
+                                    
+                                    return Html::a($check, ['update', 'id' => $model->id]);
                     },
                 ],
                 [
                     'class'          => ActionColumn::className(),
-                    'template'       => '{update} {delete} {upload}',
+                    'template'       => '{update}',
                     'contentOptions' => ['style' => 'width: 80px;min-width: 80px'],
                 ],
             ],
