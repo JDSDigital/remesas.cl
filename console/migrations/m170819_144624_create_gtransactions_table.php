@@ -20,7 +20,9 @@ class m170819_144624_create_gtransactions_table extends Migration
             'accountAdminId'            => $this->integer()->null()->comment("Account involved in the transaction."),
             'amountFrom'                => $this->double(2)->notNull()->comment("Transfered amount of money to be converted"),
             'amountTo'                  => $this->double(2)->null()->comment("Amount of money after being converted and transfered to the client."),
-            'exchangeId'                => $this->integer()->null()->comment("Exchange rate used for the transaction"),
+            'exchangeId'                => $this->integer()->notNull()->comment("Exchange rate used for the transaction"),
+            'currencyIdFrom'            => $this->integer()->notNull()->comment("Currency Id From"),
+            'currencyIdTo'              => $this->integer()->notNull()->comment("Currency Id To"),
             'userId'                    => $this->integer()->null()->comment("Admin user who completes and approves the transaction"),
             'clientBankTransaction'     => $this->integer()->null()->comment("Bank transaction Id"),
             'adminBankTransaction'      => $this->integer()->null()->comment("Bank transaction Id"),
@@ -77,6 +79,24 @@ class m170819_144624_create_gtransactions_table extends Migration
             'gtransactions',
             'userId',
             'gsystem_users',
+            'id'
+        );
+        
+        // Currency From
+        $this->addForeignKey(
+            'fk-gcurrencies-currencyIdFrom',
+            'gtransactions',
+            'currencyIdFrom',
+            'gcurrencies',
+            'id'
+        );
+        
+        // Currency To
+        $this->addForeignKey(
+            'fk-gcurrencies-currencyIdTo',
+            'gtransactions',
+            'currencyIdTo',
+            'gcurrencies',
             'id'
         );
     }

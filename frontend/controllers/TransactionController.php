@@ -74,6 +74,9 @@ class TransactionController extends Controller
         
             $model->clientId = Yii::$app->user->id;
             $model->exchangeValue = $er->value;
+            $model->currencyIdFrom = $er->currencyIdFrom;
+            $model->currencyIdTo = $er->currencyIdTo;
+            //$model->amountTo = $load['Transaction']['amountFrom']*$er->value;
             $model->transactionDate = Yii::$app->formatter->asDate($_POST['Transaction']['transactionDate'], 'yyyy-MM-dd');
             
             if ($model->save()){

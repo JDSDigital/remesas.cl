@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
 use common\models\Country;
@@ -23,10 +24,26 @@ $this->title = 'Geknology';
         <div class="row panel panel-flat">
             <div class="col-md-5 ml20">
                 <?php $form = ActiveForm::begin(['id' => 'form-transaction']); ?>
-                <?= $form->field($model, 'name')->label("Nombre")->textInput(['autofocus' => true]) ?>
-                <?= $form->field($model, 'countryId')->dropDownList(
-                        ArrayHelper::map(Country::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
-                ) ?>
+                <?= Html::label("Monto a convertir") ?>
+                <?= Html::label($model->amountFrom." ".$model->currencyFrom->symbol) ?>
+                <?= Html::label("Conversion") ?>
+                <?= Html::label($model->exchangeRate->description) ?>
+                 <?= $form->field($model, 'status')->dropDownList([
+                        '0' => 'Pendiente',
+                        '1' => 'Anulada',
+                        '2' => 'Realizada'
+                    ], ['class' => 'form-control']) ?>
+                <div class="hideField">
+                <?= $form->field($model, 'exchangeValue')->label("Tasa de cambio")->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'amountTo')->label("Monto convertido") ?>
+                <?= $form->field($model, 'adminBankTransaction')->label("Numero de Deposito o Transferencia") ?>
+                <?= $form->field($model, 'transactionResponseDate')->label("Fecha de la transaccion")->widget(DatePicker::classname(), [
+                         'language' => 'es',
+                         'dateFormat' => 'dd-MM-yyyy'
+                ])?>
+                <?= $form->field($model, 'winnings')->label("Ganancia por esta transaccion") ?>
+                </div>
+                <?= $form->field($model, 'observation')->label("Observacion") ?>
                 <div class="form-group">
                     <?= Html::submitButton('Actualizar', ['class' => 'btn btn-primary', 'name' => 'form-transaction-button']) ?>
                 </div>
@@ -35,3 +52,4 @@ $this->title = 'Geknology';
         </div>
     </div>
 </div>
+<?php $this->registerJs('hideFields();') ?>

@@ -25,6 +25,15 @@ $(function () {
     // Bootstrap switch
 
     $(".switch").bootstrapSwitch();
+    
+    // Cancelled transactions
+    var val = $('#transaction-status').val();
+    if(val == 1) {
+      $('.hideField').hide();
+    }
+    else {
+      $('.hideField').show();
+    }
 });
 
 function listenerChangeStatus(){
@@ -41,6 +50,7 @@ function listenerChangeStatus(){
     });
 }
 
+// Change the client's blocked value
 function listenerChangeBlocked(){
 
     $(".switchBlocked").change(function(){
@@ -51,5 +61,20 @@ function listenerChangeBlocked(){
                 id: $(this).attr("id").replace(/blocked-/g, '')
             }
         });
+    });
+}
+
+function hideFields(){
+
+    $("#transaction-status").change(function(){
+        var val = $('#transaction-status').val();
+        
+        // Cancelled transaction
+        if(val == 1) {
+          $('.hideField').hide();
+        }
+        else {
+          $('.hideField').show();
+        }
     });
 }

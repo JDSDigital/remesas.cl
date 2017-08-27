@@ -32,6 +32,8 @@ use yii\db\ActiveRecord;
  * @property Client $client
  * @property ExchangeRate $exchangeRate
  * @property User $user
+ * @property Currency $currencyFrom
+ * @property Currency $currencyTo
  */
 class Transaction extends ActiveRecord
 {
@@ -69,8 +71,8 @@ class Transaction extends ActiveRecord
     public function rules()
     {
         return [
-            [['clientId', 'accountClientId', 'amountFrom', 'exchangeValue', 'transactionDate'], 'required'],
-            [['clientId', 'accountClientId', 'accountAdminId', 'exchangeId', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['clientId', 'accountClientId', 'amountFrom', 'exchangeValue', 'transactionDate', 'currencyIdFrom', 'currencyIdTo'], 'required'],
+            [['clientId', 'accountClientId', 'accountAdminId', 'exchangeId', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'created_at', 'updated_at', 'currencyIdFrom', 'currencyIdTo'], 'integer'],
             [['amountFrom', 'amountTo', 'exchangeValue', 'winnings'], 'number'],
             [['observation'], 'string', 'max' => 255],
             [['accountAdminId'], 'exist', 'skipOnError' => true, 'targetClass' => AccountAdmin::className(), 'targetAttribute' => ['accountAdminId' => 'id']],
@@ -80,6 +82,8 @@ class Transaction extends ActiveRecord
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
             ['status', 'default', 'value' => self::STATUS_PENDING],
             ['status', 'in', 'range' => [self::STATUS_PENDING, self::STATUS_CANCELLED, self::STATUS_DONE]],
+            [['currencyIdFrom'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdFrom' => 'id']],
+            [['currencyIdTo'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdTo' => 'id']],
         ];
     }
 
@@ -149,5 +153,20 @@ class Transaction extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'userId']);
+    }
+    
+    public function getCurrencyFrom()
+    {
+        return $this->hasOne(Currency::className(), ['id' => 'currencyIdFrom'])
+                    ->from(Currency::tableName() . ' cf');
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCurrencyTo()
+    {
+        return $this->hasOne(Currency::className(), ['id' => 'currencyIdTo'])
+                    ->from(Currency::tableName() . ' ct');
     }
 }

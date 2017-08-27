@@ -91,6 +91,29 @@ class TransactionController extends Controller
                 'model' => $model,
             ]);
         }
+        
+                $model = new Transaction();
+        
+        if ($model->load(Yii::$app->request->post())){
+            $load = Yii::$app->request->post();
+           
+            $model->userId = Yii::$app->user->id;
+            $model->transactionResponseDate = Yii::$app->formatter->asDate($_POST['Transaction']['transactionResponseDate'], 'yyyy-MM-dd');
+            
+            if ($model->save()){
+                return $this->redirect(['index']);
+            }
+            else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }
+        else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**

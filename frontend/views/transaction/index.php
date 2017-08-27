@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'amountFrom',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->amountFrom." ".$model->exchangeRate->currencyFrom->symbol, ['view', 'id' => $model->id]);
+                        return Html::a($model->amountFrom." ".$model->currencyFrom->symbol, ['view', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -63,11 +63,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 ],
                 [
-                    'label'     => 'Monto convertido',
+                    'label'     => 'Monto convertido aprox.',
                     'attribute' => 'amountTo',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->amountTo, ['view', 'id' => $model->id]);
+                        return Html::a($model->amountTo." ".$model->currencyTo->symbol, ['view', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -102,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     $check = "Pendiente";
                                     
                                     if ($model->status == 1)
-                                        $check = "Cancelada";
+                                        $check = "Anulada";
                                     else if ($model->status == 2)
                                         $check = "Realizada";
                                     

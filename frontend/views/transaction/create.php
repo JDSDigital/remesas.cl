@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ArrayHelper::map(AccountClient::find()->orderBy('description')->all(), 'id', 'description'), ['class' => 'form-control']
                 )?>
                 
-                <?= $form->field($model, 'transactionDate')->widget(DatePicker::classname(), [
+                <?= $form->field($model, 'transactionDate')->label("Fecha de la transaccion")->widget(DatePicker::classname(), [
                          'language' => 'es',
                          'dateFormat' => 'dd-MM-yyyy',
                 ])?>
