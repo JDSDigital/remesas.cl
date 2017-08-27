@@ -86,12 +86,18 @@ class AccountClientController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        
+        
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
+            // Get the countrId for the selected bank
+            $countryId = $model->bank->countryId; 
+            
             return $this->render('update', [
                 'model' => $model,
+                'countryId' => $countryId
             ]);
         }
     }

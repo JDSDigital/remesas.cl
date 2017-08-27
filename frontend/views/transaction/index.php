@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'created_at',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a(Yii::$app->formatter->asDate($model->created_at, 'dd-MM-yyyy'), ['view', 'id' => $model->id]);
+                        return Yii::$app->formatter->asDate($model->created_at, 'dd-MM-yyyy');
                     },
                 ],
                 [
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'exchangeRateDescription',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->exchangeRate->description, ['view', 'id' => $model->id]);
+                        return $model->exchangeRate->description;
                     },
                 ],
                 [
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'amountFrom',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->amountFrom." ".$model->currencyFrom->symbol, ['view', 'id' => $model->id]);
+                        return $model->amountFrom." ".$model->currencyFrom->symbol;
                     },
                 ],
                 [
@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'exchangeValue',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->exchangeValue, ['view', 'id' => $model->id]);
+                        return $model->exchangeValue;
                     },
                 ],
                 [
@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'amountTo',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->amountTo." ".$model->currencyTo->symbol, ['view', 'id' => $model->id]);
+                        return $model->amountTo." ".$model->currencyTo->symbol;
                     },
                 ],
                 [
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'accountClientDescription',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->accountClient->description, ['view', 'id' => $model->id]);
+                        return $model->accountClient->description;
                     },
                 ],
                 [
@@ -83,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'clientBankTransaction',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->clientBankTransaction, ['view', 'id' => $model->id]);
+                        return $model->clientBankTransaction;
                     },
                 ],
                 [
@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'transactionDate',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a(Yii::$app->formatter->asDate($model->transactionDate, 'dd-MM-yyyy'), ['view', 'id' => $model->id]);
+                        return Yii::$app->formatter->asDate($model->transactionDate, 'dd-MM-yyyy');
                     },
                 ],
                 [
@@ -106,16 +106,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                     else if ($model->status == 2)
                                         $check = "Realizada";
                                     
-                                    return Html::a($check, ['view', 'id' => $model->id]);
+                                    return $check;
                     },
                 ],
                 [
                     'class'          => ActionColumn::className(),
-                    'template'       => '{upload}',
+                    'template'       => '{view}',
                     'contentOptions' => ['style' => 'width: 80px;min-width: 80px'],
                     'buttons'=>[
-                        'upload' => function ($url, $model, $key) {
-                            return Html::a('<span class="glyphicon glyphicon-copy"></span>', ['upload', 'id'=>$model->id],['title'=>'Subir comprobante']);
+                        'view' => function ($url, $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['view', 'id'=>$model->id],['title'=>'Ver detalle de transaccion']);
                         },
                      ], 
                 ],
