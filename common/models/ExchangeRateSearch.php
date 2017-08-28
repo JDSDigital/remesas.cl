@@ -21,7 +21,7 @@ class ExchangeRateSearch extends ExchangeRate
     {
         return [
             [['id', 'currencyIdFrom', 'currencyIdTo', 'created_at', 'updated_at'], 'integer'],
-            [['value'], 'number'],
+            [['sellValue', 'buyValue'], 'number'],
             [['description'], 'safe'],
             [['currencyNameFrom'], 'safe'],
             [['currencyNameTo'], 'safe'],
@@ -60,7 +60,8 @@ class ExchangeRateSearch extends ExchangeRate
             'attributes' => [
                 'id',
                 'description',
-                'value',
+                'sellValue',
+                'buyValue',
                 'currencyNameFrom' => [
                     'asc' => ['cf.name' => SORT_ASC],
                     'desc' => ['cf.name' => SORT_DESC],
@@ -87,7 +88,8 @@ class ExchangeRateSearch extends ExchangeRate
             'id' => $this->id,
             'currencyIdFrom' => $this->currencyIdFrom,
             'currencyIdTo' => $this->currencyIdTo,
-            'value' => $this->value,
+            'sellValue' => $this->sellValue,
+            'buyValue' => $this->buyValue,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

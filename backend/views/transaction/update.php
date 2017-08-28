@@ -26,15 +26,17 @@ $this->title = 'Geknology';
                 <?php $form = ActiveForm::begin(['id' => 'form-transaction']); ?>
                 <?= Html::label("Monto a convertir") ?>
                 <?= Html::label($model->amountFrom." ".$model->currencyFrom->symbol) ?>
-                <?= Html::label("Conversion") ?>
-                <?= Html::label($model->exchangeRate->description) ?>
+                <?= Html::label("De") ?>
+                <?= Html::label($model->currencyFrom->name) ?>
+                <?= Html::label("A") ?>
+                <?= Html::label($model->currencyTo->name) ?>
                  <?= $form->field($model, 'status')->dropDownList([
                         '0' => 'Pendiente',
                         '1' => 'Anulada',
                         '2' => 'Realizada'
                     ], ['class' => 'form-control']) ?>
                 <div class="hideField">
-                <?= $form->field($model, 'exchangeValue')->label("Tasa de cambio")->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'usedValue')->label("Tasa")->textInput(['autofocus' => true]) ?>
                 <?= $form->field($model, 'amountTo')->label("Monto convertido") ?>
                 <?= $form->field($model, 'adminBankTransaction')->label("Numero de Deposito o Transferencia") ?>
                 <?= $form->field($model, 'transactionResponseDate')->label("Fecha de la transaccion")->widget(DatePicker::classname(), [

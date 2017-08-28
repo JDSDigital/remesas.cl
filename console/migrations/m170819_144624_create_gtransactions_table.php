@@ -20,14 +20,15 @@ class m170819_144624_create_gtransactions_table extends Migration
             'accountAdminId'            => $this->integer()->null()->comment("Account involved in the transaction."),
             'amountFrom'                => $this->double(2)->notNull()->comment("Transfered amount of money to be converted"),
             'amountTo'                  => $this->double(2)->null()->comment("Amount of money after being converted and transfered to the client."),
-            'exchangeId'                => $this->integer()->notNull()->comment("Exchange rate used for the transaction"),
             'currencyIdFrom'            => $this->integer()->notNull()->comment("Currency Id From"),
             'currencyIdTo'              => $this->integer()->notNull()->comment("Currency Id To"),
             'userId'                    => $this->integer()->null()->comment("Admin user who completes and approves the transaction"),
             'clientBankTransaction'     => $this->integer()->null()->comment("Bank transaction Id"),
             'adminBankTransaction'      => $this->integer()->null()->comment("Bank transaction Id"),
             'observation'               => $this->string()->null()->comment("Administrator observation."),
-            'exchangeValue'             => $this->double(2)->notNull()->comment("Exchange rate value used for the transaction."),
+            'sellRateValue'             => $this->double(2)->notNull()->comment("Sell rate value used for the transaction."),
+            'buyRateValue'              => $this->double(2)->notNull()->comment("Buy rate value used for the transaction."),
+            'usedValue'                 => $this->double(2)->notNull()->comment("Rate value used for the transaction."),
             'winnings'                  => $this->double(2)->null()->comment("Winnings for this transaction."),
             'status'                    => $this->integer()->notNull()->comment("Status of the transaction: pending, done, cancelled."),
             'transactionDate'           => $this->date()->notNull()->comment("Date when the transaction was made."),
@@ -61,15 +62,6 @@ class m170819_144624_create_gtransactions_table extends Migration
             'gtransactions',
             'accountAdminId',
             'gaccounts_admin',
-            'id'
-        );
-        
-        // Exchange rate used
-        $this->addForeignKey(
-            'fk-gtransactions-exchangeId',
-            'gtransactions',
-            'exchangeId',
-            'gexchange_rates',
             'id'
         );
         

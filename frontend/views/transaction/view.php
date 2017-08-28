@@ -35,16 +35,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => Yii::$app->formatter->asDate($model->created_at, 'dd-MM-yyyy'),
             ],
             [
-                'label' => 'Conversion',
-                'value' => $model->exchangeRate->description,
+                'label' => 'De',
+                'value' => $model->currencyFrom->name,
+            ],
+            [
+                'label' => 'A',
+                'value' => $model->currencyTo->name,
             ],
             [
                 'label' => 'Monto a convertir',
                 'value' => $model->amountFrom." ".$model->currencyFrom->symbol,
-            ],
-            [
-                'label' => 'Tasa',
-                'value' => $model->exchangeValue,
             ],
             [
                 'label' => 'Monto convertido aprox.',
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label'     => 'Observacion',
-                'value'     => $model->observation,
+                'value'     => ($model->observation != "") ? $model->observation : "---",
             ]            
         ],
     ]) ?>

@@ -68,11 +68,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 ],
                 [
-                    'label'     => 'Tasa',
-                    'attribute' => 'value',
+                    'label'     => 'Tasa para la compra',
+                    'attribute' => 'sellValue',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->value, ['update', 'id' => $model->id]);
+                        return Html::a($model->sellValue, ['update', 'id' => $model->id]);
+                    },
+                ],
+                [
+                    'label'     => 'Tasa para la venta',
+                    'attribute' => 'buyValue',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                        return Html::a($model->buyValue, ['update', 'id' => $model->id]);
                     },
                 ],
                 [

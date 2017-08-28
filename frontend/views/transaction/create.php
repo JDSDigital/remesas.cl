@@ -7,7 +7,7 @@ use yii\jui\DatePicker;
 
 use common\models\AccountAdmin;
 use common\models\AccountClient;
-use common\models\ExchangeRate;
+use common\models\Currency;
 
 
 /* @var $this yii\web\View */
@@ -20,10 +20,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-transaction']); ?>
-                <?= $form->field($model, 'exchangeId')->label("Conversion")->dropDownList(
-                    ArrayHelper::map(ExchangeRate::find()->orderBy('description')->all(), 'id', 'description'), ['class' => 'form-control']
+                <?= $form->field($model, 'currencyIdFrom')->label("De")->dropDownList(
+                    ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
                 ) ?>
-            
+                <?= $form->field($model, 'currencyIdTo')->label("A")->dropDownList(
+                    ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
+                ) ?>
                 <?= $form->field($model, 'amountFrom')->label("Monto a convertir") ?>
                 
                 <?= $form->field($model, 'accountAdminId')->label("Cuenta a donde transfirió el dinero")->dropDownList(

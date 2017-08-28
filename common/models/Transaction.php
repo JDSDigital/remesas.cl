@@ -16,12 +16,12 @@ use yii\db\ActiveRecord;
  * @property integer $accountAdminId
  * @property double $amountFrom
  * @property double $amountTo
- * @property integer $exchangeId
  * @property integer $userId
  * @property integer $clientBankTransaction
  * @property integer $adminBankTransaction
  * @property string $observation
- * @property double $exchangeValue
+ * @property double $sellRateValue
+ * @property double $buyRateValue
  * @property double $winnings
  * @property integer $status
  * @property integer $transactionDate
@@ -73,14 +73,13 @@ class Transaction extends ActiveRecord
     public function rules()
     {
         return [
-            [['clientId', 'accountClientId', 'amountFrom', 'exchangeValue', 'transactionDate', 'currencyIdFrom', 'currencyIdTo'], 'required'],
-            [['clientId', 'accountClientId', 'accountAdminId', 'exchangeId', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'created_at', 'updated_at', 'currencyIdFrom', 'currencyIdTo'], 'integer'],
-            [['amountFrom', 'amountTo', 'exchangeValue', 'winnings'], 'number'],
+            [['clientId', 'accountClientId', 'amountFrom', 'sellRateValue', 'buyRateValue', 'transactionDate', 'currencyIdFrom', 'currencyIdTo', 'usedValue'], 'required'],
+            [['clientId', 'accountClientId', 'accountAdminId', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'created_at', 'updated_at', 'currencyIdFrom', 'currencyIdTo'], 'integer'],
+            [['amountFrom', 'amountTo', 'sellRateValue', 'buyRateValue', 'winnings', 'usedValue'], 'number'],
             [['observation'], 'string', 'max' => 255],
             [['accountAdminId'], 'exist', 'skipOnError' => true, 'targetClass' => AccountAdmin::className(), 'targetAttribute' => ['accountAdminId' => 'id']],
             [['accountClientId'], 'exist', 'skipOnError' => true, 'targetClass' => AccountClient::className(), 'targetAttribute' => ['accountClientId' => 'id']],
             [['clientId'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['clientId' => 'id']],
-            [['exchangeId'], 'exist', 'skipOnError' => true, 'targetClass' => ExchangeRate::className(), 'targetAttribute' => ['exchangeId' => 'id']],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
             ['status', 'default', 'value' => self::STATUS_PENDING],
             ['status', 'in', 'range' => [self::STATUS_PENDING, self::STATUS_CANCELLED, self::STATUS_DONE]],
@@ -102,12 +101,13 @@ class Transaction extends ActiveRecord
             'accountAdminId' => 'Account Admin ID',
             'amountFrom' => 'Amount From',
             'amountTo' => 'Amount To',
-            'exchangeId' => 'Exchange ID',
             'userId' => 'User ID',
             'clientBankTransaction' => 'Client Bank Transaction',
             'adminBankTransaction' => 'Admin Bank Transaction',
             'observation' => 'Observation',
-            'exchangeValue' => 'Exchange Value',
+            'sellRateValue' => 'Sell Rate Value',
+            'buyRateValue' => 'Buy Rate Value',
+            'usedValue' => 'Used Value',
             'winnings' => 'Winnings',
             'status' => 'Status',
             'transactionDate' => 'Transaction Date',
@@ -141,14 +141,6 @@ class Transaction extends ActiveRecord
     {
         return $this->hasOne(Client::className(), ['id' => 'clientId'])
                     ->from(Client::tableName() . ' c');
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getExchangeRate()
-    {
-        return $this->hasOne(ExchangeRate::className(), ['id' => 'exchangeId']);
     }
 
     /**

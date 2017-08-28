@@ -53,11 +53,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 ],
                 [
-                    'label'     => 'Conversión',
-                    'attribute' => 'exchangeRateDescription',
+                    'label'     => 'De',
+                    'attribute' => 'currencyNameFrom',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->exchangeRate->description, ['update', 'id' => $model->id]);
+                        return $model->currencyFrom->name;
+                    },
+                ],
+                [
+                    'label'     => 'A',
+                    'attribute' => 'currencyNameTo',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                        return $model->currencyTo->name;
                     },
                 ],
                 [
@@ -70,10 +78,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'label'     => 'Tasa',
-                    'attribute' => 'exchangeValue',
+                    'attribute' => 'usedValue',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->exchangeValue, ['update', 'id' => $model->id]);
+                        return Html::a($model->usedValue, ['update', 'id' => $model->id]);
                     },
                 ],
                 [

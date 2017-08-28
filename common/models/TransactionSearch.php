@@ -12,7 +12,8 @@ use common\models\Transaction;
  */
 class TransactionSearch extends Transaction
 {
-    public $exchangeRateDescription;
+    public $currencyNameFrom;
+    public $currencyNameTo;
     public $accountClientDescription;
     //public $clientName;
     
@@ -22,9 +23,9 @@ class TransactionSearch extends Transaction
     public function rules()
     {
         return [
-            [['id', 'clientId', 'accountClientId', 'accountAdminId', 'exchangeId', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'transactionDate', 'created_at', 'updated_at'], 'integer'],
-            [['amountFrom', 'amountTo', 'exchangeValue', 'winnings'], 'number'],
-            [['observation', 'exchangeRateDescription', 'accountClientDescription'/*, 'clientName'*/], 'safe'],
+            [['id', 'clientId', 'accountClientId', 'accountAdminId', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'transactionDate', 'created_at', 'updated_at', 'currencyIdFrom', 'currencyIdTo'], 'integer'],
+            [['amountFrom', 'amountTo', 'sellRateValue', 'buyRateValue', 'winnings', 'usedValue'], 'number'],
+            [['observation', 'accountClientDescription', 'currencyNameFrom', 'currencyNameTo'/*, 'clientName'*/], 'safe'],
         ];
     }
 
@@ -47,7 +48,8 @@ class TransactionSearch extends Transaction
     public function search($params)
     {
         $query = Transaction::find();
-        $query->joinWith(['exchangeRate']);
+        $query->joinWith(['currencyFrom']);
+        $query->joinWith(['currencyTo']);
         $query->joinWith(['accountClient']);
         $query->joinWith(['client']);
 
@@ -62,20 +64,29 @@ class TransactionSearch extends Transaction
                 'id',
                 'created_at',
                 'amountFrom',
-                'exchangeValue',
+                'sellRateValue',
+                'buyRateValue',
+                'usedValue',
                 'amountTo',
                 'clientBankTransaction',
                 'transactionDate',
                 'status',
-                'exchangeRateDescription' => [
-                    'asc' => ['gexchange_rates.description' => SORT_ASC],
-                    'desc' => ['gexchange_rates.description' => SORT_DESC],
-                    'label' => 'Tasa'
-                ],
+                'currencyIdFrom',
+                'currencyIdTo',
                 'accountClientDescription' => [
                     'asc' => ['ac.description' => SORT_ASC],
                     'desc' => ['ac.description' => SORT_DESC],
                     'label' => 'Cuenta'
+                ],
+                'currencyNameFrom' => [
+                    'asc' => ['cf.name' => SORT_ASC],
+                    'desc' => ['cf.name' => SORT_DESC],
+                    'label' => 'De'
+                ],
+                'currencyNameTo' => [
+                    'asc' => ['ct.name' => SORT_ASC],
+                    'desc' => ['ct.name' => SORT_DESC],
+                    'label' => 'A'
                 ]/*,
                 'clientName' => [
                     'asc' => ['c.name' => SORT_ASC],
@@ -106,11 +117,14 @@ class TransactionSearch extends Transaction
             'accountAdminId' => $this->accountAdminId,
             'amountFrom' => $this->amountFrom,
             'amountTo' => $this->amountTo,
-            'exchangeId' => $this->exchangeId,
+            'currencyIdFrom' => $this->currencyIdFrom,
+            'currencyIdTo' => $this->currencyIdTo,
             'userId' => $this->userId,
             'clientBankTransaction' => $this->clientBankTransaction,
             'adminBankTransaction' => $this->adminBankTransaction,
-            'exchangeValue' => $this->exchangeValue,
+            'sellRateValue' => $this->sellRateValue,
+            'buyRateValue' => $this->buyRateValue,
+            'usedValue' => $this->usedValue,
             'winnings' => $this->winnings,
             'status' => $this->status,
             'transactionDate' => $this->transactionDate,
@@ -120,12 +134,18 @@ class TransactionSearch extends Transaction
 
         $query->andFilterWhere(['like', 'observation', $this->observation]);
         
-        $query->joinWith(['exchangeRate' => function ($q) {
-            $q->where('gexchange_rates.description LIKE "%' . $this->exchangeRateDescription . '%"');
-        }]);
-        
         $query->joinWith(['accountClient' => function ($q) {
             $q->where('ac.description LIKE "%' . $this->accountClientDescription . '%"');
+        }]);
+        
+        // filter by currency name
+        $query->joinWith(['currencyFrom' => function ($q) {
+            $q->where('cf.name LIKE "%' . $this->currencyNameFrom . '%"');
+        }]);
+        
+        // filter by currency name
+        $query->joinWith(['currencyTo' => function ($q) {
+            $q->where('ct.name LIKE "%' . $this->currencyNameTo . '%"');
         }]);
         
         /*$query->joinWith(['client' => function ($q) {

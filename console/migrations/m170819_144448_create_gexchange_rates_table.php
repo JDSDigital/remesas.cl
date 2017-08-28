@@ -17,7 +17,8 @@ class m170819_144448_create_gexchange_rates_table extends Migration
             'id'             => $this->primaryKey(),
             'currencyIdFrom' => $this->integer()->notNull()->comment("From currency."),
             'currencyIdTo'   => $this->integer()->notNull()->comment("To currency."),
-            'value'          => $this->double(2)->notNull()->comment("Value you have to multiply the From currency for in order to get the To currency."),
+            'sellValue'      => $this->double(2)->notNull()->comment("Value you have to multiply the From currency for in order to get the To currency."),
+            'buyValue'       => $this->double(2)->notNull()->comment("Value you have to divide the To currency for in order to get the From currency."),
             'description'    => $this->string()->null()->comment("Description of the exchange"),
             
             'created_at'     => $this->integer()->null()->comment("Creation date of the exchange rate."),

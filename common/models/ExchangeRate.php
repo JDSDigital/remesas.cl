@@ -35,9 +35,9 @@ class ExchangeRate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['currencyIdFrom', 'currencyIdTo', 'value'], 'required'],
+            [['currencyIdFrom', 'currencyIdTo', 'sellValue', 'buyValue'], 'required'],
             [['currencyIdFrom', 'currencyIdTo', 'created_at', 'updated_at'], 'integer'],
-            [['value'], 'number'],
+            [['sellValue', 'buyValue'], 'number'],
             [['description'], 'string', 'max' => 255],
             [['currencyIdFrom'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdFrom' => 'id']],
             [['currencyIdTo'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdTo' => 'id']],
@@ -53,7 +53,8 @@ class ExchangeRate extends \yii\db\ActiveRecord
             'id' => 'ID',
             'currencyNameFrom' => 'Currency Name From',
             'currencyNameTo' => 'Currency Name To',
-            'value' => 'Value',
+            'sellValue' => 'Sell Value',
+            'buyValue' => 'Buy Value',
             'description' => 'Description',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At'
@@ -88,14 +89,6 @@ class ExchangeRate extends \yii\db\ActiveRecord
         return $this->currencyTo->name;
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTransactions()
-    {
-        return $this->hasMany(Transaction::className(), ['exchangeId' => 'id']);
-    }
-    
     /**
      * Get the exchange rate according to the From and To currencies
      */

@@ -53,6 +53,9 @@ class TransactionController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        
+        
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -68,15 +71,29 @@ class TransactionController extends Controller
         
         if ($model->load(Yii::$app->request->post())){
             $load = Yii::$app->request->post();
+            
+            $model->clientId = Yii::$app->user->id;
            
             // Exchange Rate Used
-            $er = ExchangeRate::find()->where(['id' => $load['Transaction']['exchangeId']])->one();
+            $er1 = ExchangeRate::find()->where(['and', ['currencyIdFrom' => $load['Transaction']['currencyIdFrom']], ['currencyIdTo' => $load['Transaction']['currencyIdTo']]])->one();
+            
+            if ($er1 != null){
+                $model->sellRateValue = $er1->sellValue;
+                $model->buyRateValue = $er1->buyValue;
+                $model->amountTo = $model->amountFrom*$model->sellRateValue;
+                $model->usedValue = $er1->sellValue;
+            }
+            else {
+               $er2 = ExchangeRate::find()->where(['and', ['currencyIdFrom' => $load['Transaction']['currencyIdTo']], ['currencyIdTo' => $load['Transaction']['currencyIdFrom']]])->one();
+               
+               if ($er2 != null){
+                   $model->sellRateValue = $er2->sellValue;
+                   $model->buyRateValue = $er2->buyValue;
+                   $model->amountTo = $model->amountFrom/$model->buyRateValue;
+                   $model->usedValue = $er2->buyValue;
+               } 
+            }
         
-            $model->clientId = Yii::$app->user->id;
-            $model->exchangeValue = $er->value;
-            $model->currencyIdFrom = $er->currencyIdFrom;
-            $model->currencyIdTo = $er->currencyIdTo;
-            //$model->amountTo = $load['Transaction']['amountFrom']*$er->value;
             $model->transactionDate = Yii::$app->formatter->asDate($_POST['Transaction']['transactionDate'], 'yyyy-MM-dd');
             
             if ($model->save()){
