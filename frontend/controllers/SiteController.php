@@ -286,15 +286,23 @@ class SiteController extends Controller
             }
             else {
                 // Search for an exchange rate with these conditions
-                $er = $model->getExchangeRateByCurrencies();
                 $ct = Currency::find()->where(['id' => $model->currencyIdTo])->one();
-                
-                if ($er != null){
-                    $calculate = $load['amount']*$er['value'];
+                $er1 = ExchangeRate::find()->where(['and', ['currencyIdFrom' => $load['currencyIdFrom']], ['currencyIdTo' => $load['currencyIdTo']]])->one();
+            
+                if ($er1 != null){
+                    $calculate = $load['amount']*$er1->sellValue;
                     $result = $calculate." ".$ct->symbol;
                 }
                 else {
-                    Yii::$app->getSession()->setFlash('error','Lo sentimos. La tasa de cambio solicitada no está disponible. Por favos intente más tarde.'); 
+                   $er2 = ExchangeRate::find()->where(['and', ['currencyIdFrom' => $load['currencyIdTo']], ['currencyIdTo' => $load['currencyIdFrom']]])->one();
+                   
+                   if ($er2 != null){
+                        $calculate = $load['amount']/$er2->buyValue;
+                        $result = $calculate." ".$ct->symbol;
+                   }
+                   else {
+                        Yii::$app->getSession()->setFlash('error','Lo sentimos. La tasa de cambio solicitada no está disponible. Por favos intente más tarde.');
+                   }
                 }
             } 
         }
