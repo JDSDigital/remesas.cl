@@ -17,6 +17,16 @@ class m170819_143554_create_gcountries_table extends Migration
             'id'             => $this->primaryKey(),
             'name'           => $this->string()->notNull()->comment("Name of the country")
         ], $tableOptions);
+        
+        $this->insert('{{%gcountries}}', [
+            'id'            => 1,
+            'name'          => 'Chile'
+        ]);
+        
+        $this->insert('{{%gcountries}}', [
+            'id'            => 2,
+            'name'          => 'Venezuela'
+        ]);
     }
 
     public function down(){

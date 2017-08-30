@@ -18,6 +18,18 @@ class m170819_143748_create_gcurrencies_table extends Migration
             'name'           => $this->string()->notNull()->comment("Name of the currency"),
             'symbol'         => $this->string()->notNull()->comment("Symbol of the currency")
         ], $tableOptions);
+        
+        $this->insert('{{%gcurrencies}}', [
+            'id'            => 1,
+            'name'          => 'Peso Chileno',
+            'symbol'        => 'CLP'
+        ]);
+        
+        $this->insert('{{%gcurrencies}}', [
+            'id'            => 2,
+            'name'          => 'Bolívar',
+            'symbol'        => 'VEF'
+        ]);
     }
 
     public function down(){

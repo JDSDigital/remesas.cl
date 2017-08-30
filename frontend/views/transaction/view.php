@@ -47,6 +47,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => $model->amountFrom." ".$model->currencyFrom->symbol,
             ],
             [
+                'label' => 'Tasa',
+                'value' => $model->usedValue,
+            ],
+            [
                 'label' => 'Monto convertido aprox.',
                 'value' => $model->amountTo." ".$model->currencyTo->symbol,
             ],

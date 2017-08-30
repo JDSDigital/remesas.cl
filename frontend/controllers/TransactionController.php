@@ -95,6 +95,12 @@ class TransactionController extends Controller
                } 
             }
             
+            // Calculate winnings
+           // $model->winnings = ($model->amountTo/$model->buyRateValue) - ($model->amountTo/$model->sellRateValue); 
+            
+            //echo $model->buyRateValue." ".$model->sellRateValue." ".$model->amountTo." ".($model->amountTo/$model->buyRateValue)." ".($model->amountTo/$model->sellRateValue);
+            //die();
+            
             $model->transactionDate = Yii::$app->formatter->asDate($_POST['Transaction']['transactionDate'], 'yyyy-MM-dd');
             
             // Transaction receipt

@@ -27,17 +27,18 @@ $this->title = 'Geknology';
     <div class="body-content">
         <div class="row panel panel-flat">
             <div class="col-md-5 ml20">
-                    <?php $form = ActiveForm::begin(['id' => 'form-exchange-rate']); ?>
+                   <?php $form = ActiveForm::begin(['id' => 'form-exchange-rate']); ?>
                     <?= $form->field($model, 'description')->label("Descripcion")->textInput(['autofocus' => true]) ?>
-                    <?= $form->field($model, 'currencyIdFrom')->label("De")->dropDownList(
+                    <?= $form->field($model, 'currencyIdFrom')->label("")->dropDownList(
                         ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
                     ) ?>
-                    <?= $form->field($model, 'currencyIdTo')->label("A")->dropDownList(
+                    <?= $form->field($model, 'currencyIdTo')->label("")->dropDownList(
                         ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
                     ) ?>
-                    <?= $form->field($model, 'value')->label("Tasa") ?>
+                    <?= $form->field($model, 'sellValue')->label("Tasa para venta") ?>
+                    <?= $form->field($model, 'buyValue')->label("Tasa para compra") ?>
                     <div class="form-group">
-                        <?= Html::submitButton('Crear Tasa de Cambio', ['class' => 'btn btn-primary', 'name' => 'form-exchange-rate-button']) ?>
+                        <?= Html::submitButton('Actualizar', ['class' => 'btn btn-primary', 'name' => 'form-exchange-rate-button']) ?>
                     </div>
                 <?php ActiveForm::end(); ?>
             </div>
