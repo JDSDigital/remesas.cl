@@ -7,7 +7,7 @@ use yii\grid\ActionColumn;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Cuentas bancarias';
+$this->title = 'Mis Cuentas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="account-client-index">

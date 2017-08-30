@@ -43,6 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
                          'dateFormat' => 'dd-MM-yyyy',
                 ])?>
                 
+                <?= $form->field($model, 'uploadFile')->fileInput() ?>
+                
                 <div class="form-group">
                     <?= Html::submitButton('Registrar', ['class' => 'btn btn-primary', 'name' => 'form-transaction-button']) ?>
                 </div>

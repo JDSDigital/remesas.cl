@@ -9,6 +9,7 @@ use common\models\TransactionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * TransactionController implements the CRUD actions for Transaction model.
@@ -93,17 +94,29 @@ class TransactionController extends Controller
                    $model->usedValue = $er2->buyValue;
                } 
             }
-        
+            
             $model->transactionDate = Yii::$app->formatter->asDate($_POST['Transaction']['transactionDate'], 'yyyy-MM-dd');
             
-            if ($model->save()){
-                return $this->redirect(['index']);
+            // Transaction receipt
+            $upload_file = UploadedFile::getInstance($model, 'uploadFile');
+
+            if (!empty($upload_file) && $upload_file->size !== 0){
+                $model->uploadFile = $upload_file;
+                
+                if ($model->validate()){
+                    if ($model->save()){
+                        $upload_file->saveAs('uploads/'.$model->id.'-'.date('YmdHis').'.'.$upload_file->extension);
+                        
+                        return $this->redirect(['index']);
+                    }
+                }
             }
             else {
+                Yii::$app->getSession()->setFlash('error', 'Debe agregar el comprobante de la transacción.');
                 return $this->render('create', [
                     'model' => $model,
                 ]);
-            }
+            }         
         }
         else {
             return $this->render('create', [

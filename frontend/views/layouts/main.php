@@ -44,7 +44,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = ['label' => 'Cuentas bancarias', 'url' => ['/site/accounts']];
+        $menuItems[] = ['label' => 'Cuentas disponibles', 'url' => ['/site/accounts']];
         $menuItems[] = ['label' => 'Mis Cuentas', 'url' => ['/account-client/index']];
         $menuItems[] = ['label' => 'Calculadora', 'url' => ['/site/calculator']];
         $menuItems[] = ['label' => 'Mis Transacciones', 'url' => ['/transaction/index']];

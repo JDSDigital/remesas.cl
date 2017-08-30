@@ -5,7 +5,7 @@ namespace common\models;
 use Yii;
 
 use yii\db\ActiveRecord;
-//use yii\web\UploadedFile;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "gtransactions".
@@ -41,7 +41,7 @@ class Transaction extends ActiveRecord
     const STATUS_PENDING = 0;
     const STATUS_CANCELLED = 1;
     const STATUS_DONE = 2;
-    //public $uploadFile;
+    public $uploadFile;
     
     /**
      * @inheritdoc
@@ -85,7 +85,7 @@ class Transaction extends ActiveRecord
             ['status', 'in', 'range' => [self::STATUS_PENDING, self::STATUS_CANCELLED, self::STATUS_DONE]],
             [['currencyIdFrom'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdFrom' => 'id']],
             [['currencyIdTo'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdTo' => 'id']],
-            //[['uploadFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['uploadFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -113,7 +113,7 @@ class Transaction extends ActiveRecord
             'transactionDate' => 'Transaction Date',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            //'uploadFile' => 'Upload File',
+            'uploadFile' => 'Upload File',
         ];
     }
 
@@ -166,7 +166,7 @@ class Transaction extends ActiveRecord
                     ->from(Currency::tableName() . ' ct');
     }
     
-    /*public function uploadFile() {
+    public function uploadFile() {
         // get the uploaded file instance
         $image = UploadedFile::getInstance($this, 'uploadFile');
  
@@ -184,7 +184,7 @@ class Transaction extends ActiveRecord
  
     public function getUploadedFile() {
         // return a default image placeholder if your source avatar is not found
-        $pic = isset($this->pic) ? $this->pic : 'default.png';
+        $pic = isset($this->uploadFile) ? $this->uploadFile : 'default.png';
         return Yii::$app->params['fileUploadUrl'] . $pic;
-    }*/
+    }
 }
