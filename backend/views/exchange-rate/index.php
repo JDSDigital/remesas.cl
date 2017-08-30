@@ -84,6 +84,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 ],
                 [
+                    'label'     => 'Estado',
+                    'attribute' => 'status',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                        $check = ($model->status == 1) ? "checked='checked'" : null;
+
+                        return "<div class='switchery-xs m0'>
+                                    <input id='status-$model->id' type='checkbox' class='switchery switchStatusER' $check>
+                                </div>";
+                    }
+                ],
+                [
                     'class'          => ActionColumn::className(),
                     'template'       => '{update} {delete}',
                     'contentOptions' => ['style' => 'width: 80px;min-width: 80px'],
@@ -93,3 +105,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
 </div>
+<?php $this->registerJs('listenerChangeStatusER();') ?>

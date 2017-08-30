@@ -73,8 +73,8 @@ class Transaction extends ActiveRecord
     public function rules()
     {
         return [
-            [['clientId', 'accountClientId', 'amountFrom', 'sellRateValue', 'buyRateValue', 'transactionDate', 'currencyIdFrom', 'currencyIdTo', 'usedValue'], 'required'],
-            [['clientId', 'accountClientId', 'accountAdminId', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'created_at', 'updated_at', 'currencyIdFrom', 'currencyIdTo'], 'integer'],
+            [['clientId', 'accountClientId', 'amountFrom', 'sellRateValue', 'buyRateValue', 'transactionDate', 'currencyIdFrom', 'currencyIdTo', 'usedValue', 'exchangeId'], 'required'],
+            [['clientId', 'accountClientId', 'accountAdminId', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'created_at', 'updated_at', 'currencyIdFrom', 'currencyIdTo', 'exchangeId'], 'integer'],
             [['amountFrom', 'amountTo', 'sellRateValue', 'buyRateValue', 'winnings', 'usedValue'], 'number'],
             [['observation'], 'string', 'max' => 255],
             [['accountAdminId'], 'exist', 'skipOnError' => true, 'targetClass' => AccountAdmin::className(), 'targetAttribute' => ['accountAdminId' => 'id']],
@@ -85,6 +85,7 @@ class Transaction extends ActiveRecord
             ['status', 'in', 'range' => [self::STATUS_PENDING, self::STATUS_CANCELLED, self::STATUS_DONE]],
             [['currencyIdFrom'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdFrom' => 'id']],
             [['currencyIdTo'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdTo' => 'id']],
+            [['exchangeId'], 'exist', 'skipOnError' => true, 'targetClass' => ExchangeRate::className(), 'targetAttribute' => ['exchangeId' => 'id']],
             [['uploadFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
         ];
     }
@@ -114,6 +115,7 @@ class Transaction extends ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'uploadFile' => 'Upload File',
+            'exchangeId' => 'Exchange Rate'
         ];
     }
 
@@ -164,6 +166,11 @@ class Transaction extends ActiveRecord
     {
         return $this->hasOne(Currency::className(), ['id' => 'currencyIdTo'])
                     ->from(Currency::tableName() . ' ct');
+    }
+    
+    public function getExchangeRate()
+    {
+        return $this->hasOne(ExchangeRate::className(), ['id' => 'exchangeId']);
     }
     
     public function uploadFile() {

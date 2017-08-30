@@ -64,6 +64,20 @@ function listenerChangeBlocked(){
     });
 }
 
+// Change the exchange rate status
+function listenerChangeStatusER(){
+
+    $(".switchStatusER").change(function(){
+        $.ajax({
+            url: 'status',
+            type: 'post',
+            data: {
+                id: $(this).attr("id").replace(/status-/g, '')
+            }
+        });
+    });
+}
+
 function hideFields(){
 
     $("#transaction-status").change(function(){

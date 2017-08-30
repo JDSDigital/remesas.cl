@@ -109,4 +109,27 @@ class ExchangeRateController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    /**
+     * Change exchange rate status
+     *
+     * @return string
+     */
+    public function actionStatus()
+    {
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+
+            $model = ExchangeRate::findOne($data['id']);
+            
+            if ($model->status)
+                $model->status = 0;
+            else
+                $model->status = 1;
+            
+            $model->save();
+        }
+
+        return null;
+    }
 }

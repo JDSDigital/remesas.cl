@@ -76,7 +76,27 @@ class TransactionController extends Controller
             $model->clientId = Yii::$app->user->id;
            
             // Exchange Rate Used
-            $er1 = ExchangeRate::find()->where(['and', ['currencyIdFrom' => $load['Transaction']['currencyIdFrom']], ['currencyIdTo' => $load['Transaction']['currencyIdTo']]])->one();
+            $er = ExchangeRate::find()->where(['id' => $load['Transaction']['exchangeId']])->one();
+            $model->currencyIdFrom = $er->currencyIdFrom;
+            $model->currencyIdTo = $er->currencyIdTo;
+            $model->sellRateValue = $er->sellValue;
+            $model->buyRateValue = $er->buyValue;
+            
+            // Check if I should multiply or divide according to the "base" currency (id=1)
+            // Multiply
+            if ($model->currencyIdFrom == 1){
+               $model->amountTo = $model->amountFrom*$model->sellRateValue;
+               $model->usedValue = $model->sellRateValue;
+            }
+            // Divide
+            else {
+                $model->amountTo = $model->amountFrom/$model->sellRateValue;
+                $model->usedValue = $model->sellRateValue;
+            }
+            
+            //$model->winnings = ($model->amountTo/$model->buyRateValue) - ($model->amountTo/$model->sellRateValue);
+            
+            /*$er1 = ExchangeRate::find()->where(['and', ['currencyIdFrom' => $load['Transaction']['currencyIdFrom']], ['currencyIdTo' => $load['Transaction']['currencyIdTo']]])->one();
             
             if ($er1 != null){
                 $model->sellRateValue = $er1->sellValue;
@@ -93,13 +113,10 @@ class TransactionController extends Controller
                    $model->amountTo = $model->amountFrom/$model->buyRateValue;
                    $model->usedValue = $er2->buyValue;
                } 
-            }
+            }*/
             
             // Calculate winnings
-           // $model->winnings = ($model->amountTo/$model->buyRateValue) - ($model->amountTo/$model->sellRateValue); 
-            
-            //echo $model->buyRateValue." ".$model->sellRateValue." ".$model->amountTo." ".($model->amountTo/$model->buyRateValue)." ".($model->amountTo/$model->sellRateValue);
-            //die();
+           //  
             
             $model->transactionDate = Yii::$app->formatter->asDate($_POST['Transaction']['transactionDate'], 'yyyy-MM-dd');
             

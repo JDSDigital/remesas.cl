@@ -22,6 +22,7 @@ class m170819_144624_create_gtransactions_table extends Migration
             'amountTo'                  => $this->double(2)->null()->comment("Amount of money after being converted and transfered to the client."),
             'currencyIdFrom'            => $this->integer()->notNull()->comment("Currency Id From"),
             'currencyIdTo'              => $this->integer()->notNull()->comment("Currency Id To"),
+            'exchangeId'                => $this->integer()->notNull()->comment("Exchange rate used for the transaction"),
             'userId'                    => $this->integer()->null()->comment("Admin user who completes and approves the transaction"),
             'clientBankTransaction'     => $this->integer()->null()->comment("Bank transaction Id"),
             'adminBankTransaction'      => $this->integer()->null()->comment("Bank transaction Id"),
@@ -89,6 +90,15 @@ class m170819_144624_create_gtransactions_table extends Migration
             'gtransactions',
             'currencyIdTo',
             'gcurrencies',
+            'id'
+        );
+        
+        // Exchange rate used
+        $this->addForeignKey(
+            'fk-gtransactions-exchangeId',
+            'gtransactions',
+            'exchangeId',
+            'gexchange_rates',
             'id'
         );
     }
