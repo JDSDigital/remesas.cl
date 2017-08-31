@@ -145,13 +145,18 @@ class UsersController extends Controller
     public function actionDelete($id)
     {
         $model = User::find()->where(['id' => $id])->one();
+        
+        // Check if the user is related to any transactions
+        $transactions = $model->getTransactions()->count();
+        
+        if ($transactions > 0){
+            Yii::$app->getSession()->setFlash('error','El usuario no puede ser eliminado porque hay transacciones relacionadas con el.');
+        }
+        else {
+            $model->delete();
+        }
 
-        if ($model->delete())
-            return $this->redirect(['index']);
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return $this->redirect(['index']);
     }
 
     /**

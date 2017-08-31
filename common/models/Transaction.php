@@ -86,7 +86,7 @@ class Transaction extends ActiveRecord
             [['currencyIdFrom'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdFrom' => 'id']],
             [['currencyIdTo'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdTo' => 'id']],
             [['exchangeId'], 'exist', 'skipOnError' => true, 'targetClass' => ExchangeRate::className(), 'targetAttribute' => ['exchangeId' => 'id']],
-            [['uploadFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['uploadFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -181,10 +181,7 @@ class Transaction extends ActiveRecord
         if (empty($image)) {
             return false;
         }
- 
-        // generate random name for the file
-        //$this->pic = time(). '.' . $image->extension;
- 
+        
         // the uploaded image instance
         return $image;
     }

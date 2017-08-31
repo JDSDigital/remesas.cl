@@ -95,4 +95,11 @@ class ExchangeRate extends \yii\db\ActiveRecord
     public function getExchangeRateByCurrencies(){
         return ExchangeRate::find()->where(['and', ['currencyIdFrom' => $this->currencyIdFrom], ['currencyIdTo' => $this->currencyIdTo]])->one();
     }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTransactions(){
+        return $this->hasMany(Transaction::className(), ['exchangeId' => 'id']);
+    }
 }

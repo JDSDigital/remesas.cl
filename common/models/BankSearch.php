@@ -54,6 +54,7 @@ class BankSearch extends Bank
         ]);
 
         $dataProvider->setSort([
+            'defaultOrder' => ['name' => SORT_ASC], 
             'attributes' => [
                 'id',
                 'name',
@@ -89,3 +90,4 @@ class BankSearch extends Bank
         return $dataProvider;
     }
 }
+?>

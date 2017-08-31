@@ -5,9 +5,10 @@ namespace backend\controllers;
 use Yii;
 use common\models\Bank;
 use common\models\BankSearch;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * BankController implements the CRUD actions for Bank model.
@@ -24,6 +25,20 @@ class BankController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => false,
+                        'roles' => ['user'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
                 ],
             ],
         ];
@@ -87,10 +102,20 @@ class BankController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
+    public function actionDelete($id){
+        $model = $this->findModel($id);
+        
+        // Check if the bank is related to any bank account
+        $accountsClients = $model->getAccountsClients()->count();
+        $accountsAdmin = $model->getAccountsAdmin()->count();
+        
+        if ($accountsClients > 0 || $accountsAdmin > 0){
+            Yii::$app->getSession()->setFlash('error','El banco no puede ser eliminado porque hay cuentas bancarias relacionadas con el.');
+        }
+        else {
+            $this->findModel($id)->delete();
+        }
+        
         return $this->redirect(['index']);
     }
 

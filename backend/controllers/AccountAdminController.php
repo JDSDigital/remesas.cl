@@ -7,6 +7,7 @@ use common\models\AccountAdmin;
 use common\models\AccountAdminSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 /**
@@ -24,6 +25,19 @@ class AccountAdminController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => false,
+                        'roles' => ['user'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
                 ],
             ],
         ];
@@ -86,9 +100,18 @@ class AccountAdminController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+    public function actionDelete($id){
+        $model = $this->findModel($id);
+        
+        // Check if the account is related to any transaction
+        $transactions = $model->getTransactions()->count();
+        
+        if ($transactions > 0){
+            Yii::$app->getSession()->setFlash('error','La cuenta bancaria no puede ser eliminada porque hay transacciones relacionadas con ella.');
+        }
+        else {
+            $this->findModel($id)->delete();
+        }
 
         return $this->redirect(['index']);
     }
@@ -107,5 +130,27 @@ class AccountAdminController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    
+    /**
+     * Change exchange rate status
+     *
+     * @return string
+     */
+    public function actionStatus(){
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+
+            $model = AccountAdmin::findOne($data['id']);
+            
+            if ($model->status)
+                $model->status = 0;
+            else
+                $model->status = 1;
+            
+            $model->save();
+        }
+
+        return null;
     }
 }

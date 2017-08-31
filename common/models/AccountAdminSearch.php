@@ -55,6 +55,7 @@ class AccountAdminSearch extends AccountAdmin
         ]);
         
         $dataProvider->setSort([
+            'defaultOrder' => ['description' => SORT_ASC],
             'attributes' => [
                 'id',
                 'description',

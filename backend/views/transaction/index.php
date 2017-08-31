@@ -93,6 +93,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 ],
                 [
+                    'label'     => 'Ganancia',
+                    'attribute' => 'winnings',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                        return Html::a(($model->winnings != "") ? $model->winnings." CLP" : "---", ['update', 'id' => $model->id]);
+                    },
+                ],
+                [
                     'label'     => 'Estado',
                     'attribute' => 'status',
                     'format'    => 'raw',

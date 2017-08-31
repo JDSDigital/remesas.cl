@@ -89,7 +89,17 @@ class ExchangeRateController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        
+        // Check if the rate is related to any transaction
+        $transactions = $model->getTransactions()->count();
+        
+        if ($transactions > 0){
+            Yii::$app->getSession()->setFlash('error','La tasa de cambio no puede ser eliminada porque hay transacciones relacionadas con ella.');
+        }
+        else {
+            $this->findModel($id)->delete();
+        }
 
         return $this->redirect(['index']);
     }

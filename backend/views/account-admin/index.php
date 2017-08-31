@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'type',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->type, ['update', 'id' => $model->id]);
+                        return Html::a(ucfirst($model->type), ['update', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -97,10 +97,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format'    => 'raw',
                     'value'     => function ($model) {
                         $check = ($model->status == 1) ? "checked='checked'" : null;
-                        $_csrf = Yii::$app->request->getCsrfToken();
 
                         return "<div class='switchery-xs m0'>
-                                    <input id='status-$model->id' type='checkbox' class='switchery switchStatus' _csrf='$_csrf' $check>
+                                    <input id='status-$model->id' type='checkbox' class='switchery switchStatusER' $check>
                                 </div>";
                     }
                 ],
@@ -114,3 +113,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
 </div>
+<?php $this->registerJs('listenerChangeStatusER();') ?>
