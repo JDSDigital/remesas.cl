@@ -87,14 +87,22 @@ class TransactionController extends Controller
             if ($model->currencyIdFrom == 1){
                $model->amountTo = $model->amountFrom*$model->sellRateValue;
                $model->usedValue = $model->sellRateValue;
+               $model->winnings = ($model->amountTo/$model->sellRateValue) - ($model->amountTo/$model->buyRateValue);
             }
             // Divide
-            else {
+            else if ($model->currencyIdTo == 1){
                 $model->amountTo = $model->amountFrom/$model->sellRateValue;
                 $model->usedValue = $model->sellRateValue;
+                $model->winnings = ($model->amountFrom/$model->buyRateValue) - $model->amountTo;
+            }
+            // For the future...
+            else {
+                $model->amountTo = $model->amountFrom*$model->sellRateValue;
+                $model->usedValue = $model->sellRateValue;
+                $model->winnings = ($model->amountTo/$model->sellRateValue) - ($model->amountTo/$model->buyRateValue);
             }
             
-            //$model->winnings = ($model->amountTo/$model->buyRateValue) - ($model->amountTo/$model->sellRateValue);
+            
             
             /*$er1 = ExchangeRate::find()->where(['and', ['currencyIdFrom' => $load['Transaction']['currencyIdFrom']], ['currencyIdTo' => $load['Transaction']['currencyIdTo']]])->one();
             
@@ -114,10 +122,7 @@ class TransactionController extends Controller
                    $model->usedValue = $er2->buyValue;
                } 
             }*/
-            
-            // Calculate winnings
-           //  
-            
+
             $model->transactionDate = Yii::$app->formatter->asDate($_POST['Transaction']['transactionDate'], 'yyyy-MM-dd');
             
             // Transaction receipt
