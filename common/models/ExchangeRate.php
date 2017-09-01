@@ -35,7 +35,11 @@ class ExchangeRate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['currencyIdFrom', 'currencyIdTo', 'sellValue', 'buyValue'], 'required'],
+            ['currencyIdFrom', 'required', 'message' => 'La moneda de origen no puede estar vacía.'],
+            ['currencyIdTo', 'required', 'message' => 'La moneda de destino no puede estar vacía.'],
+            ['sellValue', 'required', 'message' => 'El valor de venta no puede estar vacío.'],
+            ['buyValue', 'required', 'message' => 'El valor de compra no puede estar vacío.'],
+            ['description', 'required', 'message' => 'La descripción de la moneda no puede estar vacía.'],
             [['currencyIdFrom', 'currencyIdTo', 'created_at', 'updated_at'], 'integer'],
             [['sellValue', 'buyValue'], 'number'],
             [['description'], 'string', 'max' => 255],

@@ -41,7 +41,10 @@ $this->title = 'Geknology';
                 <?= $form->field($model, 'adminBankTransaction')->label("Numero de Deposito o Transferencia") ?>
                 <?= $form->field($model, 'transactionResponseDate')->label("Fecha de la transaccion")->widget(DatePicker::classname(), [
                          'language' => 'es',
-                         'dateFormat' => 'dd-MM-yyyy'
+                         'dateFormat' => 'dd-MM-yyyy',
+                         'clientOptions' => [
+                            'maxDate' => '0'
+                         ]
                 ])?>
                 <?= $form->field($model, 'winnings')->label("Ganancia por esta transaccion") ?>
                 </div>

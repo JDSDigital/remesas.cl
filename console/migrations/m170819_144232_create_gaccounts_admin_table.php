@@ -24,8 +24,8 @@ class m170819_144232_create_gaccounts_admin_table extends Migration
             'lastname'      => $this->string()->notNull()->comment("Lastname."),
             'rut'           => $this->string()->notNull()->comment("Personal id"),
             'email'         => $this->string()->notNull()->comment("Email"),
-            'minAmount'     => $this->integer()->notNull()->comment("Minimal amount for the transactions with this account."),
-            'maxAmount'     => $this->integer()->notNull()->comment("Maximum amount for the transactions with this account."),
+            'minAmount'     => $this->double(2)->notNull()->comment("Minimal amount for the transactions with this account."),
+            'maxAmount'     => $this->double(2)->notNull()->comment("Maximum amount for the transactions with this account."),
             'currencyId'    => $this->integer()->notNull()->comment("Currency of the account."),
             'status'        => $this->boolean()->notNull()->defaultValue(false)->comment("Status. Indicates if the account is available for transactions.")
         ], $tableOptions);

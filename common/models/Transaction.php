@@ -73,7 +73,12 @@ class Transaction extends ActiveRecord
     public function rules()
     {
         return [
-            [['clientId', 'accountClientId', 'amountFrom', 'sellRateValue', 'buyRateValue', 'transactionDate', 'currencyIdFrom', 'currencyIdTo', 'usedValue', 'exchangeId'], 'required'],
+            ['accountClientId', 'required', 'message' => 'Debe seleccionar la cuenta a donde desea que le envíen le hagan la transferencia.'],
+            ['amountFrom', 'required', 'message' => 'Indique el monto de dinero que desea convertir.'],
+            ['transactionDate', 'required', 'message' => 'Indique la fecha en la cual realizó el depósito o transferencia.'],
+            ['exchangeId', 'required', 'message' => 'Seleccione el tipo de cambio que desea realizar.'],
+            ['clientBankTransaction', 'required', 'message' => 'Indique el número del depósito o la transferencia que realizó.'],
+            [['clientId', 'sellRateValue', 'buyRateValue', 'currencyIdFrom', 'currencyIdTo', 'usedValue'], 'required'],
             [['clientId', 'accountClientId', 'accountAdminId', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'created_at', 'updated_at', 'currencyIdFrom', 'currencyIdTo', 'exchangeId'], 'integer'],
             [['amountFrom', 'amountTo', 'sellRateValue', 'buyRateValue', 'winnings', 'usedValue'], 'number'],
             [['observation'], 'string', 'max' => 255],

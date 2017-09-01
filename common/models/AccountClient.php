@@ -35,7 +35,10 @@ class AccountClient extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['clientId', 'bankId', 'number', 'type', 'currencyId','description'], 'required'],
+            ['description', 'required', 'message' => 'Debe escribir una descripción para la cuenta.'],
+            ['bankId', 'required', 'message' => 'Debe seleccionar el banco al que pertenece la cuenta'],
+            ['number', 'required', 'message' => 'El número de la cuenta no puede estar vacío.'],
+            [['clientId', 'type', 'currencyId'], 'required'],
             [['clientId', 'bankId', 'currencyId'], 'integer'],
             [['number', 'type', 'description'], 'string', 'max' => 255],
             [['bankId'], 'exist', 'skipOnError' => true, 'targetClass' => Bank::className(), 'targetAttribute' => ['bankId' => 'id']],

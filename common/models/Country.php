@@ -28,7 +28,7 @@ class Country extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            ['name', 'required', 'message' => 'El nombre del país no puede estar vacío'],
             [['name'], 'string', 'max' => 255],
         ];
     }

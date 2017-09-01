@@ -21,7 +21,8 @@ class AccountAdminSearch extends AccountAdmin
     public function rules()
     {
         return [
-            [['id', 'bankId', 'minAmount', 'maxAmount', 'currencyId', 'status'], 'integer'],
+            [['id', 'bankId', 'currencyId', 'status'], 'integer'],
+            [['minAmount', 'maxAmount'], 'number'],
             [['number', 'type', 'description', 'name', 'lastname', 'rut', 'email', 'bankName', 'currencyName'], 'safe'],
         ];
     }

@@ -28,14 +28,20 @@ $this->title = 'Geknology';
                          'name' => 'startDate',   
                          'language' => 'es',
                          'dateFormat' => 'dd-MM-yyyy',
-                         'value' => $startDate
+                         'value' => $startDate,
+                         'clientOptions' => [
+                            'maxDate' => '0'
+                         ]
                 ]) ?>
                 <?= Html::label("Fin") ?>
                 <?= DatePicker::widget([
                          'name' => 'endDate',   
                          'language' => 'es',
                          'dateFormat' => 'dd-MM-yyyy',
-                         'value' => $endDate
+                         'value' => $endDate,
+                         'clientOptions' => [
+                            'maxDate' => '0'
+                         ]
                 ]) ?>
                 <?= Html::label("Estado") ?>
                 <?= Html::dropDownList('status', $status, [

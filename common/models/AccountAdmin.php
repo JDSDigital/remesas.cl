@@ -41,8 +41,18 @@ class AccountAdmin extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['bankId', 'number', 'type', 'description', 'name', 'lastname', 'rut', 'email', 'minAmount', 'maxAmount', 'currencyId'], 'required'],
-            [['bankId', 'minAmount', 'maxAmount', 'currencyId', 'status'], 'integer'],
+            ['description', 'required', 'message' => 'Debe escribir una descripción para la cuenta.'],
+            ['number', 'required', 'message' => 'El número de la cuenta no puede estar vacío.'],
+            ['name', 'required', 'message' => 'Debe escribir el nombre del dueño de la cuenta.'],
+            ['lastname', 'required', 'message' => 'Debe escribir el apellido del dueño de la cuenta.'],
+            ['rut', 'required', 'message' => 'Debe escribir la identificación personal del dueño de la cuenta.'],
+            ['email', 'required', 'message' => 'Debe escribir el correo electrónico del dueño de la cuenta.'],
+            ['minAmount', 'required', 'message' => 'Introduzca la cantidad mínima para realizar una transacción.'],
+            ['maxAmount', 'required', 'message' => 'Introduzca la cantidad máxima diaria para transacciones en esta cuenta.'],
+            ['email', 'email', 'message' => 'El correo electronico no es válido'],
+            [['bankId', 'type', 'currencyId'], 'required'],
+            [['bankId', 'currencyId', 'status'], 'integer'],
+            [['minAmount', 'maxAmount'], 'number'],
             [['number', 'type', 'description', 'name', 'lastname', 'rut', 'email'], 'string', 'max' => 255],
             [['bankId'], 'exist', 'skipOnError' => true, 'targetClass' => Bank::className(), 'targetAttribute' => ['bankId' => 'id']],
             [['currencyId'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyId' => 'id']],

@@ -32,7 +32,8 @@ class Currency extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'symbol'], 'required'],
+            ['name', 'required', 'message' => 'El nombre del país no puede estar vacío'],
+            ['symbol', 'required', 'message' => 'El símbolo de la moneda no puede estar vacío'],
             [['name', 'symbol'], 'string', 'max' => 255],
         ];
     }

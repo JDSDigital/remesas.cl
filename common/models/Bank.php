@@ -31,7 +31,8 @@ class Bank extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['countryId', 'name'], 'required'],
+            ['name', 'required', 'message' => 'El nombre del banco no puede estar vacío'],
+            [['countryId'], 'required'],
             [['countryId'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['countryId'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['countryId' => 'id']],

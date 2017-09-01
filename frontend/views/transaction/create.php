@@ -45,6 +45,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'transactionDate')->label("Fecha de la transaccion")->widget(DatePicker::classname(), [
                          'language' => 'es',
                          'dateFormat' => 'dd-MM-yyyy',
+                         'clientOptions' => [
+                            'maxDate' => '0'
+                         ]
                 ])?>
                 
                 <?= $form->field($model, 'uploadFile')->fileInput() ?>

@@ -82,6 +82,7 @@ class AccountClientController extends Controller
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'countryId' => 1
                 ]);
             }
         }
@@ -101,8 +102,6 @@ class AccountClientController extends Controller
     {
         $model = $this->findModel($id);
         
-        
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {

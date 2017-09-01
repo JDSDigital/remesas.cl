@@ -34,7 +34,7 @@ $this->title = 'Geknology';
                     <?= $form->field($model, 'bankId')->label("Banco")->dropDownList(
                         ArrayHelper::map(Bank::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
                     ) ?>
-                    <?= $form->field($model, 'type')->dropDownList([
+                    <?= $form->field($model, 'type')->label("Tipo de cuenta")->dropDownList([
                         'ahorro' => 'Ahorro',
                         'corriente'  => 'Corriente',
                     ], ['class' => 'form-control']) ?>

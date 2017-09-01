@@ -25,14 +25,15 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            /*['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\Client', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],*/
-
+            ['name', 'required', 'message' => 'Debe escribir su nombre.'],
+            ['lastName', 'required', 'message' => 'Debe escribir su apellido.'],
+            ['rut', 'required', 'message' => 'Debe escribir su identificación personal.'],
+            ['phone', 'required', 'message' => 'Debe escribir su numero de telefono.'],
+            ['mobile', 'required', 'message' => 'Debe escribir su numero de telefono movil.'],
+            ['email', 'required', 'message' => 'Debe escribir su correo electrónico.'],
+            ['password', 'required', 'message' => 'La clave no debe estar vacia.'],
             [['name', 'lastName', 'rut', 'phone', 'mobile', 'email'], 'trim'],
-            [['name', 'lastName', 'rut', 'phone', 'mobile', 'email', 'password'], 'required'],
-            ['email', 'email'],
+            ['email', 'email', 'message' => 'El correo electronico no es válido'],
             [['name', 'lastName', 'rut', 'phone', 'mobile', 'email'], 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\Client', 'message' => 'This email address has already been taken.'],
 
