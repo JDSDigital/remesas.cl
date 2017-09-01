@@ -59,6 +59,9 @@ class TransactionSearch extends Transaction
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 20,
+             ],
         ]);
         
         $dataProvider->setSort([
@@ -163,6 +166,51 @@ class TransactionSearch extends Transaction
             $q->where('c.name LIKE "%' . $this->clientName . '%"');
         }]);*/
 
+        return $dataProvider;
+    }
+    
+    public function searchReport($params){
+        $query = Transaction::find();
+        $query->joinWith(['currencyFrom']);
+        $query->joinWith(['currencyTo']);
+        $query->joinWith(['accountClient']);
+        $query->joinWith(['client']);
+        $query->joinWith(['exchangeRate']);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 20,
+             ],
+        ]);
+        
+        $query->andFilterWhere(['>=', 'gtransactions.created_at', $params['startDate']]);
+        $query->andFilterWhere(['<', 'gtransactions.created_at', $params['endDate']+86400]);
+        
+        if ($params['status'] != ""){
+            $query->andFilterWhere(['gtransactions.status' => $params['status']]);
+        }
+        
+        $query->joinWith(['accountClient' => function ($q) {
+            $q->where('ac.description LIKE "%' . $this->accountClientDescription . '%"');
+        }]);
+        
+        // filter by currency name
+        $query->joinWith(['currencyFrom' => function ($q) {
+            $q->where('cf.name LIKE "%' . $this->currencyNameFrom . '%"');
+        }]);
+        
+        // filter by currency name
+        $query->joinWith(['currencyTo' => function ($q) {
+            $q->where('ct.name LIKE "%' . $this->currencyNameTo . '%"');
+        }]);
+        
+        $query->joinWith(['exchangeRate' => function ($q) {
+            $q->where('gexchange_rates.description LIKE "%' . $this->exchangeRateDescription . '%"');
+        }]);
+        
         return $dataProvider;
     }
 }

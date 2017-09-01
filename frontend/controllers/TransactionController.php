@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use Yii;
+use common\models\AccountAdmin;
 use common\models\ExchangeRate;
 use common\models\Transaction;
 use common\models\TransactionSearch;
@@ -116,6 +117,58 @@ class TransactionController extends Controller
                 $model->winnings = ($model->amountTo/$model->sellRateValue) - ($model->amountTo/$model->buyRateValue);
             }
             
+            // Look for the account the user tranfered the money to and update the available amount of money
+            $accountAdmin = AccountAdmin::find()->where(['id' => $load['Transaction']['accountAdminId']])->one();
+            
+            // If the account "has" the money... continue
+            if ($accountAdmin->maxAmount >= $model->amountTo){
+                $model->transactionDate = Yii::$app->formatter->asDate($_POST['Transaction']['transactionDate'], 'yyyy-MM-dd');
+            
+                // Transaction receipt
+                $upload_file = UploadedFile::getInstance($model, 'uploadFile');
+    
+                if (!empty($upload_file) && $upload_file->size !== 0){
+                    $model->uploadFile = $upload_file;
+                    
+                    if ($model->validate()){
+                        if ($model->save()){
+                            $upload_file->saveAs('uploads/'.$model->id.'-'.date('YmdHis').'.'.$upload_file->extension);
+                            
+                            // "Substract" the amountTo from the account
+                            $accountAdmin->maxAmount = $accountAdmin->maxAmount - $model->amountTo;
+                            $accountAdmin->save();
+                            
+                            return $this->redirect(['index']);
+                        }
+                        else {
+                            Yii::$app->getSession()->setFlash('error', 'Ha ocurrido un error. Por favor, intente de nuevo.');
+                            return $this->render('create', [
+                                'model' => $model,
+                            ]);
+                        }
+                    }
+                    else {
+                        Yii::$app->getSession()->setFlash('error', 'Ha ocurrido un error. Por favor, intente de nuevo.');
+                        return $this->render('create', [
+                            'model' => $model,
+                        ]);
+                    }
+                }
+                else {
+                    Yii::$app->getSession()->setFlash('error', 'Debe agregar el comprobante de la transacción.');
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
+                } 
+            }
+            else {
+                Yii::$app->getSession()->setFlash('error','La cantidad solicitada no se encuentra disponible. Por favor pruebe con un monto más bajo.');
+                
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+            
             /*$er1 = ExchangeRate::find()->where(['and', ['currencyIdFrom' => $load['Transaction']['currencyIdFrom']], ['currencyIdTo' => $load['Transaction']['currencyIdTo']]])->one();
             
             if ($er1 != null){
@@ -133,30 +186,7 @@ class TransactionController extends Controller
                    $model->amountTo = $model->amountFrom/$model->buyRateValue;
                    $model->usedValue = $er2->buyValue;
                } 
-            }*/
-
-            $model->transactionDate = Yii::$app->formatter->asDate($_POST['Transaction']['transactionDate'], 'yyyy-MM-dd');
-            
-            // Transaction receipt
-            $upload_file = UploadedFile::getInstance($model, 'uploadFile');
-
-            if (!empty($upload_file) && $upload_file->size !== 0){
-                $model->uploadFile = $upload_file;
-                
-                if ($model->validate()){
-                    if ($model->save()){
-                        $upload_file->saveAs('uploads/'.$model->id.'-'.date('YmdHis').'.'.$upload_file->extension);
-                        
-                        return $this->redirect(['index']);
-                    }
-                }
-            }
-            else {
-                Yii::$app->getSession()->setFlash('error', 'Debe agregar el comprobante de la transacción.');
-                return $this->render('create', [
-                    'model' => $model,
-                ]);
-            }         
+            }*/    
         }
         else {
             return $this->render('create', [

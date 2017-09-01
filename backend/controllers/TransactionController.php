@@ -147,4 +147,70 @@ class TransactionController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    /**
+    *   Calculate winnings report in base currency
+    **/
+    public function actionWinnings(){
+        
+        $searchModel = new TransactionSearch();
+        
+        
+        if (Yii::$app->request->post()){
+            $load = Yii::$app->request->post();
+            
+            // Check data provided
+            if (!isset($load['startDate'])){
+                $load['startDate'] = "";
+                $startDate = "";
+            }
+            
+            $startDate = $load['startDate'];
+            
+            if (!isset($load['endDate'])){
+                $load['endDate'] = "";
+                $endDate = "";
+            }
+            
+            $endDate = $load['endDate'];
+            
+            $status = $load['status'];
+            
+            if ($load['endDate'] < $load['startDate']){
+                Yii::$app->getSession()->setFlash('error','La fecha de inicio no puede ser mayor a la de fin.');
+                $dataProvider = $searchModel->searchReport(['startDate' => date('d-M-yyyy'), 'endDate' => date('d-M-yyyy'), 'status' => ""]); 
+            }
+            else {
+                $startDate = Yii::$app->formatter->asTimestamp($load['startDate'], 'dd-MM-yyyy');
+                $endDate = Yii::$app->formatter->asTimestamp($load['endDate'], 'dd-MM-yyyy');
+
+                $dataProvider = $searchModel->searchReport(['startDate' => $startDate, 'endDate' => $endDate, 'status' => $status]);
+                
+                // Total winnings
+                $total = 0;
+                foreach ($dataProvider->models as $item) {
+                    if ($item['winnings'] != ""){
+                        $total += $item['winnings'];
+                    }
+                }
+            }
+        }
+        else {
+           $dataProvider = $searchModel->searchReport(['startDate' => date('d-M-yyyy'), 'endDate' => date('d-M-yyyy'), 'status' => ""]);
+           $startDate = "";
+           $endDate = "" ;
+           $status = "";
+           $total = "";
+        }
+        
+        return $this->render('winnings', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+                'status' => $status,
+                'total' => $total
+            ]);
+        
+    }
 }

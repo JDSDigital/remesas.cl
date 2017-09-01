@@ -95,6 +95,7 @@ AppAsset::register($this);
 									['label' => '<i class="icon-user"></i>Usuarios', 'url' => ['//gUsers/users/index']],
                                     ['label' => '<i class="icon-user"></i>Clientes', 'url' => ['//client/index']],
                                     ['label' => '<i class="icon-user"></i>Transacciones', 'url' => ['//transaction/index']],
+                                    ['label' => '<i class="icon-user"></i>Reporte de ganancias', 'url' => ['//transaction/winnings']],
                                     ['label' => '<i class="icon-user"></i>Tasas de cambio', 'url' => ['//exchange-rate/index']],
                                     ['label' => '<i class="icon-user"></i>Cuentas bancarias', 'url' => ['//account-admin/index']],
                                     //['label' => '<i class="icon-user"></i>Países', 'url' => ['//country/index']],
