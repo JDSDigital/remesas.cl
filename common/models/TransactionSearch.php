@@ -211,6 +211,8 @@ class TransactionSearch extends Transaction
             $q->where('gexchange_rates.description LIKE "%' . $this->exchangeRateDescription . '%"');
         }]);
         
+        /*echo  $query->createCommand()->getRawSql();
+        die();*/
         return $dataProvider;
     }
 }

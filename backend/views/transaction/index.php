@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\grid\ActionColumn;
+use common\models\Refund;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -101,6 +102,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 ],
                 [
+                    'label'     => 'Fecha Cierre',
+                    'attribute' => 'transactionResponseDate',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                        return Yii::$app->formatter->asDate($model->transactionResponseDate, 'dd-MM-yyyy');
+                    },
+                ],
+                [
                     'label'     => 'Estado',
                     'attribute' => 'status',
                     'format'    => 'raw',
@@ -113,6 +122,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                         $check = "Realizada";
                                     
                                     return Html::a($check, ['update', 'id' => $model->id]);
+                    },
+                ],
+                [
+                    'label'     => 'Solicitud de devolución',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                                    // Check if there's a refunding petition made
+                                    $refund = Refund::find()->where(['transactionId' => $model->id])->one();
+                                    
+                                    if ($refund){
+                                       return Html::a('Si', ['/refund/update', 'id'=>$refund->id],['title'=>'Ver solicitud de devolucion']);   
+                                    }
+                                    else 
+                                        return "No";
                     },
                 ],
                 [

@@ -120,19 +120,6 @@ class TransactionController extends Controller
     }
 
     /**
-     * Deletes an existing Transaction model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
      * Finds the Transaction model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
@@ -154,7 +141,7 @@ class TransactionController extends Controller
     public function actionWinnings(){
         
         $searchModel = new TransactionSearch();
-        
+        $total = "";
         
         if (Yii::$app->request->post()){
             $load = Yii::$app->request->post();
@@ -176,14 +163,14 @@ class TransactionController extends Controller
             
             $status = $load['status'];
             
-            if ($load['endDate'] < $load['startDate']){
+            $startDate = Yii::$app->formatter->asTimestamp($load['startDate'], 'dd-MM-yyyy');
+            $endDate = Yii::$app->formatter->asTimestamp($load['endDate'], 'dd-MM-yyyy');
+            
+            if ($endDate < $startDate){
                 Yii::$app->getSession()->setFlash('error','La fecha de inicio no puede ser mayor a la de fin.');
                 $dataProvider = $searchModel->searchReport(['startDate' => date('d-M-yyyy'), 'endDate' => date('d-M-yyyy'), 'status' => ""]); 
             }
             else {
-                $startDate = Yii::$app->formatter->asTimestamp($load['startDate'], 'dd-MM-yyyy');
-                $endDate = Yii::$app->formatter->asTimestamp($load['endDate'], 'dd-MM-yyyy');
-
                 $dataProvider = $searchModel->searchReport(['startDate' => $startDate, 'endDate' => $endDate, 'status' => $status]);
                 
                 // Total winnings

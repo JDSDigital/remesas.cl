@@ -41,7 +41,6 @@ class Transaction extends ActiveRecord
     const STATUS_PENDING = 0;
     const STATUS_CANCELLED = 1;
     const STATUS_DONE = 2;
-    const STATUS_REFUNDED = 3;
     public $uploadFile;
     
     /**
@@ -88,7 +87,7 @@ class Transaction extends ActiveRecord
             [['clientId'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['clientId' => 'id']],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
             ['status', 'default', 'value' => self::STATUS_PENDING],
-            ['status', 'in', 'range' => [self::STATUS_PENDING, self::STATUS_CANCELLED, self::STATUS_DONE, self::STATUS_REFUNDED]],
+            ['status', 'in', 'range' => [self::STATUS_PENDING, self::STATUS_CANCELLED, self::STATUS_DONE]],
             [['currencyIdFrom'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdFrom' => 'id']],
             [['currencyIdTo'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdTo' => 'id']],
             [['exchangeId'], 'exist', 'skipOnError' => true, 'targetClass' => ExchangeRate::className(), 'targetAttribute' => ['exchangeId' => 'id']],

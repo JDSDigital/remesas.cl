@@ -18,6 +18,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            [                      
+                'label' => 'Fecha de solicitud',
+                'value' => Yii::$app->formatter->asDate($model->created_at, 'dd-MM-yyyy'),
+            ],
+            [
+                'label' => 'Transacción',
+                'value' => Html::a("# ".$model->transactionId, ['/transaction/view', 'id' => $model->id]),
+                'format' => 'html'
+            ],
+            [
+                'label' => 'Motivos',
+                'value' => $model->motivation,
+            ],
             [
                 'label'     => 'Estado',
                 'value'     => function ($model) {
@@ -32,18 +45,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
             ],
             [                      
-                'label' => 'Fecha',
-                'value' => Yii::$app->formatter->asDate($model->created_at, 'dd-MM-yyyy'),
+                'label' => 'Fecha de respuesta',
+                'value' => Yii::$app->formatter->asDate($model->responseDate, 'dd-MM-yyyy'),
             ],
             [
-                'label' => 'Transacción',
-                'value' => Html::a("# ".$model->transactionId, ['/transaction/view', 'id' => $model->id]),
-                'format' => 'html'
-            ],
-            [
-                'label' => 'Motivos',
-                'value' => $model->motivation,
-            ]           
+                'label' => 'Observación',
+                'value' => $model->observation,
+            ],       
         ],
     ]) ?>
 
