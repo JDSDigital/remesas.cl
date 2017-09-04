@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\grid\ActionColumn;
+use common\models\Refund;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -119,11 +120,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class'          => ActionColumn::className(),
-                    'template'       => '{view}',
+                    'template'       => '{view} {refund}',
                     'contentOptions' => ['style' => 'width: 80px;min-width: 80px'],
                     'buttons'=>[
                         'view' => function ($url, $model, $key) {
                             return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['view', 'id'=>$model->id],['title'=>'Ver detalle de transaccion']);
+                        },
+                        'refund' => function ($url, $model, $key) {
+                            // Check if this transaction has a refund petition associated
+                            if ($model->status == 0){
+                               $refund = Refund::find()->where(['transactionId' => $model->id])->one();
+                               
+                               if ($refund){
+                                   return Html::a('<span class="glyphicon glyphicon-usd"></span>', ['/refund/view', 'id'=>$refund->id],['title'=>'Ver solicitud de devolucion']);   
+                               }
+                               else {
+                                   return Html::a('<span class="glyphicon glyphicon-usd"></span>', ['/refund/create', 't'=>$model->id],['title'=>'Solicitar devolucion']); 
+                               }
+                            }
                         },
                      ], 
                 ],

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "grefunds".
@@ -22,7 +23,7 @@ use Yii;
  * @property Transaction $transaction
  * @property User $user
  */
-class Refund extends \yii\db\ActiveRecord
+class Refund extends ActiveRecord
 {
     const STATUS_PENDING = 0;
     const STATUS_DISMISSED = 1;
@@ -35,6 +36,22 @@ class Refund extends \yii\db\ActiveRecord
     {
         return 'grefunds';
     }
+    
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class'      => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ]
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -42,7 +59,7 @@ class Refund extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['clientId', 'transactionId', 'motivation', 'status'], 'required'],
+            [['clientId', 'transactionId', 'motivation'], 'required'],
             [['clientId', 'transactionId', 'status', 'created_at', 'updated_at', 'userId'], 'integer'],
             [['responseDate'], 'safe'],
             [['motivation', 'observation'], 'string', 'max' => 255],
@@ -50,7 +67,7 @@ class Refund extends \yii\db\ActiveRecord
             [['transactionId'], 'exist', 'skipOnError' => true, 'targetClass' => Transaction::className(), 'targetAttribute' => ['transactionId' => 'id']],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
             ['status', 'default', 'value' => self::STATUS_PENDING],
-            ['status', 'in', 'range' => [self::STATUS_PENDING, self::STATUS_CANCELLED, self::STATUS_DONE]],
+            ['status', 'in', 'range' => [self::STATUS_PENDING, self::STATUS_DISMISSED, self::STATUS_DONE]],
         ];
     }
 
