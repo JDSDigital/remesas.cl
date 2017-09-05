@@ -36,8 +36,8 @@ class TransactionController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['admin'],
-                    ],
+                        'roles' => ['admin', 'root'],
+                    ]
                 ],
             ],
         ];

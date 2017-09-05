@@ -30,7 +30,7 @@ class UsersController extends Controller
                     [
                         'actions' => ['index', 'profile', 'create', 'update', 'delete', 'logout', 'status'],
                         'allow'   => true,
-                        'roles'   => ['admin'],
+                        'roles'   => ['admin', 'root'],
                     ],
                 ],
             ],

@@ -36,8 +36,8 @@ $this->title = 'Geknology';
                         '2' => 'Realizada'
                     ], ['class' => 'form-control']) ?>
                 <div class="hideField">
-                <?= $form->field($model, 'usedValue')->label("Tasa")->textInput(['autofocus' => true]) ?>
-                <?= $form->field($model, 'amountTo')->label("Monto convertido") ?>
+                <?= $form->field($model, 'usedValue')->label("Tasa")->textInput((Yii::$app->user->identity->role != 'root') ? ['disabled' => 'true'] : []) ?>
+                <?= $form->field($model, 'amountTo')->label("Monto convertido")->textInput((Yii::$app->user->identity->role != 'root') ? ['disabled' => 'true'] : []) ?>
                 <?= $form->field($model, 'adminBankTransaction')->label("Numero de Deposito o Transferencia") ?>
                 <?= $form->field($model, 'transactionResponseDate')->label("Fecha de la transaccion")->widget(DatePicker::classname(), [
                          'language' => 'es',

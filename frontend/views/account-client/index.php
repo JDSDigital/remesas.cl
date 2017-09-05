@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'type',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->type, ['update', 'id' => $model->id]);
+                        return Html::a(ucfirst($model->type), ['update', 'id' => $model->id]);
                     },
                 ],
                 [

@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\data\ArrayDataProvider;
 
 /**
  * ClientController implements the CRUD actions for Client model.
@@ -36,7 +37,7 @@ class ClientController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['admin'],
+                        'roles' => ['admin', 'root'],
                     ],
                 ],
             ],
@@ -126,5 +127,34 @@ class ClientController extends Controller
         }
 
         return null;
+    }
+    
+    /**
+    * Get Client Bank Accounts
+    **/
+    public function actionAccounts($id, $acc = null){
+        $model = Client::findOne($id);
+        
+        // Get this account
+        if ($acc != null){
+            $accounts = $model->getAccountClient($acc);
+        }
+        // Get all accounts
+        else {
+            $accounts = $model->getAccountClient();
+        }
+        
+        $provider = new ArrayDataProvider([
+            'allModels' => $accounts,
+            'pagination' => [
+                'pageSize' => 10,
+            ]
+        ]);
+        
+        return $this->render('accounts', [
+            'model' => $model,
+            'accounts' => $accounts,
+            'dataProvider' => $provider,
+        ]);
     }
 }

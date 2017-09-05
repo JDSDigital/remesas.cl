@@ -36,8 +36,8 @@ class AccountAdminController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['admin'],
-                    ],
+                        'roles' => ['admin', 'root'],
+                    ]
                 ],
             ],
         ];

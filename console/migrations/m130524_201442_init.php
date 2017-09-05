@@ -32,6 +32,14 @@ class m130524_201442_init extends Migration
             'role'          => 'admin',
             'auth_key'      => '8yodFzc4J0-0efBA6uJaymkejpVS6qlg',
             'password_hash' => '$2y$13$anHn/UT2OXHjJp9Yt99ct.RjfMCPsHLvPPK.DjaTEc0dcp0yRPu4K',
+            'email'         => 'email@email.com',
+        ]);
+        
+        $this->insert('{{%gsystem_users}}', [
+            'username'      => 'Root',
+            'role'          => 'root',
+            'auth_key'      => '8yodFzc4J0-0efBA6uJaymkejpVS6qlg',
+            'password_hash' => '$2y$13$anHn/UT2OXHjJp9Yt99ct.RjfMCPsHLvPPK.DjaTEc0dcp0yRPu4K',
             'email'         => 'jdsosa@gmail.com',
         ]);
     }

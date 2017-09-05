@@ -273,4 +273,31 @@ class Client extends ActiveRecord implements IdentityInterface
     public function getDisplayName(){
         return $this->name." ".$this->lastName;
     }
+    
+     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccountClient($acc = null){
+        
+        $connection = Yii::$app->getDb();
+        
+        if ($acc != null){
+            $command = $connection->createCommand("
+                SELECT b.name as bank, ac.*  
+                FROM gaccounts_clients ac 
+                LEFT JOIN gbanks b ON (ac.bankId = b.id)
+                WHERE ac.clientId = ".$this->id." 
+                AND ac.id = ".$acc);
+        }
+        else {
+            $command = $connection->createCommand("
+                SELECT b.name as bank, ac.*  
+                FROM gaccounts_clients ac 
+                LEFT JOIN gbanks b ON (ac.bankId = b.id)
+                WHERE ac.clientId = ".$this->id);
+        }
+        
+        $result = $command->queryAll();
+        return $result;
+    }
 }

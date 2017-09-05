@@ -88,24 +88,33 @@ AppAsset::register($this);
 					<div class="sidebar-category sidebar-category-visible">
 						<div class="category-content p0">
 							<?php
-							(Yii::$app->user->identity->role == 'admin')
-								? $items = [
-									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['//site/index']],
-									['label' => '<i class="icon-wrench"></i>Sistema', 'url' => ['//gSystem/system/index']],
-									['label' => '<i class="icon-user"></i>Usuarios', 'url' => ['//gUsers/users/index']],
-                                    ['label' => '<i class="icon-user"></i>Clientes', 'url' => ['//client/index']],
-                                    ['label' => '<i class="icon-user"></i>Transacciones', 'url' => ['//transaction/index']],
-                                    ['label' => '<i class="icon-user"></i>Reporte de ganancias', 'url' => ['//transaction/winnings']],
-                                    ['label' => '<i class="icon-user"></i>Tasas de cambio', 'url' => ['//exchange-rate/index']],
-                                    ['label' => '<i class="icon-user"></i>Cuentas bancarias', 'url' => ['//account-admin/index']],
-                                    //['label' => '<i class="icon-user"></i>Países', 'url' => ['//country/index']],
-                                    ['label' => '<i class="icon-user"></i>Bancos', 'url' => ['//bank/index']],
-                                    //['label' => '<i class="icon-user"></i>Monedas', 'url' => ['//currency/index']],
-								]
-								: $items = [
-									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['site/index']],
-                                    ['label' => '<i class="icon-user"></i>Tasas de cambio', 'url' => ['//exchange-rate/index']],
-								];
+                            
+                                if (Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'root'){
+                                    $items = [
+    									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['//site/index']],
+    									['label' => '<i class="icon-wrench"></i>Sistema', 'url' => ['//gSystem/system/index']],
+    									['label' => '<i class="icon-user"></i>Usuarios', 'url' => ['//gUsers/users/index']],
+                                        ['label' => '<i class="icon-user"></i>Clientes', 'url' => ['//client/index']],
+                                        ['label' => '<i class="icon-user"></i>Transacciones', 'url' => ['//transaction/index']],
+                                        ['label' => '<i class="icon-user"></i>Reporte de ganancias', 'url' => ['//transaction/winnings']],
+                                        ['label' => '<i class="icon-user"></i>Tasas de cambio', 'url' => ['//exchange-rate/index']],
+                                        ['label' => '<i class="icon-user"></i>Cuentas bancarias', 'url' => ['//account-admin/index']],
+                                        //['label' => '<i class="icon-user"></i>Países', 'url' => ['//country/index']],
+                                        ['label' => '<i class="icon-user"></i>Bancos', 'url' => ['//bank/index']],
+                                        //['label' => '<i class="icon-user"></i>Monedas', 'url' => ['//currency/index']],
+    								];
+                                    
+                                    if (Yii::$app->user->identity->role == 'root'){
+                                        array_push($items, ['label' => '<i class="icon-user"></i>Países', 'url' => ['//country/index']], 
+                                                             ['label' => '<i class="icon-user"></i>Monedas', 'url' => ['//currency/index']]);
+                                    }  
+                                }
+                                else {
+                                    $items = [
+    									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['site/index']],
+                                        ['label' => '<i class="icon-user"></i>Tasas de cambio', 'url' => ['//exchange-rate/index']],
+    								];
+                                }
                             echo Menu::widget([
                                 'items'        => $items,
                                 'options'      => ['class' => 'navigation navigation-main navigation-accordion'],

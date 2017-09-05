@@ -45,7 +45,7 @@ $this->title = 'Geknology';
                 ]) ?>
                 <?= Html::label("Estado") ?>
                 <?= Html::dropDownList('status', $status, [
-                                                            ''  => 'Seleccionar',
+                                                            ''  => 'Todas',
                                                             '0' => 'Pendiente',
                                                             '1' => 'Anulada',
                                                             '2' => 'Realizada'

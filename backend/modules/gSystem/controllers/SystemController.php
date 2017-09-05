@@ -29,7 +29,7 @@ class SystemController extends Controller
                     [
                         'actions' => ['index', 'logout'],
                         'allow'   => true,
-                        'roles'   => ['admin'],
+                        'roles'   => ['admin', 'root'],
                     ],
                 ],
             ],

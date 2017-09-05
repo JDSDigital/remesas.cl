@@ -71,6 +71,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class'          => ActionColumn::className(),
                 'template'       => '{transactions} {accounts}',
                 'contentOptions' => ['style' => 'width: 80px;min-width: 80px'],
+                'buttons'=>[
+                    'accounts' => function ($url, $model, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-user"></span>', ['accounts', 'id'=>$model->id],['title'=>'Ver cuentas bancarias del usuario']);
+                    }
+                 ],
             ],
         ],
     ]); ?>

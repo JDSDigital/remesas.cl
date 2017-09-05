@@ -29,10 +29,10 @@ $this->title = 'Geknology';
             <div class="col-md-5 ml20">
                    <?php $form = ActiveForm::begin(['id' => 'form-exchange-rate']); ?>
                     <?= $form->field($model, 'description')->label("Descripcion")->textInput(['autofocus' => true]) ?>
-                    <?= $form->field($model, 'currencyIdFrom')->label("")->dropDownList(
+                    <?= $form->field($model, 'currencyIdFrom')->label("De")->dropDownList(
                         ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
                     ) ?>
-                    <?= $form->field($model, 'currencyIdTo')->label("")->dropDownList(
+                    <?= $form->field($model, 'currencyIdTo')->label("A")->dropDownList(
                         ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
                     ) ?>
                     <?= $form->field($model, 'sellValue')->label("Tasa para venta") ?>

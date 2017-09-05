@@ -140,8 +140,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class'          => ActionColumn::className(),
-                    'template'       => '{update}',
+                    'template'       => '{update} {receipt} {account_data}',
                     'contentOptions' => ['style' => 'width: 80px;min-width: 80px'],
+                    'buttons'=>[
+                        'receipt' => function ($url, $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['receipt', 'id'=>$model->id],['title'=>'Ver recibo de la transaccion']);
+                        },
+                        'account_data' => function ($url, $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-user"></span>', ['/client/accounts', 'id'=>$model->clientId, 'acc' => $model->accountClientId],['title'=>'Ver datos de la cuenta bancaria del usuario']);
+                        }
+                     ], 
                 ],
             ],
         ]); ?>
