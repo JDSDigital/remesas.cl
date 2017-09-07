@@ -132,7 +132,7 @@ class TransactionController extends Controller
                     
                     if ($model->validate()){
                         if ($model->save()){
-                            $upload_file->saveAs('uploads/'.$model->id.'-'.date('YmdHis').'.'.$upload_file->extension);
+                            $upload_file->saveAs('uploads/t-'.$model->id.'.'.$upload_file->extension);
                             
                             // "Substract" the amountTo from the account
                             $accountAdmin->maxAmount = $accountAdmin->maxAmount - $model->amountTo;

@@ -34,6 +34,16 @@ $(function () {
     else {
       $('.hideField').show();
     }
+    
+    // Modal  behavior for showing the transaction receipt
+    $("#modalButton").click(function(){
+        var options = {
+            title: 'Recibo de Transacción #'+$(this).attr('t'),
+            text: '<img width="400" src="'+$(this).attr('route')+'">',
+            html: true
+        };
+        swal(options);
+    });
 });
 
 function listenerChangeStatus(){

@@ -91,7 +91,7 @@ class Transaction extends ActiveRecord
             [['currencyIdFrom'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdFrom' => 'id']],
             [['currencyIdTo'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdTo' => 'id']],
             [['exchangeId'], 'exist', 'skipOnError' => true, 'targetClass' => ExchangeRate::className(), 'targetAttribute' => ['exchangeId' => 'id']],
-            [['uploadFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['uploadFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg'],
         ];
     }
 
