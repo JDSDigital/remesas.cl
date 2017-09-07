@@ -37,6 +37,7 @@ return [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'zAyzmQadaHjjXHPsnlkV',
             'csrfParam' => '_frontendCSRF',
+            'baseUrl' => '/remesas.cl',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
