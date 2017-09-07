@@ -39,8 +39,9 @@ $(function () {
     $("#modalButton").click(function(){
         var options = {
             title: 'Recibo de Transacción #'+$(this).attr('t'),
-            text: '<img width="400" src="'+$(this).attr('route')+'">',
-            html: true
+            text: '<img width="700" src="'+$(this).attr('route')+'">',
+            html: true,
+            customClass: 'modal-lg',
         };
         swal(options);
     });
