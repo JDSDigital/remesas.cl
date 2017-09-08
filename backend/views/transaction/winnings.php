@@ -31,7 +31,8 @@ $this->title = 'Geknology';
                          'value' => $startDate,
                          'clientOptions' => [
                             'maxDate' => '0'
-                         ]
+                         ],
+                         'options' => ['class' => 'form-control'],
                 ]) ?>
                 <?= Html::label("Fin") ?>
                 <?= DatePicker::widget([
@@ -41,7 +42,8 @@ $this->title = 'Geknology';
                          'value' => $endDate,
                          'clientOptions' => [
                             'maxDate' => '0'
-                         ]
+                         ],
+                         'options' => ['class' => 'form-control'],
                 ]) ?>
                 <?= Html::label("Estado") ?>
                 <?= Html::dropDownList('status', $status, [
@@ -54,7 +56,7 @@ $this->title = 'Geknology';
                 ?>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Generar reporte', ['class' => 'btn btn-primary', 'name' => 'form-transaction-button']) ?>
+                    <?= Html::submitButton('Generar reporte', ['class' => 'btn btn-primary mt10', 'name' => 'form-transaction-button']) ?>
                 </div>
                 <?php ActiveForm::end(); ?>
             </div>

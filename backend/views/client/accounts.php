@@ -8,8 +8,8 @@ use yii\grid\GridView;
 /* @var $model common\models\Client */
 
 $this->title = "Cuentas de ".$model->name." ".$model->lastName;
-$this->params['breadcrumbs'][] = ['label' => 'Clients', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => 'Clients', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="client-view">
 

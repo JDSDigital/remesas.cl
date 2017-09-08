@@ -203,3 +203,6 @@ a:hover, a:focus {
 .content-group > legend {
     font-size: 12px !important;
 }
+select.form-control:not([size]):not([multiple]) {
+    height: 35px;
+}

@@ -10,7 +10,7 @@ use common\models\Refund;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Geknology';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-index panel">
     <div class="page-header panel-heading mb0">

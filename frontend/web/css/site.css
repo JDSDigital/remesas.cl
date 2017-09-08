@@ -123,3 +123,6 @@ a.desc:after {
     -ms-flex-direction: row;
     -webkit-flex-direction: row;
 }
+select.form-control:not([size]):not([multiple]) {
+    height: 35px;
+}

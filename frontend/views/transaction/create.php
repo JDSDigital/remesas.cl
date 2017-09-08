@@ -41,14 +41,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'accountClientId')->label("Banco para recibir la transaccion")->dropDownList(
                     ArrayHelper::map(AccountClient::find()->orderBy('description')->all(), 'id', 'description'), ['class' => 'form-control']
                 )?>
-                
+
                 <?= $form->field($model, 'transactionDate')->label("Fecha de la transaccion")->widget(DatePicker::classname(), [
-                         'language' => 'es',
-                         'dateFormat' => 'dd-MM-yyyy',
-                         'clientOptions' => [
-                            'maxDate' => '0'
-                         ]
-                ])?>
+                    'language'      => 'es',
+                    'dateFormat'    => 'dd-MM-yyyy',
+                    'clientOptions' => [
+                        'maxDate' => '0',
+                    ],
+                    'options'       => [
+                        'class' => 'form-control',
+                    ],
+                ]) ?>
                 
                 <?= $form->field($model, 'uploadFile')->fileInput() ?>
                 

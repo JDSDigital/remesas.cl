@@ -37,6 +37,9 @@ AppAsset::register($this);
             'options'      => [
                 'class' => 'navbar bg-slate-800 navbar-fixed-top',
             ],
+			'innerContainerOptions' => [
+				'class' => 'ml20 mr10',
+			],
         ]);
         if (Yii::$app->user->isGuest) {
             $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
