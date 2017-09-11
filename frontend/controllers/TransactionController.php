@@ -118,10 +118,14 @@ class TransactionController extends Controller
             }
             
             // Look for the account the user tranfered the money to and update the available amount of money
-            $accountAdmin = AccountAdmin::find()->where(['id' => $load['Transaction']['accountAdminId']])->one();
+            //$accountAdmin = AccountAdmin::find()->where(['id' => $load['Transaction']['accountAdminId']])->one();
+            
+            // Look for the available amount of money in every account of the To 
+            $accountAdmin = new AccountAdmin();
+            $accounts = $accountAdmin->getAccountsAvailableMoney($model->amountTo);
             
             // If the account "has" the money... continue
-            if ($accountAdmin->maxAmount >= $model->amountTo){
+            if ($accounts > 0){
                 $model->transactionDate = Yii::$app->formatter->asDate($_POST['Transaction']['transactionDate'], 'yyyy-MM-dd');
             
                 // Transaction receipt
@@ -135,8 +139,8 @@ class TransactionController extends Controller
                             $upload_file->saveAs('uploads/t-'.$model->id.'.'.$upload_file->extension);
                             
                             // "Substract" the amountTo from the account
-                            $accountAdmin->maxAmount = $accountAdmin->maxAmount - $model->amountTo;
-                            $accountAdmin->save();
+                            //$accountAdmin->maxAmount = $accountAdmin->maxAmount - $model->amountTo;
+                            //$accountAdmin->save();
                             
                             return $this->redirect(['index']);
                         }

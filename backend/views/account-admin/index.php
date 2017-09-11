@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\grid\ActionColumn;
 
+use common\models\Transaction;
+
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\AccountAdminSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -89,6 +91,22 @@ $this->title = 'Geknology';
                     'format'    => 'raw',
                     'value'     => function ($model) {
                         return Html::a($model->maxAmount, ['update', 'id' => $model->id]);
+                    },
+                ],
+                [
+                    'label'     => 'Cantidad Restante',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                                // Calculate de available amount for this account
+                                $transaction = new Transaction();
+                                $total = $transaction->getTransactionSumByAA($model->id);
+                                
+                                if ($total['total'] != null)
+                                    $rest = $model->maxAmount - $total['total'];
+                                else 
+                                    $rest = $model->maxAmount;
+                        
+                                return Html::a($rest, ['update', 'id' => $model->id]);
                     },
                 ],
                 [

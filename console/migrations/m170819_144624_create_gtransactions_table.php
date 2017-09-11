@@ -17,7 +17,8 @@ class m170819_144624_create_gtransactions_table extends Migration
             'id'                        => $this->primaryKey(),
             'clientId'                  => $this->integer()->notNull()->comment("Client who asks for the transaction"),
             'accountClientId'           => $this->integer()->notNull()->comment("Account involved in the transaction."),
-            'accountAdminId'            => $this->integer()->null()->comment("Account involved in the transaction."),
+            'accountAdminIdTo'          => $this->integer()->null()->comment("Admin Bank Account the client transfered the money to."),
+            'accountAdminIdFrom'        => $this->integer()->null()->comment("Admin Bank Account the admin transfered the money back to the client."),
             'amountFrom'                => $this->double(2)->notNull()->comment("Transfered amount of money to be converted"),
             'amountTo'                  => $this->double(2)->null()->comment("Amount of money after being converted and transfered to the client."),
             'currencyIdFrom'            => $this->integer()->notNull()->comment("Currency Id From"),
@@ -59,9 +60,9 @@ class m170819_144624_create_gtransactions_table extends Migration
         
         // Admin's bank account
         $this->addForeignKey(
-            'fk-gtransactions-accountAdminId',
+            'fk-gtransactions-accountAdminIdTo',
             'gtransactions',
-            'accountAdminId',
+            'accountAdminIdTo',
             'gaccounts_admin',
             'id'
         );
@@ -99,6 +100,15 @@ class m170819_144624_create_gtransactions_table extends Migration
             'gtransactions',
             'exchangeId',
             'gexchange_rates',
+            'id'
+        );
+        
+        // Admin's bank account
+        $this->addForeignKey(
+            'fk-gtransactions-accountAdminIdFrom',
+            'gtransactions',
+            'accountAdminIdFrom',
+            'gaccounts_admin',
             'id'
         );
     }

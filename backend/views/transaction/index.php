@@ -108,6 +108,14 @@ $this->title = 'Geknology';
                     },
                 ],
                 [
+                    'label'     => 'Desde la cuenta',
+                    'attribute' => 'accountAdminDescFrom',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                        return Html::a(($model->accountAdminIdFrom != null && $model->accountAdminFrom->description != "") ? $model->accountAdminFrom->description : "---", ['update', 'id' => $model->id]);
+                    },
+                ],
+                [
                     'label'     => 'Ganancia',
                     'attribute' => 'winnings',
                     'format'    => 'raw',

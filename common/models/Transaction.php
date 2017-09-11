@@ -13,7 +13,8 @@ use yii\web\UploadedFile;
  * @property integer $id
  * @property integer $clientId
  * @property integer $accountClientId
- * @property integer $accountAdminId
+ * @property integer $accountAdminIdTo
+ * @property integer $accountAdminIdFrom 
  * @property double $amountFrom
  * @property double $amountTo
  * @property integer $userId
@@ -28,7 +29,8 @@ use yii\web\UploadedFile;
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property AccountAdmin $accountAdmin
+ * @property AccountAdmin $accountAdminTo
+ * @property AccountAdmin $accountAdminFrom
  * @property AccountClient $accountClient
  * @property Client $client
  * @property ExchangeRate $exchangeRate
@@ -79,10 +81,11 @@ class Transaction extends ActiveRecord
             ['exchangeId', 'required', 'message' => 'Seleccione el tipo de cambio que desea realizar.'],
             ['clientBankTransaction', 'required', 'message' => 'Indique el número del depósito o la transferencia que realizó.'],
             [['clientId', 'sellRateValue', 'buyRateValue', 'currencyIdFrom', 'currencyIdTo', 'usedValue'], 'required'],
-            [['clientId', 'accountClientId', 'accountAdminId', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'created_at', 'updated_at', 'currencyIdFrom', 'currencyIdTo', 'exchangeId'], 'integer'],
+            [['clientId', 'accountClientId', 'accountAdminIdTo', 'accountAdminIdFrom', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'created_at', 'updated_at', 'currencyIdFrom', 'currencyIdTo', 'exchangeId'], 'integer'],
             [['amountFrom', 'amountTo', 'sellRateValue', 'buyRateValue', 'winnings', 'usedValue'], 'number'],
             [['observation'], 'string', 'max' => 255],
-            [['accountAdminId'], 'exist', 'skipOnError' => true, 'targetClass' => AccountAdmin::className(), 'targetAttribute' => ['accountAdminId' => 'id']],
+            [['accountAdminIdTo'], 'exist', 'skipOnError' => true, 'targetClass' => AccountAdmin::className(), 'targetAttribute' => ['accountAdminIdTo' => 'id']],
+            [['accountAdminIdFrom'], 'exist', 'skipOnError' => true, 'targetClass' => AccountAdmin::className(), 'targetAttribute' => ['accountAdminIdFrom' => 'id']],
             [['accountClientId'], 'exist', 'skipOnError' => true, 'targetClass' => AccountClient::className(), 'targetAttribute' => ['accountClientId' => 'id']],
             [['clientId'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['clientId' => 'id']],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
@@ -104,7 +107,8 @@ class Transaction extends ActiveRecord
             'id' => 'ID',
             'clientId' => 'Client ID',
             'accountClientId' => 'Account Client ID',
-            'accountAdminId' => 'Account Admin ID',
+            'accountAdminIdTo' => 'Account Admin ID',
+            'accountAdminIdFrom' => 'Account Admin ID',
             'amountFrom' => 'Amount From',
             'amountTo' => 'Amount To',
             'userId' => 'User ID',
@@ -127,9 +131,19 @@ class Transaction extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAccountAdmin()
+    public function getAccountAdminTo()
     {
-        return $this->hasOne(AccountAdmin::className(), ['id' => 'accountAdminId']);
+        return $this->hasOne(AccountAdmin::className(), ['id' => 'accountAdminIdTo'])
+                            ->from(AccountAdmin::tableName() . ' aat');
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccountAdminFrom()
+    {
+        return $this->hasOne(AccountAdmin::className(), ['id' => 'accountAdminIdFrom'])
+                            ->from(AccountAdmin::tableName() . ' aaf');
     }
 
     /**
@@ -195,5 +209,18 @@ class Transaction extends ActiveRecord
         // return a default image placeholder if your source avatar is not found
         $pic = isset($this->uploadFile) ? $this->uploadFile : 'default.png';
         return Yii::$app->params['fileUploadUrl'] . $pic;
+    }
+    
+     /**
+     * Get the sum of the transactions made through this account today
+     */
+    public function getTransactionSumByAA($aa){
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand("
+            SELECT sum(t.amountTo) AS total 
+            FROM gtransactions t where t.accountAdminIdFrom = ".$aa);
+
+        $result = $command->queryOne();
+        return $result;
     }
 }

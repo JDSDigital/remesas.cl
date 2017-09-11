@@ -16,6 +16,7 @@ class TransactionSearch extends Transaction
     public $currencyNameTo;
     public $accountClientDescription;
     public $exchangeRateDescription;
+    public $accountAdminDescFrom;
     //public $clientName;
     
     /**
@@ -24,9 +25,9 @@ class TransactionSearch extends Transaction
     public function rules()
     {
         return [
-            [['id', 'clientId', 'accountClientId', 'accountAdminId', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'transactionDate', 'created_at', 'updated_at', 'currencyIdFrom', 'currencyIdTo', 'exchangeId'], 'integer'],
+            [['id', 'clientId', 'accountClientId', 'accountAdminIdTo', 'accountAdminIdFrom', 'userId', 'clientBankTransaction', 'adminBankTransaction', 'status', 'transactionDate', 'created_at', 'updated_at', 'currencyIdFrom', 'currencyIdTo', 'exchangeId'], 'integer'],
             [['amountFrom', 'amountTo', 'sellRateValue', 'buyRateValue', 'winnings', 'usedValue'], 'number'],
-            [['observation', 'accountClientDescription', 'currencyNameFrom', 'currencyNameTo', 'exchangeRateDescription'/*, 'clientName'*/], 'safe'],
+            [['observation', 'accountClientDescription', 'currencyNameFrom', 'currencyNameTo', 'exchangeRateDescription', 'accountAdminDescFrom'/*, 'clientName'*/], 'safe'],
         ];
     }
 
@@ -54,6 +55,7 @@ class TransactionSearch extends Transaction
         $query->joinWith(['accountClient']);
         $query->joinWith(['client']);
         $query->joinWith(['exchangeRate']);
+        $query->joinWith(['accountAdminFrom']);
 
         // add conditions that should always apply here
 
@@ -97,6 +99,11 @@ class TransactionSearch extends Transaction
                     'asc' => ['gexchange_rates.description' => SORT_ASC],
                     'desc' => ['gexchange_rates.description' => SORT_DESC],
                     'label' => 'Tasa'
+                ],
+                'accountAdminDescFrom' => [
+                    'asc' => ['aaf.description' => SORT_ASC],
+                    'desc' => ['aaf.description' => SORT_DESC],
+                    'label' => 'Desde la cuenta'
                 ],/*,
                 'clientName' => [
                     'asc' => ['c.name' => SORT_ASC],
@@ -124,7 +131,8 @@ class TransactionSearch extends Transaction
             'id' => $this->id,
             'clientId' => $this->clientId,
             'accountClientId' => $this->accountClientId,
-            'accountAdminId' => $this->accountAdminId,
+            'accountAdminIdTo' => $this->accountAdminIdTo,
+            'accountAdminIdFrom' => $this->accountAdminIdFrom,
             'amountFrom' => $this->amountFrom,
             'amountTo' => $this->amountTo,
             'currencyIdFrom' => $this->currencyIdFrom,
@@ -162,9 +170,16 @@ class TransactionSearch extends Transaction
             $q->where('gexchange_rates.description LIKE "%' . $this->exchangeRateDescription . '%"');
         }]);
         
+        /*$query->joinWith(['accountAdminFrom' => function ($q) {
+            $q->where('aaf.description LIKE "%' . $this->accountAdminDescFrom . '%"');
+        }]);*/
+        
         /*$query->joinWith(['client' => function ($q) {
             $q->where('c.name LIKE "%' . $this->clientName . '%"');
         }]);*/
+        
+        /*echo $query->createCommand()->getRawSql();
+        die();*/
 
         return $dataProvider;
     }

@@ -5,6 +5,7 @@ use yii\helpers\ArrayHelper;
 use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
+use common\models\AccountAdmin;
 use common\models\Country;
 
 $this->title = 'Geknology';
@@ -38,6 +39,9 @@ $this->title = 'Geknology';
                 <div class="hideField">
                 <?= $form->field($model, 'usedValue')->label("Tasa")->textInput((Yii::$app->user->identity->role != 'root') ? ['disabled' => 'true'] : []) ?>
                 <?= $form->field($model, 'amountTo')->label("Monto convertido")->textInput((Yii::$app->user->identity->role != 'root') ? ['disabled' => 'true'] : []) ?>
+                <?= $form->field($model, 'accountAdminIdFrom')->label("Cuenta desde donde transfirió el dinero")->dropDownList(
+                    ArrayHelper::map(AccountAdmin::find()->where('status = 1 and currencyId = '.$model->currencyIdTo)->orderBy('description')->all(), 'id', 'description'), ['class' => 'form-control']
+                ) ?>
                 <?= $form->field($model, 'adminBankTransaction')->label("Numero de Deposito o Transferencia") ?>
                 <?= $form->field($model, 'transactionResponseDate')->label("Fecha de la transaccion")->widget(DatePicker::classname(), [
                          'language' => 'es',

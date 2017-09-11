@@ -129,4 +129,18 @@ class AccountAdmin extends \yii\db\ActiveRecord
         $result = $command->queryAll();
         return $result;
     }
+    
+    /**
+     * Get accounts with available money
+    **/
+    public function getAccountsAvailableMoney($amount){
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand("
+            SELECT id  
+            FROM gaccounts_admin
+            WHERE maxAmount >= ".$amount);
+
+        $result = count($command->queryAll());
+        return $result;
+    }
 }
