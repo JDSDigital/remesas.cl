@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
+use common\models\AccountAdmin;
 use common\models\Transaction;
 use common\models\TransactionSearch;
 use yii\web\Controller;
@@ -99,14 +100,29 @@ class TransactionController extends Controller
         
         if ($model->load(Yii::$app->request->post())){
             $load = Yii::$app->request->post();
-           
-            $model->userId = Yii::$app->user->id;
-            $model->transactionResponseDate = Yii::$app->formatter->asDate($_POST['Transaction']['transactionResponseDate'], 'yyyy-MM-dd');
             
-            if ($model->save()){
-                return $this->redirect(['index']);
+            // Check if there's "emough money in the account to make this transaction"
+            $accountAdmin = AccountAdmin::find()->where(['id' => $load['Transaction']['accountAdminIdFrom']])->one();
+            
+            $transaction = new Transaction();
+            $total = $transaction->getTransactionSumByAA($load['Transaction']['accountAdminIdFrom']);
+            
+            if (($accountAdmin->maxAmount - $total['total']) >= $model->amountTo){
+                $model->userId = Yii::$app->user->id;
+                $model->transactionResponseDate = Yii::$app->formatter->asDate($load['Transaction']['transactionResponseDate'], 'yyyy-MM-dd');
+                
+                if ($model->save()){
+                    return $this->redirect(['index']);
+                }
+                else {
+                    return $this->render('update', [
+                        'model' => $model,
+                    ]);
+                }
             }
             else {
+                Yii::$app->getSession()->setFlash('error','La cantidad solicitada no se encuentra disponible en la cuenta seleccionada.');
+                
                 return $this->render('update', [
                     'model' => $model,
                 ]);

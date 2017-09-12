@@ -218,7 +218,8 @@ class Transaction extends ActiveRecord
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("
             SELECT sum(t.amountTo) AS total 
-            FROM gtransactions t where t.accountAdminIdFrom = ".$aa);
+            FROM gtransactions t WHERE t.accountAdminIdFrom = ".$aa." 
+            AND t.transactionResponseDate >= '".date('Y-m-d')."' AND t.transactionResponseDate < '".(date('Y-m-d', strtotime(' +1 day')))."'");
 
         $result = $command->queryOne();
         return $result;
