@@ -121,11 +121,15 @@ class TransactionController extends Controller
             //$accountAdmin = AccountAdmin::find()->where(['id' => $load['Transaction']['accountAdminId']])->one();
             
             // Look for the available amount of money in every account of the To 
+            //$accountAdmin = new AccountAdmin();
+            //$accounts = $accountAdmin->getAccountsAvailableMoney($model->amountTo);
+            
+            // Available money in all of the accounts
             $accountAdmin = new AccountAdmin();
-            $accounts = $accountAdmin->getAccountsAvailableMoney($model->amountTo);
+            $available = $accountAdmin->getAmountSumByCurrency($er->currencyIdTo);
             
             // If the account "has" the money... continue
-            if ($accounts > 0){
+            if ($available['total'] >= $model->amountTo){
                 $model->transactionDate = Yii::$app->formatter->asDate($_POST['Transaction']['transactionDate'], 'yyyy-MM-dd');
             
                 // Transaction receipt

@@ -138,9 +138,23 @@ class AccountAdmin extends \yii\db\ActiveRecord
         $command = $connection->createCommand("
             SELECT id  
             FROM gaccounts_admin
-            WHERE maxAmount >= ".$amount);
+            WHERE status = 1 AND maxAmount >= ".$amount);
 
         $result = count($command->queryAll());
+        return $result;
+    }
+    
+    /**
+     * Get the available money for the accounts in this currency
+    **/
+    public function getAmountSumByCurrency($currency){
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand("
+            SELECT sum(ac.maxAmount) AS total 
+            FROM gaccounts_admin ac 
+            WHERE ac.status = 1 AND ac.currencyId = ".$currency);
+        
+        $result = $command->queryOne();
         return $result;
     }
 }
