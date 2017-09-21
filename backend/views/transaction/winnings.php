@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 
 $this->title = 'Geknology';
 ?>
-<div class="site-index panel">
+<div class="site-index">
     <div class="page-header panel-heading mb0">
         <div class="row">
             <div class="col-md-6">
@@ -19,9 +19,9 @@ $this->title = 'Geknology';
         </div>
     </div>
     <!-- /page header -->
-    <div class="body-content">
-        <div class="row panel panel-flat">
-            <div class="col-md-5 ml20">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-flat pl20 pr20">
                 <?php $form = ActiveForm::begin(['id' => 'form-transaction']); ?>
                 <?= Html::label("Inicio") ?>
                 <?= DatePicker::widget([
@@ -60,8 +60,11 @@ $this->title = 'Geknology';
                 </div>
                 <?php ActiveForm::end(); ?>
             </div>
-            
-            <div id="winningsReport">            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="winningsReport">
             <?= GridView::widget([
                 'dataProvider'   => $dataProvider,
                 'layout'         => '{items}{pager}{summary}',
@@ -161,12 +164,12 @@ $this->title = 'Geknology';
                         'format'    => 'raw',
                         'value'     => function ($model) {
                                         $check = "Pendiente";
-                                        
+
                                         if ($model->status == 1)
                                             $check = "Anulada";
                                         else if ($model->status == 2)
                                             $check = "Realizada";
-                                        
+
                                         return $check;
                         },
                     ],
@@ -181,12 +184,12 @@ $this->title = 'Geknology';
                 ],
             ]); ?>
             </div>
-            
-            <?php
-                if (isset($total) && $total != ""){
-                    echo Html::tag('h3', "Total ".Html::encode($total)." CLP"); 
-                }
-            ?>                                               
         </div>
+
+        <?php
+            if (isset($total) && $total != ""){
+                echo Html::tag('h3', "Total ".Html::encode($total)." CLP");
+            }
+        ?>
     </div>
 </div>

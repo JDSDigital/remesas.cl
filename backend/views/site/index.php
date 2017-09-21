@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Geknology';
 ?>
-<div class="site-index panel">
+<div class="site-index">
     <div class="page-header panel-heading mb0">
         <div class="row">
             <div class="col-md-6">

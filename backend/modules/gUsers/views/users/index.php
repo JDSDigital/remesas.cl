@@ -9,7 +9,7 @@ use yii\helpers\Html;
 
 $this->title = 'Geknology';
 ?>
-<div class="site-index panel">
+<div class="site-index">
     <div class="page-header panel-heading mb0">
         <div class="row">
             <div class="col-md-6">
@@ -19,20 +19,20 @@ $this->title = 'Geknology';
             </div>
             <div class="col-md-6">
                 <p class="text-right mt20">
-                    <?= Html::a('<i class="icon-user-plus mr5"></i>' . Html::encode('Agregar Usuario'), ['create'])?>
+                    <?= Html::a('<i class="icon-user-plus mr5"></i>' . Html::encode('Agregar Usuario'), ['create'], ['class' => 'btn btn-primary'])?>
                 </p>
             </div>
         </div>
     </div>
     <!-- /page header -->
-    <div class="body-content">
+    <div class="panel panel-flat">
         <?= Yii::$app->session->getFlash('success'); ?>
         <?=
         GridView::widget([
             'dataProvider'   => $dataProvider,
             'layout'         => '{items}{pager}{summary}',
             'options'        => [
-                'class' => 'panel panel-flat pl20 pr20',
+                'class' => 'pl20 pr20',
             ],
             'tableOptions'   => [
                 'class' => 'table table-striped table-hover',

@@ -12,7 +12,7 @@ use yii\grid\GridView;
 $this->title = 'Clientes';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="client-index panel">
+<div class="client-index">
     <div class="page-header panel-heading mb0">
         <div class="row">
             <div class="col-md-6">
@@ -26,6 +26,7 @@ $this->title = 'Clientes';
 
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
+            'layout'         => '{items}{pager}{summary}',
             'filterModel' => $searchModel,
             'options'        => [
                 'class' => 'panel panel-flat pl20 pr20',

@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="col-md-6">
                 <p class="text-right mt20">
-                    <?= Html::a('Agregar Moneda', ['create'], ['class' => 'btn']) ?>
+                    <?= Html::a('<i class="fa fa-lg fa-plus-circle position-left"></i> Agregar Moneda', ['create'], ['class' => 'btn btn-primary']) ?>
                 </p>
             </div>
         </div>

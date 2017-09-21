@@ -10,7 +10,7 @@ use common\models\Currency;
 
 $this->title = 'Geknology';
 ?>
-<div class="site-index panel">
+<div class="site-index">
     <div class="page-header panel-heading mb0">
         <div class="row">
             <div class="col-md-6">
@@ -20,40 +20,66 @@ $this->title = 'Geknology';
             </div>
             <div class="col-md-6">
                 <p class="text-right mt20">
-                    <?= Html::a('Agregar Cuenta Bancaria', ['create'], ['class' => 'btn']) ?>
+                    <?= Html::a('<i class="fa fa-lg fa-plus-circle position-left"></i> Agregar Cuenta bancaria', ['create'], ['class' => 'btn btn-primary']) ?>
                 </p>
             </div>
         </div>
     </div>
     <!-- /page header -->
-    <div class="body-content">
-        <div class="row panel panel-flat">
-            <div class="col-md-5 ml20">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-flat pl20 pr20">
                 <?php $form = ActiveForm::begin(['id' => 'form-account-admin']); ?>
-                    <?= $form->field($model, 'description')->label("Descripcion")->textInput(['autofocus' => true]) ?>
-                    <?= $form->field($model, 'bankId')->label("Banco")->dropDownList(
-                        ArrayHelper::map(Bank::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
-                    ) ?>
-                    <?= $form->field($model, 'type')->label("Tipo de cuenta")->dropDownList([
-                        'ahorro' => 'Ahorro',
-                        'corriente'  => 'Corriente',
-                        'rut'  => 'Rut',
-                        'vista'  => 'Vista',
-                    ], ['class' => 'form-control']) ?>
-                    <?= $form->field($model, 'currencyId')->label("Moneda")->dropDownList(
-                        ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
-                    ) ?>
-                    <?= $form->field($model, 'number')->label("Número de cuenta") ?>
-                    <?= $form->field($model, 'name')->label("Nombre del dueño") ?>
-                    <?= $form->field($model, 'lastname')->label("Apellido del dueño") ?>
-                    <?= $form->field($model, 'rut')->label("Identificación del dueño") ?>
-                    <?= $form->field($model, 'email')->label("Correo electrónico") ?>
-                    <?= $form->field($model, 'minAmount')->label("Cantidad mínima para transacciones") ?>
-                    <?= $form->field($model, 'maxAmount')->label("Cantidad máxima para transacciones") ?>
-                    
-                    <div class="form-group">
-                        <?= Html::submitButton('Crear Cuenta Bancaria', ['class' => 'btn btn-primary', 'name' => 'form-account-admin-button']) ?>
-                    </div>
+                    <fieldset class="content-group">
+
+                        <legend class="text-bold"><?= Html::encode('Información del banco') ?></legend>
+                        <div class="form-group mb40">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <?= $form->field($model, 'description')->label("Descripcion")->textInput(['autofocus' => true]) ?>
+                                </div>
+                                <div class="col-md-5">
+                                    <?= $form->field($model, 'bankId')->label("Banco")->dropDownList(
+                                        ArrayHelper::map(Bank::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
+                                    ) ?>
+                                </div>
+                                <div class="col-md-5">
+                                    <?= $form->field($model, 'type')->label("Tipo de cuenta")->dropDownList([
+                                        'ahorro' => 'Ahorro',
+                                        'corriente'  => 'Corriente',
+                                        'rut'  => 'Rut',
+                                        'vista'  => 'Vista',
+                                    ], ['class' => 'form-control']) ?>
+                                </div>
+                                <div class="col-md-5">
+                                    <?= $form->field($model, 'currencyId')->label("Moneda")->dropDownList(
+                                        ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
+                                    ) ?>
+                                </div>
+                                <div class="col-md-10">
+                                    <?= $form->field($model, 'number')->label("Número de cuenta") ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <legend class="text-bold"><?= Html::encode('Información del dueño de la cuenta') ?></legend>
+                        <div class="form-group mb40">
+                            <?= $form->field($model, 'name')->label("Nombre del dueño") ?>
+                            <?= $form->field($model, 'lastname')->label("Apellido del dueño") ?>
+                            <?= $form->field($model, 'rut')->label("Identificación del dueño") ?>
+                            <?= $form->field($model, 'email')->label("Correo electrónico") ?>
+                        </div>
+
+                        <legend class="text-bold"><?= Html::encode('Información de las transacciones') ?></legend>
+                        <div class="form-group mb40">
+                            <?= $form->field($model, 'minAmount')->label("Cantidad mínima para transacciones") ?>
+                            <?= $form->field($model, 'maxAmount')->label("Cantidad máxima para transacciones") ?>
+                        </div>
+
+                        <div class="form-group">
+                            <?= Html::submitButton('Crear Cuenta Bancaria', ['class' => 'btn btn-primary', 'name' => 'form-account-admin-button']) ?>
+                        </div>
+                    </fieldset>
                 <?php ActiveForm::end(); ?>
             </div>
         </div>

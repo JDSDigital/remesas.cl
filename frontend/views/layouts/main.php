@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use frontend\models\ContactForm;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -13,6 +14,9 @@ use common\widgets\Alert;
 $this->registerLinkTag(['rel' => 'apple-touch-icon', 'sizes' => '180x180', 'href' => Yii::getAlias('@web') . '/images/favicons/apple-touch-icon.png']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'sizes' => '32x32', 'href' => Yii::getAlias('@web') . '/images/favicons/favicon-32x32.png']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'sizes' => '16x16', 'href' => Yii::getAlias('@web') . '/images/favicons/favicon-16x16.png']);
+
+/*$contact = new ContactForm();
+Yii::$app->view->params['contact'] = $contact;*/
 
 AppAsset::register($this);
 ?>
@@ -48,26 +52,19 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'About'],
+        ['label' => 'Contact'],
         
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Login', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-login']];
     } else {
         $menuItems[] = ['label' => 'Cuentas disponibles', 'url' => ['/site/accounts']];
         $menuItems[] = ['label' => 'Mis Cuentas', 'url' => ['/account-client/index']];
         $menuItems[] = ['label' => 'Calculadora', 'url' => ['/site/calculator']];
         $menuItems[] = ['label' => 'Mis Transacciones', 'url' => ['/transaction/index']];
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
+        $menuItems[] = ['label' => 'Logout (' . Yii::$app->user->identity->username . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right list-inline'],
@@ -92,21 +89,21 @@ AppAsset::register($this);
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="footerWidget">
-                            <img src="images/neko-logo.png" alt="latest Little Neko news" id="footerLogo">
-                            <p><a href="http://www.little-neko.com/" title="Little Neko, website template creation">Little Neko</a> is a web design and development studio. We build responsive HTML5 and CSS3 templates, integrating best web design practises and up-to-date web technologies to create great user experiences. We love what we do and we hope you too ! </p>
+                            <?= Html::img(Yii::getAlias('@web') . '/images/logo.png', ['id' => 'footerLogo', 'class' => 'img-responsive', 'alt' => 'Remesas.cl']) ?>
+                            <p><a href="http://www.little-neko.com/" title="Little Neko, website template creation">Remesas.cl</a> is a web design and development studio. We build responsive HTML5 and CSS3 templates, integrating best web design practises and up-to-date web technologies to create great user experiences. We love what we do and we hope you too ! </p>
                         </div>
                     </div>
 
                     <div class="col-sm-4">
                         <div class="footerWidget">
 
-                            <h3>Little NEKO</h3>
+                            <h3>Remesas.cl</h3>
                             <address>
                                 <p>
                                     <i class="icon-location"></i>&nbsp;77 Mass. Ave., E14/E15<br>
                                     Cambridge, MA 02139-4307 USA <br>
                                     <i class="icon-phone"></i>&nbsp;615.987.1234 <br>
-                                    <i class="icon-mail-alt"></i>&nbsp;<a href="mailto:little@little-neko.com">little@little-neko.com</a>
+                                    <i class="icon-mail-alt"></i>&nbsp;<a href="mailto:admin@remesas.cl">admin@remesas.cl</a>
                                 </p>
                             </address>
                         </div>
@@ -132,7 +129,7 @@ AppAsset::register($this);
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <p>Copyright © <?= date('Y') ?> <a href="http://www.little-neko.com/" target="blank">Little NEKO</a> / All rights reserved.</p>
+                        <p>Copyright © <?= date('Y') ?> <?= Html::a('Remesas.cl',['//site/index']) ?> / Diseño y desarrollo por <?= Html::a('Geknology',['http://www.geknology.com/']) ?></p>
                     </div>
 
                 </div>
@@ -140,6 +137,12 @@ AppAsset::register($this);
         </section>
     </footer>
     <!-- End footer -->
+
+<!-- ================================
+          Modal1
+    ==================================-->
+<?= Yii::$app->controller->renderPartial('//site/login'); ?>
+<!-- /. End Modal1 -->
 
 <?php $this->endBody() ?>
 </body>

@@ -4,20 +4,26 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
 
+use common\models\ClientLoginForm;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
+$model = new ClientLoginForm();
+
 $this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+<div id="modal-login" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <h1><?= Html::encode($this->title) ?></h1>
+                <?php $form = ActiveForm::begin([
+                    'id'     => 'login-form',
+                    'action' => ['//site/login'],
+                ]); ?>
 
                 <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
@@ -33,7 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
                 </div>
 
-            <?php ActiveForm::end(); ?>
+                <?php ActiveForm::end(); ?>
+            </div>
         </div>
+
     </div>
 </div>

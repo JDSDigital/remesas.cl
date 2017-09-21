@@ -10,7 +10,7 @@ use common\models\Currency;
 
 $this->title = 'Geknology';
 ?>
-<div class="site-index panel">
+<div class="site-index">
     <div class="page-header panel-heading mb0">
         <div class="row">
             <div class="col-md-6">
@@ -20,15 +20,15 @@ $this->title = 'Geknology';
             </div>
             <div class="col-md-6">
                 <p class="text-right mt20">
-                    <?= Html::a('Agregar Cuenta Bancaria', ['create'], ['class' => 'btn']) ?>
+                    <?= Html::a('<i class="fa fa-lg fa-plus-circle position-left"></i> Agregar Cuenta bancaria', ['create'], ['class' => 'btn btn-primary']) ?>
                 </p>
             </div>
         </div>
     </div>
     <!-- /page header -->
-    <div class="body-content">
-        <div class="row panel panel-flat">
-            <div class="col-md-5 ml20">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-flat pl20 pr20">
                 <?php $form = ActiveForm::begin(['id' => 'form-account-admin']); ?>
                     <?= $form->field($model, 'description')->label("Descripcion")->textInput(['autofocus' => true]) ?>
                     <?= $form->field($model, 'bankId')->label("Banco")->dropDownList(

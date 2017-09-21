@@ -76,7 +76,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $contact = new ContactForm();
+
+        return $this->render('index', [
+            'contact' => $contact,
+        ]);
     }
 
     /**
@@ -86,17 +90,15 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $model = new ClientLoginForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
+            foreach ($model->errors as $error) {
+                Yii::$app->session->setFlash('error', $error);
+            }
+            return $this->render('login');
         }
     }
 
@@ -282,7 +284,7 @@ class SiteController extends Controller
                 Yii::$app->getSession()->setFlash('error','Debe introducir una cantidad a convertir');
             }
             else if ($load['currencyIdFrom'] == $load['currencyIdTo']){
-                Yii::$app->getSession()->setFlash('error','Las monedas de conversión deben ser diferentes');
+                Yii::$app->getSession()->setFlash('error','Las monedas de conversiï¿½n deben ser diferentes');
             }
             else {
                 // Search for an exchange rate with these conditions
@@ -308,7 +310,7 @@ class SiteController extends Controller
                     $result = $calculate." ".$ct->symbol;
                 }
                 else {
-                   Yii::$app->getSession()->setFlash('error','Lo sentimos. La tasa de cambio solicitada no está disponible. Por favos intente más tarde.');
+                   Yii::$app->getSession()->setFlash('error','Lo sentimos. La tasa de cambio solicitada no estï¿½ disponible. Por favos intente mï¿½s tarde.');
                 }
             } 
         }

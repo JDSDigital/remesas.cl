@@ -3,6 +3,10 @@
 /* @var $this yii\web\View */
 
 $this->title = 'Cuentas disponibles';
+echo '<pre>';
+print_r($accounts);
+echo '</pre>';
+exit;
 ?>
 <div class="site-index">
     <div class="body-content">

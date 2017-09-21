@@ -12,32 +12,46 @@ $this->title = "Cuentas de ".$model->name." ".$model->lastName;
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="client-view">
+    <div class="page-header panel-heading mb0">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="page-title">
+                    <h3><?= Html::encode($this->title) ?></h3>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="row">
+    	<div class="col-md-6">
+            <div class="panel panel-flat">
+                <?= DetailView::widget([
+                    'model' => $model,
+                    'attributes' => [
+                        [
+                            'label' => 'Nombre y Apellido',
+                            'value' => $model->name." ".$model->lastName,
+                        ],
+                        [
+                            'label' => 'Rut',
+                            'value' => $model->rut,
+                        ],
+                        [
+                            'label' => 'Correo electrónico',
+                            'value' => $model->email,
+                        ],
+                    ],
+                ]) ?>
+            </div>
+        </div>
+    </div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            [
-                'label' => 'Nombre y Apellido',
-                'value' => $model->name." ".$model->lastName,
-            ],
-            [
-                'label' => 'Rut',
-                'value' => $model->rut,
-            ],
-            [
-                'label' => 'Correo electrónico',
-                'value' => $model->email,
-            ],
-        ],
-    ]) ?>
-    
-    <?= GridView::widget([
+    <div class="panel panel-flat">
+        <?= GridView::widget([
             'dataProvider'   => $dataProvider,
             'layout'         => '{items}{pager}{summary}',
             'options'        => [
-                'class' => 'panel panel-flat pl20 pr20',
+                'class' => 'pl20 pr20',
             ],
             'tableOptions'   => [
                 'class' => 'table table-striped table-hover',
@@ -60,5 +74,6 @@ $this->title = "Cuentas de ".$model->name." ".$model->lastName;
                 ]
             ],
         ]); ?>
+    </div>
 
 </div>

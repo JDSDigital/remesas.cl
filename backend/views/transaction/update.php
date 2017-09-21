@@ -10,7 +10,7 @@ use common\models\Country;
 
 $this->title = 'Geknology';
 ?>
-<div class="site-index panel">
+<div class="site-index">
     <div class="page-header panel-heading mb0">
         <div class="row">
             <div class="col-md-6">
@@ -21,9 +21,9 @@ $this->title = 'Geknology';
         </div>
     </div>
     <!-- /page header -->
-    <div class="body-content">
-        <div class="row panel panel-flat">
-            <div class="col-md-5 ml20">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-flat pl20 pr20">
                 <?php $form = ActiveForm::begin(['id' => 'form-transaction']); ?>
                 <?= Html::label("Monto a convertir") ?>
                 <?= Html::label($model->amountFrom." ".$model->currencyFrom->symbol) ?>
