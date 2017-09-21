@@ -126,3 +126,12 @@ a.desc:after {
 select.form-control:not([size]):not([multiple]) {
     height: 35px;
 }
+.navbar {
+    padding: 0 10px;
+}
+.navbar-brand {
+    padding: 0 !important;
+}
+.nav-logo {
+    max-height: 50px;
+}

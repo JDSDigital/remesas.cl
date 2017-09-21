@@ -23,6 +23,7 @@ class AppAsset extends AssetBundle
         'app\assets\TetherAsset',
         'app\assets\BootstrapAsset',
         'app\assets\FontAwesomeAsset',
+        'app\assets\ThemeAsset',
 //        'yii\bootstrap\BootstrapAsset',
     ];
 }
