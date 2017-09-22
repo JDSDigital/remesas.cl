@@ -7,7 +7,7 @@ body {
 .wrap {
     min-height: 100%;
     height: auto;
-    margin: 0 auto -60px;
+    margin: 0 auto;
     padding: 0 0 60px;
 }
 
@@ -150,4 +150,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 .btn {
     border-bottom: 4px solid rgba(150, 150, 150, 0.25) !important;
+}
+.pb50 {
+    padding-top: 50px;
 }

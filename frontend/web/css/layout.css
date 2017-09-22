@@ -369,12 +369,12 @@ h1, h2, h3, h4, h5, h6, legend {
 }
 h1 {
 	font-size: 33px;
-	line-height: 33px;
-	font-weight: 700;
+	line-height: 33px !important;
+	font-weight: 700 !important;
 	font-style: normal;
 	text-transform:uppercase;
 	position:relative;
-	margin-bottom: 11px;
+	margin-bottom: 11px !important;
 }
 
 
@@ -428,10 +428,10 @@ h1 {
 h2 {
 	font-size:30px;
 	line-height: 1.1em;
-	font-weight: 300;
+	font-weight: 300 !important;
 	font-style: normal;
 	padding:0;
-	margin-bottom:14px;
+	margin-bottom:14px !important;
 	text-transform: uppercase;
 	letter-spacing:0.075em;
 
@@ -464,7 +464,6 @@ h4 {
 	font-size: 18px !important;
 	line-height: 22px !important;
 	margin-bottom: 11px !important;
-	font-style: bold !important;
 	font-weight:300 !important;
 }
 h5 {
@@ -528,9 +527,10 @@ blockquote p {
 	display:inline;
 }
 blockquote small, .ctaBox blockquote small{
-	font-size:50%;
-	display:inline-block;
-	line-height: 1em;
+	font-size:50% !important;
+	display:inline-block !important;
+	line-height: 1em !important;
+	color: inherit !important;
 }
 blockquote:before {
 	content:'\e928';
@@ -566,7 +566,7 @@ hr {
 	body{padding-top: 128px;}
 	h1 {
 		font-size: 44px;
-		line-height: 44px;
+		line-height: 44px !important;
 	}
 	.paralaxText blockquote {
 		font-size: 33px;
@@ -1573,7 +1573,7 @@ textarea#comments {height:87px;}
 
 /*** STYLE SWITCHER ***/
 #switcherContent{padding:0 15px 15px 15px;}
-.styleSwitcher {background:#333; position:fixed; top:200px; width:170px;left:-170px;z-index:9999}' +
+.styleSwitcher {background:#333; position:fixed; top:200px; width:170px;left:-170px;z-index:9999}
 .switcher.dark{background:#555;}
 .styleSwitcher ul li{display:inline-block;}
 .styleSwitcher ul {display:block; padding:0; margin:0}

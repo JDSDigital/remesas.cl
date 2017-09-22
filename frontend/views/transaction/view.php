@@ -9,7 +9,7 @@ use yii\widgets\DetailView;
 $this->title = "Transaccion #".$model->id;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="transaction-view">
+<div class="container transaction-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

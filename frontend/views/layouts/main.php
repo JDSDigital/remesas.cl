@@ -7,6 +7,7 @@ use frontend\models\ContactForm;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
@@ -51,9 +52,9 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About'],
-        ['label' => 'Contact'],
+        ['label' => 'Inicio', 'url' => ['/site/index']],
+        ['label' => 'Quienes Somos', 'url' => (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index') ? '#about' : ['/site/index']],
+        ['label' => 'Contacto', 'url' => (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index') ? '#contact' : ['/site/index']],
         
     ];
     if (Yii::$app->user->isGuest) {
@@ -64,7 +65,8 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Mis Cuentas', 'url' => ['/account-client/index']];
         $menuItems[] = ['label' => 'Calculadora', 'url' => ['/site/calculator']];
         $menuItems[] = ['label' => 'Mis Transacciones', 'url' => ['/transaction/index']];
-        $menuItems[] = ['label' => 'Logout (' . Yii::$app->user->identity->username . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
+//        $menuItems[] = ['label' => 'Logout (' . Yii::$app->user->identity->username . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
+        $menuItems[] = ['label' => 'Logout', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right list-inline'],
@@ -73,7 +75,7 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-    <div class="container">
+    <div class="pb50">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
@@ -112,11 +114,11 @@ AppAsset::register($this);
                         <div class="footerWidget">
                             <h3>Follow us, we are social</h3>
                             <ul class="socialNetwork">
+                                <li><a href="#" class="tips" title="" data-original-title="follow me on Instagram"><i class="icon-dribbble iconRounded"></i></a></li>
                                 <li><a href="#" class="tips" title="" data-original-title="follow me on Facebook"><i class="icon-facebook-1 iconRounded"></i></a></li>
                                 <li><a href="#" class="tips" title="" data-original-title="follow me on Twitter"><i class="icon-twitter-bird iconRounded"></i></a></li>
                                 <li><a href="#" class="tips" title="" data-original-title="follow me on Google+"><i class="icon-gplus-1 iconRounded"></i></a></li>
                                 <li><a href="#" class="tips" title="" data-original-title="follow me on Linkedin"><i class="icon-linkedin-1 iconRounded"></i></a></li>
-                                <li><a href="#" class="tips" title="" data-original-title="follow me on Dribble"><i class="icon-dribbble iconRounded"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -129,7 +131,7 @@ AppAsset::register($this);
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <p>Copyright © <?= date('Y') ?> <?= Html::a('Remesas.cl',['//site/index']) ?> / Diseño y desarrollo por <?= Html::a('Geknology',['http://www.geknology.com/']) ?></p>
+                        <p>Copyright © <?= date('Y') ?> <?= Html::a('Remesas.cl',['//site/index']) ?> / Diseño y desarrollo por <?= Html::a('Geknology', Url::to('http://www.geknology.com/')) ?></p>
                     </div>
 
                 </div>

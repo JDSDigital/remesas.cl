@@ -17,7 +17,7 @@ use common\models\ExchangeRate;
 $this->title = 'Registrar Depósito / Transferencia';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="account-client-create">
+<div class="container account-client-create">
     <div class="row">
         <div class="col-md-6">
             <h1><?= Html::encode($this->title) ?></h1>

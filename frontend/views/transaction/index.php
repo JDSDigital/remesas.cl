@@ -11,7 +11,7 @@ use common\models\Refund;
 $this->title = 'Transacciones';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="account-client-index">
+<div class="container account-client-index">
     <div class="row">
     	<div class="col-md-6 text-left">
             <h1><?= Html::encode($this->title) ?></h1>

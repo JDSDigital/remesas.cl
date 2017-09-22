@@ -12,10 +12,10 @@ use common\models\Currency;
 /* @var $model common\models\AccountClient */
 
 $this->title = 'Crear cuenta bancaria';
-$this->params['breadcrumbs'][] = ['label' => 'Account Clients', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => 'Account Clients', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="account-client-create">
+<div class="container account-client-create">
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-account-client']); ?>
