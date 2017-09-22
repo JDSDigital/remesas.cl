@@ -70,5 +70,4 @@ return [
         ],
     ],
     'params' => $params,
-    'language' => 'es'
 ];

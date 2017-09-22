@@ -10,12 +10,13 @@ use common\models\Currency;
 /* @var $model common\models\AccountClient */
 
 $this->title = 'Calculadora';
-$this->params['breadcrumbs'][] = ['label' => 'Account Clients', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => 'Account Clients', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="calculator">
     <div class="row">
         <div class="col-lg-5">
+            <h1><?= Html::encode($this->title) ?></h1>
             <?php $form = ActiveForm::begin(['id' => 'form-account-client']); ?>
                 <?= Html::label("Cantidad a convertir", "amount") ?>
                 <?= Html::textInput('amount', $amount, ['class' => 'form-control']) ?>

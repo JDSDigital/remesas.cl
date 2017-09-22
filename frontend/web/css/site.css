@@ -1,6 +1,7 @@
 html,
 body {
     height: 100%;
+    padding: 0 !important;
 }
 
 .wrap {
@@ -146,4 +147,7 @@ select.form-control:not([size]):not([multiple]) {
     -ms-transform: translate(0, 50%) !important;
     -o-transform: translate(0, 50%) !important;
     transform: translate(0, 50%) !important;
+}
+.btn {
+    border-bottom: 4px solid rgba(150, 150, 150, 0.25) !important;
 }

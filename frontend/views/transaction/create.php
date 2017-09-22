@@ -15,11 +15,16 @@ use common\models\ExchangeRate;
 /* @var $model common\models\AccountClient */
 
 $this->title = 'Registrar Depósito / Transferencia';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="account-client-create">
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-md-6">
+            <h1><?= Html::encode($this->title) ?></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
             <?php $form = ActiveForm::begin(['id' => 'form-transaction']); ?>
                 <?php /*echo $form->field($model, 'currencyIdFrom')->label("De")->dropDownList(
                     ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']

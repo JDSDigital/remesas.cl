@@ -9,20 +9,25 @@ use common\models\Refund;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Transacciones';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="account-client-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="row">
+    	<div class="col-md-6 text-left">
+            <h1><?= Html::encode($this->title) ?></h1>
+        </div>
+    	<div class="col-md-6 text-right">
+            <p>
+                <?= Html::a('Solicitar transacción', ['create'], ['class' => 'btn btn-primary']) ?>
+            </p>
+        </div>
+    </div>
     <?= Yii::$app->session->getFlash('success'); ?>
-    <p>
-        <?= Html::a('Solicitar transacción', ['create'], ['class' => 'btn']) ?>
-    </p>
     <?= GridView::widget([
             'dataProvider'   => $dataProvider,
             'layout'         => '{items}{pager}{summary}',
             'options'        => [
-                'class' => 'panel panel-flat pl20 pr20',
+                'class' => 'panel panel-flat',
             ],
             'tableOptions'   => [
                 'class' => 'table table-striped table-hover',

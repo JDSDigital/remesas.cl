@@ -3,29 +3,42 @@
 /* @var $this yii\web\View */
 
 $this->title = 'Cuentas disponibles';
-echo '<pre>';
-print_r($accounts);
-echo '</pre>';
-exit;
 ?>
 <div class="site-index">
     <div class="body-content">
         <div class="row">
             <div class="col-lg-12">
                 <h2>Cuentas disponibles</h2>
-                <?php 
-                    if (isset($accounts)){
-                        foreach ($accounts as $account){
-                            echo "<p>".$account['country']."</p>"
-                                ."<p>".$account['bank']."</p>"
-                                ."<p>".$account['number']."</p>"
-                                ."<p>".$account['type']."</p>"
-                                ."<p>".$account['name']." ".$account['lastname']."</p>"       
-                                ."<p>".$account['rut']."</p>"
-                                ."<p>".$account['email']."</p>";
-                        }
-                    }
-                ?>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>País</th>
+                                <th>Banco</th>
+                                <th>Número de cuenta</th>
+                                <th>Tipo de cuenta</th>
+                                <th>Nombre</th>
+                                <th>Cédula / RUT</th>
+                                <th>Correo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                if (isset($accounts)){
+                                    foreach ($accounts as $account){
+                                        echo "<tr><td>".$account['country']."</td>"
+                                            ."<td>".$account['bank']."</td>"
+                                            ."<td>".$account['number']."</td>"
+                                            ."<td>".ucfirst($account['type'])."</td>"
+                                            ."<td>".$account['name']." ".$account['lastname']."</td>"
+                                            ."<td>".$account['rut']."</td>"
+                                            ."<td>".$account['email']."</td></tr>";
+                                    }
+                                }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

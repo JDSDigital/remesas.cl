@@ -21,7 +21,6 @@ use yii\web\IdentityInterface;
  * @property string $role
  * @property string $password_hash
  * @property string $password_reset_token
- * @property string $email
  * @property string $auth_key
  * @property integer $status
  * @property integer $blocked
@@ -96,7 +95,7 @@ class Client extends ActiveRecord implements IdentityInterface
             'rut' => 'Rut',
             'phone' => 'Phone',
             'mobile' => 'Mobile',
-            'email' => 'Email',
+            'email' => 'Correo',
             'username' => 'Username',
             'role' => 'Role',
             'auth_key' => 'Auth Key',
