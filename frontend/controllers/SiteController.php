@@ -3,6 +3,8 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\base\InvalidParamException;
+use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -153,21 +155,16 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionSignup(){
-        
+
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
             $email = \Yii::$app->mailer->compose()
                     ->setTo($user->email)
-                    ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+//                    ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+                    ->setFrom([Yii::$app->params['supportEmail'] => 'Geknology Core'])
                     ->setSubject('Signup Confirmation')
-                    ->setHtmlBody("
-                        Click this link ".\yii\helpers\Html::a('confirm',
-                                                                Yii::$app->urlManager->createAbsoluteUrl(
-                                                                    ['site/confirm', 'id' => $user->id, 'key' =>$user->auth_key]
-                                                                )
-                                                               )
-                    )
+                    ->setHtmlBody("Click this link <a href='http://geknology.com/remesas.cl/site/confirm?id=" . $user->id . "&key=" . $user->auth_key . "' target='_blank'>confirm</a>")
                     ->send();
                     
                     if($email){

@@ -20,7 +20,7 @@ $this->title = 'Contáctanos';
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
-                <?= $form->field($contact, 'name')->textInput(['autofocus' => true]) ?>
+                <?= $form->field($contact, 'name')->textInput() ?>
 
                 <?= $form->field($contact, 'email') ?>
 
