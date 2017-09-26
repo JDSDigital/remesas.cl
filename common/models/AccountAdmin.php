@@ -117,7 +117,7 @@ class AccountAdmin extends \yii\db\ActiveRecord
      * Get active accounts
      */
     public function getActiveAccounts(){
-        $connection = Yii::$app->getDb();
+        /*$connection = Yii::$app->getDb();
         $command = $connection->createCommand("
             SELECT b.name as bank, c.name as country, ac.number, 
             ac.name, ac.lastname, ac.rut, ac.email, ac.type  
@@ -126,7 +126,17 @@ class AccountAdmin extends \yii\db\ActiveRecord
             LEFT JOIN gcountries c ON (b.countryId = c.id) 
             WHERE ac.status = 1");
 
-        $result = $command->queryAll();
+        $result = $command->queryAll();*/
+
+        $result = AccountAdmin::find()->select(['currencyId','gbanks.name as bankname', 'bankId','countryId','number','gaccounts_admin.name','lastname','rut','email','type'])
+            ->joinWith(['bank', 'country',
+                'rates' => function($query) {
+                    $query->select('currencyIdFrom', 'status');
+                }
+            ])
+            ->where(['gaccounts_admin.status' => 1, 'gexchange_rates.status' => 1])
+            ->all();
+
         return $result;
     }
     
@@ -156,5 +166,23 @@ class AccountAdmin extends \yii\db\ActiveRecord
         
         $result = $command->queryOne();
         return $result;
+    }
+
+    /**
+     * Get the country of the bank
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCountry()
+    {
+        return $this->hasOne(Country::className(), ['id' => 'countryId'])->via('bank');
+    }
+
+    /**
+     * Get the exchange rates
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRates()
+    {
+        return $this->hasOne(ExchangeRate::className(), ['currencyIdFrom' => 'currencyId']);
     }
 }

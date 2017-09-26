@@ -25,13 +25,13 @@ $this->title = 'Cuentas disponibles';
                         <?php
                             if (isset($accounts)){
                                 foreach ($accounts as $account){
-                                    echo "<tr><td>".$account['country']."</td>"
-                                        ."<td>".$account['bank']."</td>"
-                                        ."<td>".$account['number']."</td>"
-                                        ."<td>".ucfirst($account['type'])."</td>"
-                                        ."<td>".$account['name']." ".$account['lastname']."</td>"
-                                        ."<td>".$account['rut']."</td>"
-                                        ."<td>".$account['email']."</td></tr>";
+                                    echo "<tr><td>".$account->country->name."</td>"
+                                        ."<td>".$account->bank->name."</td>"
+                                        ."<td>".$account->number."</td>"
+                                        ."<td>".ucfirst($account->type)."</td>"
+                                        ."<td>".$account->name." ".$account->lastname."</td>"
+                                        ."<td>".$account->rut."</td>"
+                                        ."<td>".$account->email."</td></tr>";
                                 }
                             }
                         ?>
