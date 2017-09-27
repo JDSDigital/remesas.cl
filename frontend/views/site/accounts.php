@@ -7,7 +7,7 @@ $this->title = 'Cuentas disponibles';
 <div class="site-index container">
     <div class="row">
         <div class="col-lg-12">
-            <h2>Cuentas disponibles</h2>
+            <h1>Cuentas disponibles</h1>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>

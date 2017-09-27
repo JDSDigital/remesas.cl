@@ -152,5 +152,5 @@ select.form-control:not([size]):not([multiple]) {
     border-bottom: 4px solid rgba(150, 150, 150, 0.25) !important;
 }
 .pb50 {
-    padding-top: 50px;
+    padding-top: 80px;
 }

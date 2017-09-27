@@ -18,6 +18,7 @@ $this->title = 'Crear cuenta bancaria';
 <div class="container account-client-create">
     <div class="row">
         <div class="col-lg-5">
+            <h1>Agregar Cuenta</h1>
             <?php $form = ActiveForm::begin(['id' => 'form-account-client']); ?>
                 <?= $form->field($model, 'description')->label("Descripcion")->textInput(['autofocus' => true]) ?>
                 <?= Html::label("País") ?>
