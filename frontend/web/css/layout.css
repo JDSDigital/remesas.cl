@@ -135,9 +135,10 @@ margin-bottom:0;
 }
 /*** icons ***/
 .iconRounded{
-	border-radius:8px;
-	width: 40px;
-	height: 40px;
+	/*border-radius:8px;*/
+	border-radius:50%;
+	width: 52px;
+	height: 52px;
 	display: block;
 	text-align: center;
 	/*padding-top: 11px;*/

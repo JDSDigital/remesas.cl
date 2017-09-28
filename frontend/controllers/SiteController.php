@@ -98,9 +98,9 @@ class SiteController extends Controller
             return $this->goBack();
         } else {
             foreach ($model->errors as $error) {
-                Yii::$app->session->setFlash('error', $error);
+                Yii::$app->session->setFlash('error', 'Correo o contraseña incorrectas.');
             }
-            return $this->render('login');
+            return $this->actionIndex();
         }
     }
 
@@ -161,7 +161,6 @@ class SiteController extends Controller
             if ($user = $model->signup()) {
             $email = \Yii::$app->mailer->compose()
                     ->setTo($user->email)
-//                    ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
                     ->setFrom([Yii::$app->params['supportEmail'] => 'Geknology Core'])
                     ->setSubject('Confirmación de cuenta')
                     ->setHtmlBody("Haga click en el siguiente enlace para activar su cuenta: <a href='http://geknology.com/remesas.cl/site/confirm?id=" . $user->id . "&key=" . $user->auth_key . "' target='_blank'>Activar</a>")

@@ -4,18 +4,27 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\SignupForm */
 
+use frontend\models\SignupForm;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+
+$model = new SignupForm();
 
 $this->title = 'Registrarse';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container site-signup">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+<div id="modal-signup" class="modal fade" role="dialog" style="top: -200px;">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <h1><?= Html::encode($this->title) ?></h1>
+                <?php $form = ActiveForm::begin([
+                    'id' => 'form-signup',
+                    'action' => ['//site/signup'],
+                ]); ?>
 
                 <?= $form->field($model, 'name')->label("Nombre")->textInput(['autofocus' => true]) ?>
                 <?= $form->field($model, 'lastName')->label("Apellido") ?>
@@ -29,7 +38,9 @@ $this->title = 'Registrarse';
                     <?= Html::submitButton('Registrarse', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
                 </div>
 
-            <?php ActiveForm::end(); ?>
+                <?php ActiveForm::end(); ?>
+            </div>
         </div>
+
     </div>
 </div>

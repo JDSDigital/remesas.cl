@@ -23,7 +23,7 @@ class ThemeAsset extends AssetBundle
         'font-icons/custom-icons/css/custom-icons-ie7.css',
 
         'css/layout.css',
-        'css/orange.css',
+        'css/yellow.css',
         'css/custom.css',
     ];
     public $js = [

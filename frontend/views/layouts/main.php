@@ -58,7 +58,7 @@ AppAsset::register($this);
         
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+        $menuItems[] = ['label' => 'Signup', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-signup']];
         $menuItems[] = ['label' => 'Login', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-login']];
     } else {
         $menuItems[] = ['label' => 'Cuentas disponibles', 'url' => ['/site/accounts']];
@@ -149,6 +149,18 @@ AppAsset::register($this);
     ==================================-->
 <?= Yii::$app->controller->renderPartial('//site/login'); ?>
 <!-- /. End Modal1 -->
+
+<!-- ================================
+          Modal2
+    ==================================-->
+<?= Yii::$app->controller->renderPartial('//site/requestPasswordResetToken'); ?>
+<!-- /. End Modal2 -->
+
+<!-- ================================
+          Modal3
+    ==================================-->
+<?= Yii::$app->controller->renderPartial('//site/signup'); ?>
+<!-- /. End Modal3 -->
 
 <?php $this->endBody() ?>
 </body>

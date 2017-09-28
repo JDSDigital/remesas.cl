@@ -32,7 +32,7 @@ $this->title = 'Login';
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
                 <div style="color:#999;margin:1em 0">
-                    Si olvidó su contraseña, puede resetearla <?= Html::a('aquí', ['site/request-password-reset']) ?>.
+                    Si olvidó su contraseña, puede resetearla <?= Html::a('aquí', ['site/request-password-reset'], ['data-toggle' => 'modal', 'data-target' => '#modal-reset-password']) ?>.
                 </div>
 
                 <div class="form-group">

@@ -10,7 +10,7 @@ use yii\captcha\Captcha;
 
 $this->title = 'Contáctanos';
 ?>
-<section id="contact" class="container site-contact pb50">
+<section id="contact" class="container site-contact pb50 pt80">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

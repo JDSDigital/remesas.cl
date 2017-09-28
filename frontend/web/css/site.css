@@ -135,6 +135,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 .nav-logo {
     max-height: 50px;
+    text-shadow: 3px 3px 5px white;
 }
 .footerWidget #footerLogo {
     max-height: 50px;
