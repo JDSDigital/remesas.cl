@@ -95,7 +95,7 @@ AppAsset::register($this);
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="footerWidget">
-                            <?= Html::img(Yii::getAlias('@web') . '/images/logo.png', ['id' => 'footerLogo', 'class' => 'img-responsive', 'alt' => 'Remesas.cl']) ?>
+                            <?= Html::img(Yii::getAlias('@web') . '/images/logo-alt.png', ['id' => 'footerLogo', 'class' => 'img-responsive', 'alt' => 'Remesas.cl']) ?>
                             <p><a href="http://www.little-neko.com/" title="Little Neko, website template creation">Remesas.cl</a> is a web design and development studio. We build responsive HTML5 and CSS3 templates, integrating best web design practises and up-to-date web technologies to create great user experiences. We love what we do and we hope you too ! </p>
                         </div>
                     </div>
