@@ -75,11 +75,15 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-    <div class="pb50">
+    <div class="pb50 mt50">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?= Alert::widget() ?>
+        <div class="container">
+            <div class="row">
+                <?= Alert::widget() ?>
+            </div>
+        </div>
         <?= $content ?>
     </div>
 </div>

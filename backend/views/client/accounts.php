@@ -69,6 +69,10 @@ $this->title = "Cuentas de ".$model->name." ".$model->lastName;
                     'attribute' => 'number'
                 ],
                 [
+                    'label'     => 'RUT/Cédula',
+                    'attribute' => 'rut'
+                ],
+                [
                     'label'     => 'Tipo de cuenta',
                     'attribute' => 'type'
                 ]

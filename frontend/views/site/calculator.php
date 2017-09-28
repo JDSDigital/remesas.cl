@@ -13,7 +13,7 @@ $this->title = 'Calculadora';
 //$this->params['breadcrumbs'][] = ['label' => 'Account Clients', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container calculator">
+<div class="container calculator pt30">
     <div class="row">
         <div class="col-lg-5">
             <h1><?= Html::encode($this->title) ?></h1>

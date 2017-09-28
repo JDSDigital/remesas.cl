@@ -4,7 +4,7 @@
 
 $this->title = 'Cuentas disponibles';
 ?>
-<div class="site-index container">
+<div class="site-index container pt30">
     <div class="row">
         <div class="col-lg-12">
             <h1>Cuentas disponibles</h1>

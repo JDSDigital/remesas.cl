@@ -22,7 +22,7 @@ class AccountClientSearch extends AccountClient
     {
         return [
             [['id', 'clientId', 'bankId', 'currencyId'], 'integer'],
-            [['number', 'type', 'description', 'bankName', 'currencyName'], 'safe'],
+            [['number', 'type', 'description', 'bankName', 'rut', 'currencyName'], 'safe'],
         ];
     }
 
@@ -59,6 +59,7 @@ class AccountClientSearch extends AccountClient
                 'id',
                 'description',
                 'type',
+                'rut',
                 'bankName' => [
                     'asc' => ['gbanks.name' => SORT_ASC],
                     'desc' => ['gbanks.name' => SORT_DESC],
@@ -89,6 +90,7 @@ class AccountClientSearch extends AccountClient
         ]);
 
         $query->andFilterWhere(['like', 'number', $this->number])
+            ->andFilterWhere(['like', 'rut', $this->rut])
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'description', $this->description]);
             

@@ -163,7 +163,7 @@ class SiteController extends Controller
                     ->setTo($user->email)
 //                    ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
                     ->setFrom([Yii::$app->params['supportEmail'] => 'Geknology Core'])
-                    ->setSubject('Signup Confirmation')
+                    ->setSubject('Confirmación de cuenta')
                     ->setHtmlBody("Haga click en el siguiente enlace para activar su cuenta: <a href='http://geknology.com/remesas.cl/site/confirm?id=" . $user->id . "&key=" . $user->auth_key . "' target='_blank'>Activar</a>")
                     ->send();
                     
@@ -240,10 +240,10 @@ class SiteController extends Controller
         if (!empty($user)){
             $user->status = 1;
             $user->save();
-            Yii::$app->getSession()->setFlash('success','Success!');
+            Yii::$app->getSession()->setFlash('success','Se ha activado su cuenta con éxito.');
         }
         else {
-            Yii::$app->getSession()->setFlash('warning','Failed!');
+            Yii::$app->getSession()->setFlash('warning','No se ha podido activar su cuenta, por favor intente mas tarde.');
         }
         return $this->goHome();
     }

@@ -14,13 +14,14 @@ class m170819_144131_create_gaccounts_clients_table extends Migration
         }
 
         $this->createTable('{{%gaccounts_clients}}', [
-            'id'             => $this->primaryKey(),
-            'clientId'        => $this->integer()->notNull()->comment("Client who owns the bank account."),
-            'bankId'         => $this->integer()->notNull()->comment("Bank of the account."),
-            'number'         => $this->string()->notNull()->comment("Number of the bank account"),
-            'type'           => $this->string()->notNull()->comment("Type of account"),
-            'currencyId'    => $this->integer()->notNull()->comment("Currency of the account."),
-            'description'   => $this->string()->notNull()->comment("Description of the account"),
+            'id'          => $this->primaryKey(),
+            'clientId'    => $this->integer()->notNull()->comment("Client who owns the bank account."),
+            'bankId'      => $this->integer()->notNull()->comment("Bank of the account."),
+            'number'      => $this->string()->notNull()->comment("Number of the bank account"),
+            'rut'         => $this->string()->notNull()->comment("RUT of the owner of the bank account"),
+            'type'        => $this->string()->notNull()->comment("Type of account"),
+            'currencyId'  => $this->integer()->notNull()->comment("Currency of the account."),
+            'description' => $this->string()->notNull()->comment("Description of the account"),
         ], $tableOptions);
         
         // Client

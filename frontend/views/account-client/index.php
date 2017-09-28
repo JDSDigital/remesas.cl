@@ -10,7 +10,7 @@ use yii\grid\ActionColumn;
 $this->title = 'Mis Cuentas';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container account-client-index">
+<div class="container account-client-index pt30">
     <div class="row">
     	<div class="col-md-6 text-left">
             <h1><?= Html::encode($this->title) ?></h1>
@@ -54,6 +54,13 @@ $this->title = 'Mis Cuentas';
                     'format'    => 'raw',
                     'value'     => function ($model) {
                         return Html::a($model->bank->name, ['update', 'id' => $model->id]);
+                    },
+                ],
+                [
+                    'attribute' => 'rut',
+                    'format'    => 'raw',
+                    'value'     => function ($model) {
+                        return Html::a($model->rut, ['update', 'id' => $model->id]);
                     },
                 ],
                 [

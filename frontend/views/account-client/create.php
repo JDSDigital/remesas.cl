@@ -15,7 +15,7 @@ $this->title = 'Crear cuenta bancaria';
 //$this->params['breadcrumbs'][] = ['label' => 'Account Clients', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container account-client-create">
+<div class="container account-client-create pt30">
     <div class="row">
         <div class="col-lg-5">
             <h1>Agregar Cuenta</h1>
@@ -32,7 +32,8 @@ $this->title = 'Crear cuenta bancaria';
                                                 });'
                                       ]) 
                 ?>
-                <?= $form->field($model, 'bankId')->label("Banco")->dropDownList(ArrayHelper::map(Bank::find()->all(), 'id', 'name'), ['class' => 'form-control']); ?> 
+                <?= $form->field($model, 'bankId')->label("Banco")->dropDownList(ArrayHelper::map(Bank::find()->all(), 'id', 'name'), ['class' => 'form-control']); ?>
+                <?= $form->field($model, 'rut')->label("RUT/Cédula") ?>
                 <?= $form->field($model, 'type')->label("Tipo de cuenta")->dropDownList([
                     'ahorro' => 'Ahorro',
                     'corriente'  => 'Corriente',
