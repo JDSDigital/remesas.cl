@@ -2,9 +2,17 @@
 
 /* @var $this yii\web\View */
 
+use yii\bootstrap\Html;
+
 $this->title = 'Remesas.cl';
 ?>
 <div class="site-index">
+
+    <div class="row">
+        <div class="col-md-12">
+            <?= Html::img(Yii::getAlias('@web') . '/images/steps.jpg', ['class' => 'img-responsive']) ?>
+        </div>
+    </div>
 
     <?= Yii::$app->controller->renderPartial('//site/about'); ?>
 

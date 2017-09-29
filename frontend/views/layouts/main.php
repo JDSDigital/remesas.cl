@@ -45,7 +45,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Html::img(Yii::getAlias('@web') . '/images/logo.png', ['class' => 'nav-logo img-responsive']),
+        'brandLabel' => Html::img(Yii::getAlias('@web') . '/images/logo2.png', ['class' => 'nav-logo img-responsive']),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -58,7 +58,7 @@ AppAsset::register($this);
         
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-signup']];
+        $menuItems[] = ['label' => 'Registro', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-signup']];
         $menuItems[] = ['label' => 'Login', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-login']];
     } else {
         $menuItems[] = ['label' => 'Cuentas disponibles', 'url' => ['/site/accounts']];
@@ -95,7 +95,7 @@ AppAsset::register($this);
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="footerWidget">
-                            <?= Html::img(Yii::getAlias('@web') . '/images/logo-alt.png', ['id' => 'footerLogo', 'class' => 'img-responsive', 'alt' => 'Remesas.cl']) ?>
+                            <?= Html::img(Yii::getAlias('@web') . '/images/logo-alt2.png', ['id' => 'footerLogo', 'class' => 'img-responsive', 'alt' => 'Remesas.cl']) ?>
                             <p><a href="http://www.little-neko.com/" title="Little Neko, website template creation">Remesas.cl</a> is a web design and development studio. We build responsive HTML5 and CSS3 templates, integrating best web design practises and up-to-date web technologies to create great user experiences. We love what we do and we hope you too ! </p>
                         </div>
                     </div>

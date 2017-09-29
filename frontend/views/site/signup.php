@@ -14,7 +14,7 @@ $this->title = 'Registrarse';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div id="modal-signup" class="modal fade" role="dialog" style="top: -200px;">
+<div id="modal-signup" class="modal fade" role="dialog" style="top: -300px;">
     <div class="modal-dialog">
 
         <!-- Modal content-->
