@@ -11,6 +11,10 @@ use common\models\Refund;
 $this->title = 'Transacciones';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<?= Yii::$app->controller->renderPartial('//site/accounts'); ?>
+
+
 <div class="container account-client-index pt30">
     <div class="row">
     	<div class="col-md-6 text-left">

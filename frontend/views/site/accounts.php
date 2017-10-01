@@ -2,7 +2,11 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'Cuentas disponibles';
+use common\models\AccountAdmin;
+
+$account = new AccountAdmin();
+$accounts = $account->getActiveAccounts();
+
 ?>
 <div class="site-index container pt30">
     <div class="row">

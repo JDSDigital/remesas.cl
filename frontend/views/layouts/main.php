@@ -61,9 +61,9 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Registro', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-signup']];
         $menuItems[] = ['label' => 'Login', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-login']];
     } else {
-        $menuItems[] = ['label' => 'Cuentas disponibles', 'url' => ['/site/accounts']];
+//        $menuItems[] = ['label' => 'Cuentas disponibles', 'url' => ['/site/accounts']];
         $menuItems[] = ['label' => 'Mis Cuentas', 'url' => ['/account-client/index']];
-        $menuItems[] = ['label' => 'Calculadora', 'url' => ['/site/calculator']];
+        $menuItems[] = ['label' => 'Calculadora', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-calculator']];
         $menuItems[] = ['label' => 'Mis Transacciones', 'url' => ['/transaction/index']];
 //        $menuItems[] = ['label' => 'Logout (' . Yii::$app->user->identity->username . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
         $menuItems[] = ['label' => 'Logout', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
@@ -161,6 +161,12 @@ AppAsset::register($this);
     ==================================-->
 <?= Yii::$app->controller->renderPartial('//site/signup'); ?>
 <!-- /. End Modal3 -->
+
+<!-- ================================
+          Modal4
+    ==================================-->
+<?= Yii::$app->controller->renderPartial('//site/calculator'); ?>
+<!-- /. End Modal4 -->
 
 <?php $this->endBody() ?>
 </body>

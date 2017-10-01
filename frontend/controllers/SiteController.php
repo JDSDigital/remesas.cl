@@ -249,36 +249,29 @@ class SiteController extends Controller
      * List of the site's available bank accounts 
      */
     public function actionAccounts(){
-        $model = new AccountAdmin();
-        $accounts = $model->getActiveAccounts();
-        
-        return $this->render('accounts', [
-            'accounts' => $accounts,
-        ]);
+        return $this->render('accounts');
     }
     
     /**
      * Helps the user to make some exchange calculations before making a transaction 
      */
     public function actionCalculator(){
-        
+
         $model = new ExchangeRate();
         $result = null;
-        $amount = 1;
-        
+
         // Get $_POST data
         $load = Yii::$app->request->post();
         
         if ($load != null){
             $model->currencyIdFrom = $load['currencyIdFrom'];
             $model->currencyIdTo = $load['currencyIdTo'];
-            $amount = $load['amount'];
-            
+
             if ($load['amount'] == ""){
-                Yii::$app->getSession()->setFlash('error','Debe introducir una cantidad a convertir');
+                return 'Debe introducir una cantidad a convertir';
             }
             else if ($load['currencyIdFrom'] == $load['currencyIdTo']){
-                Yii::$app->getSession()->setFlash('error','Las monedas de conversi�n deben ser diferentes');
+                return 'Las monedas de conversión deben ser diferentes';
             }
             else {
                 // Search for an exchange rate with these conditions
@@ -301,18 +294,12 @@ class SiteController extends Controller
                         $calculate = $load['amount']*$er1->sellValue;
                     }
                     
-                    $result = $calculate." ".$ct->symbol;
+                    return $calculate." ".$ct->symbol;
                 }
                 else {
-                   Yii::$app->getSession()->setFlash('error','Lo sentimos. La tasa de cambio solicitada no est� disponible. Por favos intente m�s tarde.');
+                   return 'Lo sentimos. La tasa de cambio solicitada no está disponible. Por favor intente más tarde.';
                 }
             } 
         }
-        
-        return $this->render('calculator', [
-            'model' => $model,
-            'result' => $result,
-            'amount' => $amount
-        ]);
     }
 }

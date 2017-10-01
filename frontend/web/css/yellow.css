@@ -712,7 +712,7 @@ border:none}
 .color2 .ctaBox {border-color:rgba(255,255,255,0.5);}
 /*** icons ***/
 .iconRounded {background-color:#c8e729 ;color:#4f001f; border: 6px solid #4f001f; -webkit-transition: all 0.2s ease !important;	-moz-transition: all 0.2s ease !important;-o-transition: all 0.2s ease !important;-ms-transition: all 0.2s ease !important;transition: all 0.2s ease !important;}
-.iconRounded:hover, .color1 .iconRounded:hover,.iconLinks a:hover i{background-color:#333;color:#c8e729;; -webkit-transition: all 0.2s ease !important;	-moz-transition: all 0.2s ease !important;-o-transition: all 0.2s ease !important;-ms-transition: all 0.2s ease !important;transition: all 0.2s ease !important;}
+.iconRounded:hover, .color1 .iconRounded:hover,.iconLinks a:hover i{background-color:#222;color:#c8e729;; -webkit-transition: all 0.2s ease !important;	-moz-transition: all 0.2s ease !important;-o-transition: all 0.2s ease !important;-ms-transition: all 0.2s ease !important;transition: all 0.2s ease !important;}
 .color1 .iconRounded {color:#fff ;}
 .color2 .iconRounded {background-color:#FFF;color:#c8e729 ;}
 
