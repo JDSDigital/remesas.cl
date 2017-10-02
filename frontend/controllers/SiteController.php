@@ -276,7 +276,12 @@ class SiteController extends Controller
             else {
                 // Search for an exchange rate with these conditions
                 $ct = Currency::find()->where(['id' => $model->currencyIdTo])->one();
-                $er1 = ExchangeRate::find()->where(['and', ['currencyIdFrom' => $load['currencyIdFrom']], ['currencyIdTo' => $load['currencyIdTo']]])->one();
+                $er1 = ExchangeRate::find()->where([
+                    'and',
+                    ['currencyIdFrom' => $load['currencyIdFrom']],
+                    ['currencyIdTo' => $load['currencyIdTo']],
+                    ['status' => 1]
+                ])->one();
                 
                 // Depending on the from currency
                 if ($er1 != null){
@@ -295,8 +300,7 @@ class SiteController extends Controller
                     }
                     
                     return $calculate." ".$ct->symbol;
-                }
-                else {
+                } else {
                    return 'Lo sentimos. La tasa de cambio solicitada no está disponible. Por favor intente más tarde.';
                 }
             } 
