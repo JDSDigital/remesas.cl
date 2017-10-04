@@ -19,6 +19,11 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
+        'formatter' => [
+            'decimalSeparator' => ',',
+            'thousandSeparator' => '.',
+            'currencyCode' => 'USD',
+        ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'useFileTransport' => false, //for the testing purpose, you need to enable this

@@ -44,14 +44,15 @@ $this->title = 'Registrar Depósito / Transferencia';
                 <?= $form->field($model, 'clientBankTransaction')->label("Numero de Depósito o Transferencia") ?>
                 
                 <?= $form->field($model, 'accountClientId')->label("Banco para recibir la transaccion")->dropDownList(
-                    ArrayHelper::map(AccountClient::find()->orderBy('description')->all(), 'id', 'description'), ['class' => 'form-control']
+                    ArrayHelper::map(AccountClient::find()->where(['clientId' => Yii::$app->user->identity->id])->orderBy('description')->all(), 'id', 'description'), ['class' => 'form-control']
                 )?>
 
                 <?= $form->field($model, 'transactionDate')->label("Fecha de la transaccion")->widget(DatePicker::classname(), [
                     'language'      => 'es',
                     'dateFormat'    => 'dd-MM-yyyy',
                     'clientOptions' => [
-                        'maxDate' => '0',
+                        'maxDate'      => '0',
+                        'defaultValue' => date('dd-MM-yyyy'),
                     ],
                     'options'       => [
                         'class' => 'form-control',

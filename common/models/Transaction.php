@@ -78,6 +78,7 @@ class Transaction extends ActiveRecord
             ['accountClientId', 'required', 'message' => 'Debe seleccionar la cuenta a donde desea que le realicen la transferencia.'],
             ['amountFrom', 'required', 'message' => 'Indique el monto de dinero que desea convertir.'],
             ['transactionDate', 'required', 'message' => 'Indique la fecha en la cual realizó el depósito o transferencia.'],
+            ['transactionDate', 'default', 'value' => date('dd-MM-yyyy')],
             ['exchangeId', 'required', 'message' => 'Seleccione el tipo de cambio que desea realizar.'],
             ['clientBankTransaction', 'required', 'message' => 'Indique el número del depósito o la transferencia que realizó.'],
             [['clientId', 'sellRateValue', 'buyRateValue', 'currencyIdFrom', 'currencyIdTo', 'usedValue'], 'required'],
@@ -94,7 +95,7 @@ class Transaction extends ActiveRecord
             [['currencyIdFrom'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdFrom' => 'id']],
             [['currencyIdTo'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currencyIdTo' => 'id']],
             [['exchangeId'], 'exist', 'skipOnError' => true, 'targetClass' => ExchangeRate::className(), 'targetAttribute' => ['exchangeId' => 'id']],
-            [['uploadFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg'],
+            [['uploadFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png'],
         ];
     }
 
@@ -123,7 +124,7 @@ class Transaction extends ActiveRecord
             'transactionDate' => 'Transaction Date',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'uploadFile' => 'Upload File',
+            'uploadFile' => 'Adjuntar foto del comprobante',
             'exchangeId' => 'Exchange Rate'
         ];
     }

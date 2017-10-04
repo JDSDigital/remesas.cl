@@ -7,6 +7,7 @@ use yii\widgets\ActiveForm;
 use common\models\Bank;
 use common\models\Country;
 use common\models\Currency;
+use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\AccountClient */
@@ -20,7 +21,7 @@ $this->title = 'Crear cuenta bancaria';
         <div class="col-lg-5">
             <h1>Agregar Cuenta</h1>
             <?php $form = ActiveForm::begin(['id' => 'form-account-client']); ?>
-                <?= $form->field($model, 'description')->label("Descripcion")->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'description')->label("Descripcion")->textInput(['autofocus' => true, 'placeholder' => 'Ejemplo: Banesco Mamá']) ?>
                 <?= Html::label("País") ?>
                 <?= Html::dropDownList('countryId', $countryId, ArrayHelper::map(Country::find()->orderBy('name')->all(), 'id', 'name'), 
                                       [
@@ -33,7 +34,7 @@ $this->title = 'Crear cuenta bancaria';
                                       ]) 
                 ?>
                 <?= $form->field($model, 'bankId')->label("Banco")->dropDownList(ArrayHelper::map(Bank::find()->all(), 'id', 'name'), ['class' => 'form-control']); ?>
-                <?= $form->field($model, 'rut')->label("RUT/Cédula") ?>
+                <?= $form->field($model, 'rut')->label("RUT/Cédula")->textInput(['placeholder' => 'Ejemplo: 123456789']) ?>
                 <?= $form->field($model, 'type')->label("Tipo de cuenta")->dropDownList([
                     'ahorro' => 'Ahorro',
                     'corriente'  => 'Corriente',
@@ -43,7 +44,9 @@ $this->title = 'Crear cuenta bancaria';
                 <?= $form->field($model, 'currencyId')->label("Moneda")->dropDownList(
                     ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
                 ) ?>
-                <?= $form->field($model, 'number')->label("Número de cuenta") ?>
+                <?= $form->field($model, 'number')->label("Número de cuenta")->widget(MaskedInput::className(), [
+                    'mask' => '9999 9999 99 9999999999'
+                ]) ?>
                 
                 
                 <div class="form-group">

@@ -88,7 +88,7 @@ $this->title = 'Geknology';
                     'attribute' => 'amountFrom',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->amountFrom." ".$model->currencyFrom->symbol, ['update', 'id' => $model->id]);
+                        return Html::a(Yii::$app->formatter->asCurrency($model->amountFrom) . " " . $model->currencyFrom->symbol, ['update', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -104,7 +104,7 @@ $this->title = 'Geknology';
                     'attribute' => 'amountTo',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a(($model->amountTo != "") ? $model->amountTo." ".$model->currencyTo->symbol : "---", ['update', 'id' => $model->id]);
+                        return Html::a(($model->amountTo != "") ? Yii::$app->formatter->asCurrency($model->amountTo) . " " . $model->currencyTo->symbol : "---", ['update', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -120,7 +120,7 @@ $this->title = 'Geknology';
                     'attribute' => 'winnings',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a(($model->winnings != "") ? $model->winnings." CLP" : "---", ['update', 'id' => $model->id]);
+                        return Html::a(($model->winnings != "") ? Yii::$app->formatter->asCurrency($model->winnings) . " CLP" : "---", ['update', 'id' => $model->id]);
                     },
                 ],
                 [

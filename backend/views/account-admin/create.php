@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 
 use common\models\Bank;
 use common\models\Currency;
-
+use yii\widgets\MaskedInput;
 
 $this->title = 'Geknology';
 ?>
@@ -57,7 +57,9 @@ $this->title = 'Geknology';
                                     ) ?>
                                 </div>
                                 <div class="col-md-10">
-                                    <?= $form->field($model, 'number')->label("Número de cuenta") ?>
+                                    <?= $form->field($model, 'number')->label("Número de cuenta")->widget(MaskedInput::className(), [
+                                        'mask' => '9999 9999 99 9999999999'
+                                    ]) ?>
                                 </div>
                             </div>
                         </div>

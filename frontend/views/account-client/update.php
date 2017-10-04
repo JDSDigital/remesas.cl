@@ -7,6 +7,7 @@ use yii\widgets\ActiveForm;
 use common\models\Bank;
 use common\models\Country;
 use common\models\Currency;
+use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\AccountClient */
@@ -43,7 +44,9 @@ $this->title = 'Crear cuenta bancaria';
                 <?= $form->field($model, 'currencyId')->label("Moneda")->dropDownList(
                     ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
                 ) ?>
-                <?= $form->field($model, 'number')->label("Número de cuenta") ?>
+                <?= $form->field($model, 'number')->label("Número de cuenta")->widget(MaskedInput::className(), [
+                    'mask' => '9999 9999 99 9999999999'
+                ]) ?>
                 
                 <div class="form-group">
                     <?= Html::submitButton('Actualizar Cuenta Bancaria', ['class' => 'btn btn-primary', 'name' => 'form-account-client-button']) ?>

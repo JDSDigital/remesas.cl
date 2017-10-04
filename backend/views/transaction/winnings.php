@@ -107,7 +107,7 @@ $this->title = 'Geknology';
                         'attribute' => 'amountFrom',
                         'format'    => 'raw',
                         'value'     => function ($model) {
-                            return $model->amountFrom." ".$model->currencyFrom->symbol;
+                            return Yii::$app->formatter->asCurrency($model->amountFrom)." ".$model->currencyFrom->symbol;
                         },
                     ],
                     [
@@ -123,7 +123,7 @@ $this->title = 'Geknology';
                         'attribute' => 'amountTo',
                         'format'    => 'raw',
                         'value'     => function ($model) {
-                            return $model->amountTo." ".$model->currencyTo->symbol;
+                            return Yii::$app->formatter->asCurrency($model->amountTo)." ".$model->currencyTo->symbol;
                         },
                     ],
                     [
@@ -178,7 +178,7 @@ $this->title = 'Geknology';
                         'attribute' => 'winnings',
                         'format'    => 'raw',
                         'value'     => function ($model) {
-                            return ($model->winnings != "") ? $model->winnings." CLP" : "---";
+                            return ($model->winnings != "") ? Yii::$app->formatter->asCurrency($model->winnings)." CLP" : "---";
                         },
                     ],
                 ],
@@ -193,3 +193,4 @@ $this->title = 'Geknology';
         ?>
     </div>
 </div>
+backend/views/account-admin/create.php backend/views/account-admin/update.php backend/views/transaction/index.php backend/views/transaction/winnings.php common/config/main.php common/models/Transaction.php frontend/views/account-client/create.php frontend/views/account-client/update.php frontend/views/transaction/create.php
