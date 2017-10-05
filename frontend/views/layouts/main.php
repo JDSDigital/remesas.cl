@@ -52,9 +52,9 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Inicio', 'url' => ['/site/index']],
-        ['label' => 'Quienes Somos', 'url' => (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index') ? '#about' : ['/site/index']],
-        ['label' => 'Contacto', 'url' => (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index') ? '#contact' : ['/site/index']],
+        ['label' => 'Inicio', 'url' => (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index') ? '#index' : ['/site/index'], 'linkOptions' => ['id' => 'btn-index']],
+        ['label' => 'Quienes Somos', 'url' => (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index') ? '#about' : ['/site/index'], 'linkOptions' => ['id' => 'btn-about']],
+        ['label' => 'Contacto', 'url' => (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index') ? '#contact' : ['/site/index'], 'linkOptions' => ['id' => 'btn-contact']],
         
     ];
     if (Yii::$app->user->isGuest) {
@@ -167,6 +167,11 @@ AppAsset::register($this);
     ==================================-->
 <?= Yii::$app->controller->renderPartial('//site/calculator'); ?>
 <!-- /. End Modal4 -->
+
+<?php
+//$this->registerJsFile('@web/js-plugin/parallax/js/jquery.scrollTo-1.4.3.1-min.js',	['depends' => [\yii\web\JqueryAsset::className()]]);
+//$this->registerJsFile('@web/js-plugin/parallax/js/jquery.localscroll-1.2.7-min.js',	['depends' => [\yii\web\JqueryAsset::className()]]);
+?>
 
 <?php $this->endBody() ?>
 </body>

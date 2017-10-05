@@ -8,9 +8,9 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\Refund */
 
 $this->title = 'Solicitar Devolución - Transacción '.$t;
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="refund-create">
+<div class="container">
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-refund']); ?>

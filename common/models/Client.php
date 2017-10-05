@@ -70,7 +70,7 @@ class Client extends ActiveRecord implements IdentityInterface
             ['lastName', 'required', 'message' => 'Debe escribir su apellido.'],
             ['rut', 'required', 'message' => 'Debe escribir su identificación personal.'],
             ['phone', 'required', 'message' => 'Debe escribir su numero de telefono.'],
-            ['mobile', 'required', 'message' => 'Debe escribir su numero de telefono movil.'],
+//            ['mobile', 'required', 'message' => 'Debe escribir su numero de telefono movil.'],
             ['email', 'required', 'message' => 'Debe escribir su correo electrónico.'],
             ['password_hash', 'required', 'message' => 'La clave no debe estar vacia.'],
             [['username', 'role', 'auth_key'], 'required'],

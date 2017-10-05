@@ -61,6 +61,13 @@ $this->title = 'Geknology';
                 <?php ActiveForm::end(); ?>
             </div>
         </div>
+        <?php if (isset($total) && $total != "") : ?>
+            <div class="col-md-5 text-center">
+                <div class="panel panel-flat pb30">
+                    <?= Html::tag('h2', "Total ".Yii::$app->formatter->asCurrency(Html::encode($total))." CLP"); ?>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -185,11 +192,5 @@ $this->title = 'Geknology';
             ]); ?>
             </div>
         </div>
-
-        <?php
-            if (isset($total) && $total != ""){
-                echo Html::tag('h3', "Total ".Html::encode($total)." CLP");
-            }
-        ?>
     </div>
 </div>

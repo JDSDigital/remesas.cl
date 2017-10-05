@@ -19,7 +19,7 @@ class m170819_144027_create_gclients_table extends Migration
             'lastName'              => $this->string()->notNull()->comment("Lastname"),
             'rut'                   => $this->string()->notNull()->comment("Personal id"),
             'phone'                 => $this->string()->notNull()->comment("Phone number"),
-            'mobile'                => $this->string()->notNull()->comment("Mobile number"),
+            'mobile'                => $this->string()->null()->comment("Mobile number"),
             'email'                 => $this->string()->notNull()->unique()->comment("Email"),
             'username'              => $this->string()->notNull()->unique()->comment("Webpage login"),
             'role'                  => $this->string()->notNull()->comment("User level"),

@@ -6,7 +6,7 @@ use yii\bootstrap\Html;
 
 $this->title = 'Remesas.cl';
 ?>
-<div class="site-index">
+<div id="index" class="site-index">
 
     <div class="row">
         <div class="col-md-12">

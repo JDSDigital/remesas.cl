@@ -32,8 +32,8 @@ class ThemeAsset extends AssetBundle
 //        'js-plugin/isotope/jquery.isotope.min.js',
 //	    'js-plugin/isotope/jquery.isotope.sloppy-masonry.min.js',
 
-        'js-plugin/parallax/js/jquery.scrollTo-1.4.3.1-min.js',
-	    'js-plugin/parallax/js/jquery.localscroll-1.2.7-min.js',
+//        'js-plugin/parallax/js/jquery.scrollTo-1.4.3.1-min.js',
+//	    'js-plugin/parallax/js/jquery.localscroll-1.2.7-min.js',
 
 //        'js/custom.js',
     ];

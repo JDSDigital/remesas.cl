@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Transaction */
 
 $this->title = "Transaccion #".$model->id;
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container transaction-view pt30">
 
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => 'Monto a convertir',
-                'value' => $model->amountFrom." ".$model->currencyFrom->symbol,
+                'value' => Yii::$app->formatter->asCurrency($model->amountFrom)." ".$model->currencyFrom->symbol,
             ],
             [
                 'label' => 'Tasa',
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => 'Monto convertido aprox.',
-                'value' => $model->amountTo." ".$model->currencyTo->symbol,
+                'value' => Yii::$app->formatter->asCurrency($model->amountTo)." ".$model->currencyTo->symbol,
             ],
             [
                 'label'     => 'Cuenta',

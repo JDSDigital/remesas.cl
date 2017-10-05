@@ -34,7 +34,7 @@ $this->title = 'Calculadora';
 
                 <?php
                 if (isset($result) && $result != null){
-                    echo Html::tag('h1', Html::encode($result), ['id' => 'result']);
+                    echo Html::tag('h1', Yii::$app->formatter->asCurrency(Html::encode($result)), ['id' => 'result']);
                 }
                 ?>
                 <h1 id="result"></h1>

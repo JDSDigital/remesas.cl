@@ -69,7 +69,7 @@ $this->title = 'Transacciones';
                     'attribute' => 'amountFrom',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return $model->amountFrom." ".$model->currencyFrom->symbol;
+                        return Yii::$app->formatter->asCurrency($model->amountFrom)." ".$model->currencyFrom->symbol;
                     },
                 ],
                 [
@@ -85,7 +85,7 @@ $this->title = 'Transacciones';
                     'attribute' => 'amountTo',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return $model->amountTo." ".$model->currencyTo->symbol;
+                        return Yii::$app->formatter->asCurrency($model->amountTo)." ".$model->currencyTo->symbol;
                     },
                 ],
                 [
