@@ -22,7 +22,7 @@ $this->title = 'Transacciones';
         </div>
     	<div class="col-md-6 text-right">
             <p>
-                <?= Html::a('Solicitar transacción', ['create'], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Solicitar transacción', ['#'], ['data-toggle' => 'modal', 'data-target' => '#modal-check', 'class' => 'btn btn-primary']) ?>
             </p>
         </div>
     </div>
@@ -141,10 +141,10 @@ $this->title = 'Transacciones';
                                $refund = Refund::find()->where(['transactionId' => $model->id])->one();
                                
                                if ($refund){
-                                   return Html::a('<span class="glyphicon glyphicon-usd"></span>', ['/refund/view', 'id'=>$refund->id],['title'=>'Ver solicitud de devolucion']);   
+                                   return Html::a('<span class="glyphicon glyphicon-usd"></span>', ['/refund/view', 'id'=>$refund->id],['title'=>'Ver solicitud de devolucion']);
                                }
                                else {
-                                   return Html::a('<span class="glyphicon glyphicon-usd"></span>', ['/refund/create', 't'=>$model->id],['title'=>'Solicitar devolucion']); 
+                                   return Html::a('<span class="glyphicon glyphicon-usd"></span>', ['/refund/create', 't'=>$model->id],['title'=>'Solicitar devolucion']);
                                }
                             }
                         },
@@ -153,3 +153,5 @@ $this->title = 'Transacciones';
             ],
         ]); ?>
 </div>
+
+<?= Yii::$app->controller->renderPartial('check'); ?>

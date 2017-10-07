@@ -14,10 +14,10 @@ $this->title = 'Solicitar Devolución - Transacción '.$t;
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-refund']); ?>
-                
+
                 <?= $form->field($model, 'transactionId')->hiddenInput(['value' => $t])->label(false) ?>
                 <?= $form->field($model, 'motivation')->label("Describa el motivo por el cual desea una devolución") ?>
-                
+
                 <div class="form-group">
                     <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary', 'name' => 'form-transaction-button']) ?>
                 </div>

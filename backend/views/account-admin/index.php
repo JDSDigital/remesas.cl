@@ -82,7 +82,7 @@ $this->title = 'Geknology';
                     'attribute' => 'minAmount',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->minAmount, ['update', 'id' => $model->id]);
+                        return Html::a(Yii::$app->formatter->asCurrency($model->minAmount, $model->currency->symbol), ['update', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -90,7 +90,7 @@ $this->title = 'Geknology';
                     'attribute' => 'maxAmount',
                     'format'    => 'raw',
                     'value'     => function ($model) {
-                        return Html::a($model->maxAmount, ['update', 'id' => $model->id]);
+                        return Html::a(Yii::$app->formatter->asCurrency($model->maxAmount, $model->currency->symbol), ['update', 'id' => $model->id]);
                     },
                 ],
                 [
@@ -106,7 +106,7 @@ $this->title = 'Geknology';
                                 else 
                                     $rest = $model->maxAmount;
                         
-                                return Html::a($rest, ['update', 'id' => $model->id]);
+                                return Html::a(Yii::$app->formatter->asCurrency($rest, $model->currency->symbol), ['update', 'id' => $model->id]);
                     },
                 ],
                 [

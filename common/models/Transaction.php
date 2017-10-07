@@ -225,4 +225,14 @@ class Transaction extends ActiveRecord
         $result = $command->queryOne();
         return $result;
     }
+
+    public function getCurrency()
+    {
+        return $this->hasOne(Currency::className(), ['id' => 'currencyId']);
+    }
+
+    public function getRefund()
+    {
+        return $this->hasOne(Refund::className(), ['transactionId' => 'id']);
+    }
 }

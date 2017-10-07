@@ -26,7 +26,7 @@ $this->title = 'Geknology';
             <div class="panel panel-flat pl20 pr20">
                 <?php $form = ActiveForm::begin(['id' => 'form-transaction']); ?>
                 <?= Html::label("Monto a convertir") ?>
-                <?= Html::label($model->amountFrom." ".$model->currencyFrom->symbol) ?>
+                <?= Html::label(Yii::$app->formatter->asCurrency($model->amountFrom, $model->currencyFrom->symbol)) ?>
                 <?= Html::label("De") ?>
                 <?= Html::label($model->currencyFrom->name) ?>
                 <?= Html::label("A") ?>

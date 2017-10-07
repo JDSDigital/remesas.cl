@@ -2,7 +2,9 @@
 namespace backend\controllers;
 
 
+use common\models\Transaction;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -65,7 +67,19 @@ class SiteController extends Controller
         if(Yii::$app->user->isGuest)
             return $this->redirect(['login']);
 
-        return $this->render('index');
+        $query = Transaction::find()->joinWith('refund')->where(['or', ['gtransactions.status' => 0], ['grefunds.status' => 0]]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'created_at' => SORT_DESC,
+                ]
+            ],
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**

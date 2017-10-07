@@ -82,9 +82,8 @@ class TransactionController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate(){
-        $model = new Transaction();
-        
+    public function actionCreate($model, $exchangeId = null, $amount = null){
+
         if ($model->load(Yii::$app->request->post())){
             $load = Yii::$app->request->post();
             
@@ -199,6 +198,7 @@ class TransactionController extends Controller
         else {
             return $this->render('create', [
                 'model' => $model,
+                'exchangeId' => $exchangeId
             ]);
         }
     }
@@ -214,6 +214,29 @@ class TransactionController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionCheck()
+    {
+        $load = Yii::$app->request->post();
+
+        $er = ExchangeRate::find()->where(['id' => $load['CheckForm']['rate']])->one();
+
+        // Available money in all of the accounts
+        $accountAdmin = new AccountAdmin();
+        $available = $accountAdmin->getAmountSumByCurrency($er->currencyIdTo);
+        
+        // If the account "has" the money... continue
+        if ($available['total'] >= ($load['CheckForm']['amount'] * $er->sellValue)){
+            $model = new Transaction();
+            $exchangeId = $load['CheckForm']['rate'];
+            $model->amountFrom = $load['CheckForm']['amount'];
+
+            return $this->actionCreate($model, $exchangeId);
+        } else {
+            Yii::$app->getSession()->setFlash('error','La cantidad solicitada no se encuentra disponible. Por favor pruebe con un monto más bajo.');
+            return $this->actionIndex();
+        }
     }
 
     /**

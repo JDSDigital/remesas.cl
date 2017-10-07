@@ -64,7 +64,7 @@ $this->title = 'Geknology';
         <?php if (isset($total) && $total != "") : ?>
             <div class="col-md-5 text-center">
                 <div class="panel panel-flat pb30">
-                    <?= Html::tag('h2', "Total ".Yii::$app->formatter->asCurrency(Html::encode($total))." CLP"); ?>
+                    <?= Html::tag('h2', "Total ".Yii::$app->formatter->asCurrency(Html::encode($total), 'CLP')); ?>
                 </div>
             </div>
         <?php endif; ?>
@@ -114,7 +114,7 @@ $this->title = 'Geknology';
                         'attribute' => 'amountFrom',
                         'format'    => 'raw',
                         'value'     => function ($model) {
-                            return Yii::$app->formatter->asCurrency($model->amountFrom)." ".$model->currencyFrom->symbol;
+                            return Yii::$app->formatter->asCurrency($model->amountFrom, $model->currencyFrom->symbol);
                         },
                     ],
                     [
@@ -130,7 +130,7 @@ $this->title = 'Geknology';
                         'attribute' => 'amountTo',
                         'format'    => 'raw',
                         'value'     => function ($model) {
-                            return Yii::$app->formatter->asCurrency($model->amountTo)." ".$model->currencyTo->symbol;
+                            return Yii::$app->formatter->asCurrency($model->amountTo, $model->currencyTo->symbol);
                         },
                     ],
                     [
@@ -185,7 +185,7 @@ $this->title = 'Geknology';
                         'attribute' => 'winnings',
                         'format'    => 'raw',
                         'value'     => function ($model) {
-                            return ($model->winnings != "") ? Yii::$app->formatter->asCurrency($model->winnings)." CLP" : "---";
+                            return ($model->winnings != "") ? Yii::$app->formatter->asCurrency($model->winnings, 'CLP') : "---";
                         },
                     ],
                 ],

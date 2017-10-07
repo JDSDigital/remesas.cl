@@ -24,7 +24,7 @@ $this->title = "Cuentas de ".$model->name." ".$model->lastName;
 
     <div class="row">
     	<div class="col-md-6">
-            <div class="panel panel-flat">
+            <div class="panel panel-flat pt0">
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
