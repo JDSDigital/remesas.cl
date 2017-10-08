@@ -82,13 +82,15 @@ class TransactionController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($model, $exchangeId = null, $amount = null){
+    public function actionCreate($amountFrom = null, $exchangeId = null, $amount = null){
+
+        $model = new Transaction();
 
         if ($model->load(Yii::$app->request->post())){
             $load = Yii::$app->request->post();
             
             $model->clientId = Yii::$app->user->id;
-           
+
             // Exchange Rate Used
             $er = ExchangeRate::find()->where(['id' => $load['Transaction']['exchangeId']])->one();
             $model->currencyIdFrom = $er->currencyIdFrom;
@@ -170,7 +172,7 @@ class TransactionController extends Controller
             }
             else {
                 Yii::$app->getSession()->setFlash('error','La cantidad solicitada no se encuentra disponible. Por favor pruebe con un monto más bajo.');
-                
+
                 return $this->render('create', [
                     'model' => $model,
                 ]);
@@ -196,9 +198,11 @@ class TransactionController extends Controller
             }*/    
         }
         else {
+            $model->amountFrom = $amountFrom;
             return $this->render('create', [
                 'model' => $model,
-                'exchangeId' => $exchangeId
+                'exchangeId' => $exchangeId,
+                'amountFrom' => $amountFrom
             ]);
         }
     }
@@ -228,11 +232,12 @@ class TransactionController extends Controller
         
         // If the account "has" the money... continue
         if ($available['total'] >= ($load['CheckForm']['amount'] * $er->sellValue)){
-            $model = new Transaction();
-            $exchangeId = $load['CheckForm']['rate'];
-            $model->amountFrom = $load['CheckForm']['amount'];
 
-            return $this->actionCreate($model, $exchangeId);
+            $exchangeId = $load['CheckForm']['rate'];
+            $amountFrom = $load['CheckForm']['amount'];
+
+            return $this->actionCreate($amountFrom, $exchangeId);
+
         } else {
             Yii::$app->getSession()->setFlash('error','La cantidad solicitada no se encuentra disponible. Por favor pruebe con un monto más bajo.');
             return $this->actionIndex();

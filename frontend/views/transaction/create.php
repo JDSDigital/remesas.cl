@@ -25,7 +25,10 @@ $this->title = 'Registrar Depósito / Transferencia';
     </div>
     <div class="row">
         <div class="col-md-5">
-            <?php $form = ActiveForm::begin(['id' => 'form-transaction']); ?>
+            <?php $form = ActiveForm::begin([
+                'id' => 'form-transaction',
+                'action' => 'create',
+            ]); ?>
                 <?php /*echo $form->field($model, 'currencyIdFrom')->label("De")->dropDownList(
                     ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
                 );*/ ?>
@@ -35,8 +38,11 @@ $this->title = 'Registrar Depósito / Transferencia';
                 <?= $form->field($model, 'exchangeId')->label("Conversion")->dropDownList(
                     ArrayHelper::map(ExchangeRate::find()->where(['id' => $exchangeId])->all(), 'id', 'description'), ['class' => 'form-control', 'disabled' => 'disabled']
                 ) ?>
+                <?= $form->field($model, 'exchangeId')->hiddenInput(['value' => $exchangeId])->label(false) ?>
+
                 <?= $form->field($model, 'amountFrom')->label("Monto a convertir")->textInput(['disabled' => 'disabled']) ?>
-                
+                <?= $form->field($model, 'amountFrom')->hiddenInput(['value' => $amountFrom])->label(false) ?>
+
                 <?= $form->field($model, 'accountAdminIdTo')->label("Cuenta a donde transfirió el dinero")->dropDownList(
                     ArrayHelper::map(AccountAdmin::find()->joinWith(['rates'])->where(['gaccounts_admin.status' => 1, 'gexchange_rates.status' => 1])->orderBy('description')->all(), 'id', 'description'), ['class' => 'form-control']
                 ) ?>
