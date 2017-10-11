@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\AccountAdmin;
+use common\models\ExchangeRate;
 use common\models\Transaction;
 use common\models\TransactionSearch;
 use yii\web\Controller;
@@ -101,13 +102,8 @@ class TransactionController extends Controller
         if ($model->load(Yii::$app->request->post())){
             $load = Yii::$app->request->post();
             
-            // Check if there's "emough money in the account to make this transaction"
-            $accountAdmin = AccountAdmin::find()->where(['id' => $load['Transaction']['accountAdminIdFrom']])->one();
-            
-            $transaction = new Transaction();
-            $total = $transaction->getTransactionSumByAA($load['Transaction']['accountAdminIdFrom']);
-            
-            if (($accountAdmin->maxAmount - $total['total']) >= $model->amountTo){
+            // Check if the user is gonna cancel the transaction or mark it as pending
+            if ($load['Transaction']['status'] == 1 || $load['Transaction']['status'] == 0){
                 $model->userId = Yii::$app->user->id;
                 $model->transactionResponseDate = Yii::$app->formatter->asDate($load['Transaction']['transactionResponseDate'], 'yyyy-MM-dd');
                 
@@ -121,11 +117,39 @@ class TransactionController extends Controller
                 }
             }
             else {
-                Yii::$app->getSession()->setFlash('error','La cantidad solicitada no se encuentra disponible en la cuenta seleccionada.');
+                // Check if there's "emough money in the account to make this transaction"
+                //$accountAdmin = AccountAdmin::find()->where(['id' => $load['Transaction']['accountAdminIdFrom']])->one();
                 
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
+                // Available money in all of the accounts
+                $er = ExchangeRate::find()->where(['id' => $model->exchangeId])->one();
+                
+                $accountAdmin = new AccountAdmin();
+                $available = $accountAdmin->getAmountSumByCurrency($er->currencyIdTo);
+                
+                //$transaction = new Transaction();
+                //$total = $transaction->getTransactionSumByAA($load['Transaction']['accountAdminIdFrom']);
+                
+                //if (($accountAdmin->maxAmount - $total['total']) >= $model->amountTo){
+                if ($available['total'] >= $model->amountTo){
+                    $model->userId = Yii::$app->user->id;
+                    $model->transactionResponseDate = Yii::$app->formatter->asDate($load['Transaction']['transactionResponseDate'], 'yyyy-MM-dd');
+                    
+                    if ($model->save()){
+                        return $this->redirect(['index']);
+                    }
+                    else {
+                        return $this->render('update', [
+                            'model' => $model,
+                        ]);
+                    }
+                }
+                else {
+                    Yii::$app->getSession()->setFlash('error','La cantidad solicitada no se encuentra disponible en la cuenta seleccionada.');
+                    
+                    return $this->render('update', [
+                        'model' => $model,
+                    ]);
+                }
             }
         }
         else {
