@@ -66,7 +66,7 @@ $(document).ready(function() {
     $("body").append(s);  
 
 
-    if($.cookie("css")) {
+    /*if($.cookie("css")) {
     	$("#colors").attr("href",$.cookie("css"));
     }
 
@@ -76,7 +76,7 @@ $(document).ready(function() {
 
     if($.cookie("header")) {
     	$("body").attr('class', $.cookie("header"));
-    }  
+    }  */
 
 
     $(".switcher li a").click(function() { 
