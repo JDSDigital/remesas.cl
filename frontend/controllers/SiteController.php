@@ -14,6 +14,7 @@ use common\models\ClientLoginForm;
 use common\models\Client;
 use common\models\Currency;
 use common\models\ExchangeRate;
+use common\models\Transaction;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -299,7 +300,21 @@ class SiteController extends Controller
                         $calculate = $load['amount']*$er1->sellValue;
                     }
                     
-                    return $calculate." ".$ct->symbol;
+                    // Search for the available money on the accounts
+                    // Available money in all of the accounts
+                    $accountAdmin = new AccountAdmin();
+                    $available = $accountAdmin->getAmountSumByCurrency($load['currencyIdTo']);
+                    
+                    // Substract the money of the transactions received during this day
+                    $transaction = new Transaction();
+                    $total = $transaction->getTransactionSumByAA();
+                    
+                    if ($available['total'] - $total['total'] >= $calculate){
+                        return Yii::$app->formatter->asDecimal(Html::encode($calculate), 2)." ".$ct->symbol;
+                    }
+                    else {
+                        return 'Lo sentimos. La cantidad solicitada no se encuentra disponible.';
+                    }
                 } else {
                    return 'Lo sentimos. La tasa de cambio solicitada no está disponible. Por favor intente más tarde.';
                 }

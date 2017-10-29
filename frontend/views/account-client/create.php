@@ -20,9 +20,11 @@ $this->title = 'Crear cuenta bancaria';
     <div class="row">
         <div class="col-lg-5">
             <h1>Agregar Cuenta</h1>
+            <h4>En esta sección puede agregar una cuenta a "Mis Cuentas", que son aquellas donde usted recibirá el dinero solicitado.</h4>
             <?php $form = ActiveForm::begin(['id' => 'form-account-client']); ?>
                 <?= $form->field($model, 'description')->label("Descripcion")->textInput(['autofocus' => true, 'placeholder' => 'Ejemplo: Banesco Mamá']) ?>
-                <?= Html::label("País") ?>
+                <?= Html::label("País (de quien recibe la transferencia)") ?>
+                <?= Html::tag('h4', 'Los bancos se cargarán de forma automática al seleccionar el país.') ?>
                 <?= Html::dropDownList('countryId', $countryId, ArrayHelper::map(Country::find()->orderBy('name')->all(), 'id', 'name'), 
                                       [
                                         'id' => 'countryId',
@@ -34,16 +36,16 @@ $this->title = 'Crear cuenta bancaria';
                                       ]) 
                 ?>
                 <?= $form->field($model, 'bankId')->label("Banco")->dropDownList(ArrayHelper::map(Bank::find()->all(), 'id', 'name'), ['class' => 'form-control']); ?>
-                <?= $form->field($model, 'rut')->label("RUT/Cédula")->textInput(['placeholder' => 'Ejemplo: 123456789']) ?>
+                <?= $form->field($model, 'rut')->label("RUT/Cédula (de quien recibe la transferencia)")->textInput(['placeholder' => 'Ejemplo: 123456789']) ?>
+                <?= $form->field($model, 'currencyId')->label("Moneda")->dropDownList(
+                    ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
+                ) ?>
                 <?= $form->field($model, 'type')->label("Tipo de cuenta")->dropDownList([
                     'ahorro' => 'Ahorro',
                     'corriente'  => 'Corriente',
                     'rut'  => 'Rut',
                     'vista'  => 'Vista',
                 ], ['class' => 'form-control']) ?>
-                <?= $form->field($model, 'currencyId')->label("Moneda")->dropDownList(
-                    ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['class' => 'form-control']
-                ) ?>
                 <?= $form->field($model, 'number')->label("Número de cuenta")->widget(MaskedInput::className(), [
                     'mask' => '9999 9999 99 9999999999'
                 ]) ?>

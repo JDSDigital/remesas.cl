@@ -215,12 +215,17 @@ class Transaction extends ActiveRecord
      /**
      * Get the sum of the transactions made through this account today
      */
-    public function getTransactionSumByAA($aa){
+    public function getTransactionSumByAA($aa = null){
         $connection = Yii::$app->getDb();
+        
+        $with_account = " ";
+        if ($aa != null){
+            $with_account = "t.accountAdminIdFrom = ".$aa." AND ";
+        }
+        
         $command = $connection->createCommand("
             SELECT sum(t.amountTo) AS total 
-            FROM gtransactions t WHERE t.accountAdminIdFrom = ".$aa." 
-            AND t.transactionResponseDate >= '".date('Y-m-d')."' AND t.transactionResponseDate < '".(date('Y-m-d', strtotime(' +1 day')))."'");
+            FROM gtransactions t WHERE ".$with_account." t.transactionResponseDate >= '".date('Y-m-d')."' AND t.transactionResponseDate < '".(date('Y-m-d', strtotime(' +1 day')))."'");
 
         $result = $command->queryOne();
         return $result;

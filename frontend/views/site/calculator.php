@@ -26,7 +26,7 @@ $this->title = 'Calculadora';
                 <h1><?= Html::encode($this->title) ?></h1>
                 <?php $form = ActiveForm::begin(['id' => 'form-account-client']); ?>
                 <?= Html::label("Cantidad a convertir", "amount") ?>
-                <?= Html::textInput('amount', $amount, ['id' => 'amount', 'class' => 'form-control']) ?>
+                <?= Html::textInput('amount', $amount, ['id' => 'amount', 'class' => 'form-control', 'style' => 'text-align: right']) ?>
                 <?= Html::label("De", "currencyIdFrom") ?>
                 <?= Html::dropDownList('currencyIdFrom', $model->currencyIdFrom, ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['id' => 'currencyIdFrom', 'class' => 'form-control'])?>
                 <?= Html::label("A", "currencyIdTo") ?>

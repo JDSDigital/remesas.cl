@@ -27,9 +27,9 @@ class SignupForm extends Model
         return [
             ['name', 'required', 'message' => 'Debe escribir su nombre.'],
             ['lastName', 'required', 'message' => 'Debe escribir su apellido.'],
-            ['rut', 'required', 'message' => 'Debe escribir su identificación personal.'],
-            ['phone', 'required', 'message' => 'Debe escribir su numero de telefono.'],
-            ['mobile', 'required', 'message' => 'Debe escribir su numero de telefono movil.'],
+            ['rut', 'required', 'message' => 'Debe escribir su rut o cédula.'],
+            //['phone', 'required', 'message' => 'Debe escribir su numero de telefono.'],
+            ['mobile', 'required', 'message' => 'Debe escribir su número de teléfono móvil.'],
             ['email', 'required', 'message' => 'Debe escribir su correo electrónico.'],
             ['password', 'required', 'message' => 'La clave no debe estar vacia.'],
             [['name', 'lastName', 'rut', 'phone', 'mobile', 'email'], 'trim'],

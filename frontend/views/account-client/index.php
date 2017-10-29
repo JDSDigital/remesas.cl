@@ -14,6 +14,7 @@ $this->title = 'Mis Cuentas';
     <div class="row">
     	<div class="col-md-6 text-left">
             <h1><?= Html::encode($this->title) ?></h1>
+            <h4>Cuentas donde usted recibirá el dinero solicitado.</h4>
         </div>
     	<div class="col-md-6 text-right">
             <p>

@@ -59,7 +59,7 @@ AppAsset::register($this);
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Registro', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-signup']];
-        $menuItems[] = ['label' => 'Login', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-login']];
+        $menuItems[] = ['label' => 'Inicio de sesión', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-login']];
     } else {
 //        $menuItems[] = ['label' => 'Cuentas disponibles', 'url' => ['/site/accounts']];
         $menuItems[] = ['label' => 'Mis Cuentas', 'url' => ['/account-client/index']];

@@ -28,7 +28,7 @@ $this->title = 'Registrarse';
 
                 <?= $form->field($model, 'name')->label("Nombre")->textInput(['autofocus' => true]) ?>
                 <?= $form->field($model, 'lastName')->label("Apellido") ?>
-                <?= $form->field($model, 'rut')->label("Identificación Personal") ?>
+                <?= $form->field($model, 'rut')->label("Rut/Cédula") ?>
                 <?= $form->field($model, 'phone')->label("Teléfono") ?>
                 <?= $form->field($model, 'mobile')->label("Teléfono Móvil") ?>
                 <?= $form->field($model, 'email')->label("Correo electrónico") ?>
