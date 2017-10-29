@@ -34,6 +34,7 @@ $this->title = 'Geknology';
                     <?= $form->field($model, 'role')->dropDownList([
                         'admin' => 'Administrador',
                         'user'  => 'Usuario',
+                        'simple' => 'Simple'
                     ], ['class' => 'form-control']) ?>
                     <div class="form-group">
                         <?= Html::submitButton('Crear Usuario', ['class' => 'btn btn-primary', 'name' => 'form-user-button']) ?>

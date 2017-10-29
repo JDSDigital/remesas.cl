@@ -27,6 +27,19 @@ class RefundController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => false,
+                        'roles' => ['simple', 'user'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['root', 'admin'],
+                    ],
+                ],
+            ],
         ];
     }
 

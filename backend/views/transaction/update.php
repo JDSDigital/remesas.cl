@@ -37,8 +37,16 @@ $this->title = 'Geknology';
                         '2' => 'Realizada'
                     ], ['class' => 'form-control']) ?>
                 <div class="hideField">
-                <?= $form->field($model, 'usedValue')->label("Tasa")->textInput((Yii::$app->user->identity->role != 'root') ? ['disabled' => 'true'] : []) ?>
-                <?= $form->field($model, 'amountTo')->label("Monto convertido")->textInput((Yii::$app->user->identity->role != 'root') ? ['disabled' => 'true'] : []) ?>
+                <?php 
+                    if (Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'root'){
+                        echo $form->field($model, 'usedValue')->label("Tasa")->textInput((Yii::$app->user->identity->role != 'root') ? ['disabled' => 'true'] : []);
+                        echo $form->field($model, 'amountTo')->label("Monto convertido")->textInput((Yii::$app->user->identity->role != 'root') ? ['disabled' => 'true'] : []);
+                    }
+                    else {
+                        echo $form->field($model, 'amountTo')->label("Monto transferido")->textInput((Yii::$app->user->identity->role != 'root') ? ['disabled' => 'true'] : []);
+                    }     
+                ?>
+
                 <?= $form->field($model, 'accountAdminIdFrom')->label("Cuenta desde donde transfirió el dinero")->dropDownList(
                     ArrayHelper::map(AccountAdmin::find()->where('status = 1 and currencyId = '.$model->currencyIdTo)->orderBy('description')->all(), 'id', 'description'), ['class' => 'form-control']
                 ) ?>
@@ -50,7 +58,11 @@ $this->title = 'Geknology';
                             'maxDate' => '0'
                          ]
                 ])?>
-                <?= $form->field($model, 'winnings')->label("Ganancia por esta transaccion") ?>
+                <?php 
+                    if (Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'root'){
+                        echo $form->field($model, 'winnings')->label("Ganancia por esta transaccion"); 
+                    }
+                ?>
                 </div>
                 <?= $form->field($model, 'observation')->label("Observacion") ?>
                 <div class="form-group">

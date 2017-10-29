@@ -37,7 +37,13 @@ class ClientController extends Controller
                     ],
                     [
                         'allow' => true,
+                        'actions' => ['index', 'view', 'update', 'blocked'],
                         'roles' => ['admin', 'root'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['accounts'],
+                        'roles' => ['admin', 'root', 'simple'],
                     ],
                 ],
             ],

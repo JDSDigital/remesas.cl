@@ -112,10 +112,16 @@ AppAsset::register($this);
                                                              ['label' => '<i class="icon-user"></i>Monedas', 'url' => ['//currency/index']]);
                                     }  
                                 }
-                                else {
+                                else if (Yii::$app->user->identity->role == 'user'){
                                     $items = [
     									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['site/index']],
                                         ['label' => '<i class="icon-user"></i>Tasas de cambio', 'url' => ['//exchange-rate/index']],
+    								];
+                                }
+                                else {
+                                    $items = [
+    									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['site/index']],
+                                        ['label' => '<i class="fa fa-exchange"></i>Transacciones', 'url' => ['//transaction/index']],
     								];
                                 }
                             echo Menu::widget([

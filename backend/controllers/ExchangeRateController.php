@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\ExchangeRate;
 use common\models\ExchangeRateSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -24,6 +25,19 @@ class ExchangeRateController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => false,
+                        'roles' => ['simple'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['root', 'admin', 'user'],
+                    ],
                 ],
             ],
         ];

@@ -38,8 +38,14 @@ class TransactionController extends Controller
                     ],
                     [
                         'allow' => true,
+                        'actions' => ['index', 'view', 'update'],
+                        'roles' => ['admin', 'root', 'simple'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['winnings'],
                         'roles' => ['admin', 'root'],
-                    ]
+                    ],
                 ],
             ],
         ];
@@ -70,24 +76,6 @@ class TransactionController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
-    }
-
-    /**
-     * Creates a new Transaction model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Transaction();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
     }
 
     /**

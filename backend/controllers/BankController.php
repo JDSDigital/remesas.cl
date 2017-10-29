@@ -33,7 +33,7 @@ class BankController extends Controller
                 'rules' => [
                     [
                         'allow' => false,
-                        'roles' => ['user'],
+                        'roles' => ['user', 'simple'],
                     ],
                     [
                         'allow' => true,

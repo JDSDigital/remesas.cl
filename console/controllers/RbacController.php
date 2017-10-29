@@ -22,11 +22,14 @@ class RbacController extends Controller
         $root = $auth->createRole('root');
         $auth->add($root);
         // $auth->addChild($admin, $user);
+        
+        $simple = $auth->createRole('simple');
+        $auth->add($simple);
 
         // Assign roles to users. 1 and 2 are IDs returned by IdentityInterface::getId()
         // usually implemented in your User model.
         $auth->assign($admin, 1);
-        $auth->assign($user, 2);
-        $auth->assign($root, 3);
+        $auth->assign($root, 2);
+        //$auth->assign($root, 3);
     }
 }
