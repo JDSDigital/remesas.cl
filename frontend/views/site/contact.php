@@ -8,12 +8,12 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 
-$this->title = 'Contáctanos';
+//$this->title = 'Contáctanos';
 ?>
 
 <section id="contact" class="color0">
             <div class="title">
-                <h1><?= Html::encode($this->title) ?></h1>
+                <h1><?= Html::encode("Contáctanos") ?></h1>
             </div>
             <section class="pt30 pb30">
                 <div class="container">

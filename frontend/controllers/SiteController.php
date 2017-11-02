@@ -25,6 +25,12 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
+    const STATUS_OK = 0;
+    const STATUS_QUANTITY = 1;
+    const STATUS_CURRENCY = 2;
+    const STATUS_AVAILABILITY = 3;
+    const STATUS_RATES = 4;
+
     /**
      * @inheritdoc
      */
@@ -269,12 +275,10 @@ class SiteController extends Controller
             $model->currencyIdTo = $load['currencyIdTo'];
 
             if ($load['amount'] == ""){
-                return 'Debe introducir una cantidad a convertir';
-            }
-            else if ($load['currencyIdFrom'] == $load['currencyIdTo']){
-                return 'Las monedas de conversión deben ser diferentes';
-            }
-            else {
+                return self::STATUS_QUANTITY;
+            } else if ($load['currencyIdFrom'] == $load['currencyIdTo']){
+                return self::STATUS_CURRENCY;
+            } else {
                 // Search for an exchange rate with these conditions
                 $ct = Currency::find()->where(['id' => $model->currencyIdTo])->one();
                 $er1 = ExchangeRate::find()->where([
@@ -313,12 +317,14 @@ class SiteController extends Controller
                         return Yii::$app->formatter->asDecimal(Html::encode($calculate), 2)." ".$ct->symbol;
                     }
                     else {
-                        return 'Lo sentimos. La cantidad solicitada no se encuentra disponible.';
+                        return self::STATUS_AVAILABILITY;
                     }
                 } else {
-                   return 'Lo sentimos. La tasa de cambio solicitada no está disponible. Por favor intente más tarde.';
+                   return self::STATUS_RATES;
                 }
-            } 
+            }
+        } else {
+            return $this->render('//site/calculator');
         }
     }
 }

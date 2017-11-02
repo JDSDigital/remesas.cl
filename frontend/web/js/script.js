@@ -20,7 +20,25 @@ $(function () {
                 _csrf: yii.getCsrfToken()
             },
             success: function (data) {
-                $('#result').html(data);
+                console.log(data);
+                switch(data){
+                    case '1':
+                        $('#result').html('Debe introducir una cantidad a convertir');
+                        break;
+                    case '2':
+                        $('#result').html('Las monedas de conversión deben ser diferentes');
+                        break;
+                    case '3':
+                        $('#result').html('Lo sentimos. La cantidad solicitada no se encuentra disponible.');
+                        break;
+                    case '4':
+                        $('#result').html('Lo sentimos. La tasa de cambio solicitada no está disponible. Por favor intente más tarde.');
+                        break;
+                    default:
+                        $('#result').html(data);
+                        $('#btn-continue').removeClass('hidden');
+                        break;
+                }
             }
 
         });

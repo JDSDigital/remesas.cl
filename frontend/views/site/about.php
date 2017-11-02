@@ -4,12 +4,12 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Quienes Somos';
+//$this->title = 'Quienes Somos';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <section id="about" class="color0">
     <div class="title">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode("Quienes Somos") ?></h1>
         <h2 class="subTitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut massa ante.</h2>
     </div>
     <!-- section content -->

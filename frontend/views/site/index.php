@@ -28,4 +28,4 @@ $this->title = 'Remesas.cl';
     ]); ?>
 
 </div>
-<?php $this->registerJsFile(Yii::getAlias('@web') . '/js-plugin/supersized/js/supersized.3.2.7.min.js', ['depends' => [JqueryAsset::className()]]); ?>
+<?php //$this->registerJsFile(Yii::getAlias('@web') . '/js-plugin/supersized/js/supersized.3.2.7.min.js', ['depends' => [JqueryAsset::className()]]); ?>

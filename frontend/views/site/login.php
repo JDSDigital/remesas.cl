@@ -10,7 +10,7 @@ use yii\bootstrap\ActiveForm;
 
 $model = new ClientLoginForm();
 
-$this->title = 'Inicio de sesión';
+//$this->title = 'Inicio de sesión';
 ?>
 
 <div id="modal-login" class="modal fade" role="dialog">

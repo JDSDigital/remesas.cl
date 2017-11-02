@@ -57,4 +57,13 @@ return array (
       '@yii/jui' => $vendorDir . '/yiisoft/yii2-jui',
     ),
   ),
+  'borales/yii2-phone-input' => 
+  array (
+    'name' => 'borales/yii2-phone-input',
+    'version' => '0.1.1.0',
+    'alias' => 
+    array (
+      '@borales/extensions/phoneInput' => $vendorDir . '/borales/yii2-phone-input/src',
+    ),
+  ),
 );

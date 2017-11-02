@@ -10,7 +10,7 @@ use frontend\models\PasswordResetRequestForm;
 
 $model = new PasswordResetRequestForm();
 
-$this->title = 'Resetear Contraseña';
+//$this->title = 'Resetear Contraseña';
 
 ?>
 
@@ -20,7 +20,7 @@ $this->title = 'Resetear Contraseña';
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-body">
-                <h1><?= Html::encode($this->title) ?></h1>
+                <h1><?= Html::encode("Resetear Contraseña") ?></h1>
 
                 <p>Introduzca su correo y se le enviará un enlace para cambiar su contraseña.</p>
 

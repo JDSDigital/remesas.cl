@@ -4,6 +4,7 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\SignupForm */
 
+use borales\extensions\phoneInput\PhoneInput;
 use frontend\models\SignupForm;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -29,8 +30,21 @@ $this->title = 'Registrarse';
                 <?= $form->field($model, 'name')->label("Nombre")->textInput() ?>
                 <?= $form->field($model, 'lastName')->label("Apellido") ?>
                 <?= $form->field($model, 'rut')->label("Rut/Cédula") ?>
-                <?= $form->field($model, 'phone')->label("Teléfono") ?>
-                <?= $form->field($model, 'mobile')->label("Teléfono Móvil") ?>
+                <label class="control-label" for="signupform-phone">Teléfono</label>
+                <?= $form->field($model, 'phone')->widget(PhoneInput::className(), [
+                    'jsOptions' => [
+                        'nationalMode'       => false,
+                        'preferredCountries' => ['cl', 've'],
+                    ],
+                ])->label(false) ?>
+                <label class="control-label" for="signupform-mobile">Teléfono Móvil</label>
+                <?= $form->field($model, 'mobile')->widget(PhoneInput::className(), [
+                    'jsOptions' => [
+                        'autoHideDialCode'   => true,
+                        'nationalMode'       => false,
+                        'preferredCountries' => ['cl', 've'],
+                    ],
+                ])->label(false) ?>
                 <?= $form->field($model, 'email')->label("Correo electrónico") ?>
                 <?= $form->field($model, 'password')->label("Clave")->passwordInput() ?>
 

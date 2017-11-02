@@ -61,11 +61,10 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Registro', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-signup']];
         $menuItems[] = ['label' => 'Inicio de sesión', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-login']];
     } else {
-//        $menuItems[] = ['label' => 'Cuentas disponibles', 'url' => ['/site/accounts']];
-        $menuItems[] = ['label' => 'Mis Cuentas', 'url' => ['/account-client/index']];
-        $menuItems[] = ['label' => 'Calculadora', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-calculator']];
-        $menuItems[] = ['label' => 'Mis Transacciones', 'url' => ['/transaction/index']];
-//        $menuItems[] = ['label' => 'Logout (' . Yii::$app->user->identity->username . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
+        $menuItems[] = ['label' => 'Enviar Dinero', 'url' => ['//site/calculator']];
+//        $menuItems[] = ['label' => 'Mis Cuentas', 'url' => ['/account-client/index']];
+//        $menuItems[] = ['label' => 'Calculadora', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-calculator']];
+//        $menuItems[] = ['label' => 'Mis Transacciones', 'url' => ['/transaction/index']];
         $menuItems[] = ['label' => 'Logout', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
     }
     echo Nav::widget([
@@ -161,12 +160,6 @@ AppAsset::register($this);
     ==================================-->
 <?= Yii::$app->controller->renderPartial('//site/signup'); ?>
 <!-- /. End Modal3 -->
-
-<!-- ================================
-          Modal4
-    ==================================-->
-<?= Yii::$app->controller->renderPartial('//site/calculator'); ?>
-<!-- /. End Modal4 -->
 
 <?php
 //$this->registerJsFile('@web/js-plugin/parallax/js/jquery.scrollTo-1.4.3.1-min.js',	['depends' => [\yii\web\JqueryAsset::className()]]);

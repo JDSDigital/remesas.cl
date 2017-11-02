@@ -14,36 +14,38 @@ $model = new ExchangeRate();
 $result = null;
 $amount = 1;
 
-$this->title = 'Calculadora';
+$this->title = 'Paso 1: Verificar Disponibilidad';
 ?>
 
-<div id="modal-calculator" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-body">
-                <h1><?= Html::encode($this->title) ?></h1>
-                <?php $form = ActiveForm::begin(['id' => 'form-account-client']); ?>
-                <?= Html::label("Cantidad a convertir", "amount") ?>
-                <?= Html::textInput('amount', $amount, ['id' => 'amount', 'class' => 'form-control', 'style' => 'text-align: right']) ?>
-                <?= Html::label("De", "currencyIdFrom") ?>
-                <?= Html::dropDownList('currencyIdFrom', $model->currencyIdFrom, ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['id' => 'currencyIdFrom', 'class' => 'form-control'])?>
-                <?= Html::label("A", "currencyIdTo") ?>
-                <?= Html::dropDownList('currencyIdTo', $model->currencyIdTo, ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['id' => 'currencyIdTo', 'class' => 'form-control'])?>
-
-                <?php
-                if (isset($result) && $result != null){
-                    echo Html::tag('h1', Yii::$app->formatter->asCurrency(Html::encode($result)), ['id' => 'result']);
-                }
-                ?>
-                <h1 id="result"></h1>
-                <div class="form-group">
-                    <?= Html::button('Calcular', ['class' => 'btn btn-primary mt10', 'id' => 'form-calculator-button', 'url' => Yii::$app->request->baseUrl . '/site/calculator']) ?>
-                </div>
-                <?php ActiveForm::end(); ?>
-            </div>
+<div class="site-index container pt30">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1><?= Html::encode($this->title) ?></h1>
         </div>
+        <div class="col-lg-6">
+            <?php $form = ActiveForm::begin(['id' => 'form-account-client']); ?>
+            <?= Html::label("Cantidad a convertir", "amount") ?>
+            <?= Html::textInput('amount', $amount, ['id' => 'amount', 'class' => 'form-control', 'style' => 'text-align: right']) ?>
+            <?= Html::label("De", "currencyIdFrom") ?>
+            <?= Html::dropDownList('currencyIdFrom', $model->currencyIdFrom, ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['id' => 'currencyIdFrom', 'class' => 'form-control'])?>
+            <?= Html::label("A", "currencyIdTo") ?>
+            <?= Html::dropDownList('currencyIdTo', $model->currencyIdTo, ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['id' => 'currencyIdTo', 'class' => 'form-control'])?>
 
+            <?php
+            if (isset($result) && $result != null){
+                echo Html::tag('h1', Yii::$app->formatter->asCurrency(Html::encode($result)), ['id' => 'result']);
+            }
+            ?>
+            <h1 id="result"></h1>
+            <div class="form-group">
+                <?= Html::button('Calcular', ['class' => 'btn btn-primary mt10', 'id' => 'form-calculator-button', 'url' => Yii::$app->request->baseUrl . '/site/calculator']) ?>
+            </div>
+            <?php ActiveForm::end(); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <?= Html::a('Continuar', ['//account-client/index'], ['id' => 'btn-continue', 'class' => 'btn btn-success mb30 hidden'])?>
+        </div>
     </div>
 </div>
