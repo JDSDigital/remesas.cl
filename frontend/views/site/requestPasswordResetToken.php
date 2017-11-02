@@ -29,7 +29,7 @@ $this->title = 'Resetear Contraseña';
                     'action' => ['//site/requestPasswordReset'],
                 ]); ?>
 
-                    <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+                    <?= $form->field($model, 'email')->textInput() ?>
 
                     <div class="form-group">
                         <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary']) ?>

@@ -26,7 +26,7 @@ $this->title = 'Registrarse';
                     'action' => ['//site/signup'],
                 ]); ?>
 
-                <?= $form->field($model, 'name')->label("Nombre")->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'name')->label("Nombre")->textInput() ?>
                 <?= $form->field($model, 'lastName')->label("Apellido") ?>
                 <?= $form->field($model, 'rut')->label("Rut/Cédula") ?>
                 <?= $form->field($model, 'phone')->label("Teléfono") ?>

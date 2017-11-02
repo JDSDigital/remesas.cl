@@ -25,7 +25,7 @@ $this->title = 'Inicio de sesión';
                     'action' => ['//site/login'],
                 ]); ?>
 
-                <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'email')->textInput() ?>
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
 

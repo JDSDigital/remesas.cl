@@ -131,7 +131,7 @@ AppAsset::register($this);
             </div>
         </section>
 
-        <section  id="footerRights">
+        <section id="footerRights">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">

@@ -13,9 +13,16 @@ return [
     'controllerNamespace' => 'console\controllers',
     'controllerMap' => [
         'fixture' => [
-            'class' => 'yii\console\controllers\FixtureController',
+            'class'     => 'yii\console\controllers\FixtureController',
             'namespace' => 'common\fixtures',
-          ],
+        ],
+        'migrate' => [
+            'class'         => 'yii\console\controllers\MigrateController',
+            'migrationPath' => [
+                '@yii/rbac/migrations',
+                '@app/migrations',
+            ],
+        ],
     ],
     'components' => [
         'log' => [

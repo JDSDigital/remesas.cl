@@ -9,18 +9,6 @@ $this->title = 'Remesas.cl';
 ?>
 <div id="index" class="site-index">
 
-    <section id="superSizedSlider">
-        <!--Arrow Navigation-->
-        <a id="prevslide" class="load-item"></a> <a id="nextslide" class="load-item"></a>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="slidecaption"> </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <?= Yii::$app->controller->renderPartial('//site/about'); ?>
 
     <section id="paralaxSlice3" data-stellar-background-ratio="0.5" style="background-position: 50% 123px;">
