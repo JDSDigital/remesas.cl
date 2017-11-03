@@ -7,7 +7,7 @@ use yii\grid\ActionColumn;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Mis Cuentas';
+$this->title = 'Paso 2: Agregar Cuentas';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container account-client-index pt30">
@@ -87,4 +87,9 @@ $this->title = 'Mis Cuentas';
                 ],
             ],
         ]); ?>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <?= Html::a('Continuar', ['//site/accounts'], ['id' => 'btn-continue', 'class' => 'btn btn-success mb30 ' . ($dataProvider->getTotalCount() == 0 ? 'hidden' : '')])?>
+        </div>
+    </div>
 </div>

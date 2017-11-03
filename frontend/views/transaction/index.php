@@ -8,12 +8,9 @@ use common\models\Refund;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Transacciones';
+$this->title = 'Paso 4: Adjuntar recibo';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-
-<?= Yii::$app->controller->renderPartial('//site/accounts'); ?>
-
 
 <div class="container account-client-index pt30">
     <div class="row">
