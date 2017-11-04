@@ -37,6 +37,7 @@ use yii\web\UploadedFile;
  * @property User $user
  * @property Currency $currencyFrom
  * @property Currency $currencyTo
+ * @property TransactionsPars $transactionParts
  */
 class Transaction extends ActiveRecord
 {
@@ -239,5 +240,13 @@ class Transaction extends ActiveRecord
     public function getRefund()
     {
         return $this->hasOne(Refund::className(), ['transactionId' => 'id']);
+    }
+    
+     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTransactionParts()
+    {
+        return $this->hasMany(TransactionsParts::className(), ['transactionId' => 'id']);
     }
 }

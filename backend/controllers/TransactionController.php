@@ -5,12 +5,15 @@ namespace backend\controllers;
 use Yii;
 use common\models\AccountAdmin;
 use common\models\ExchangeRate;
+use common\models\Model;
 use common\models\Transaction;
 use common\models\TransactionSearch;
+use common\models\TransactionsParts;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * TransactionController implements the CRUD actions for Transaction model.
@@ -86,48 +89,88 @@ class TransactionController extends Controller
      */
     public function actionUpdate($id){
         $model = $this->findModel($id);
+        $modelsParts = $model->transactionParts;
         
         if ($model->load(Yii::$app->request->post())){
             $load = Yii::$app->request->post();
             
-            // Check if the user is gonna cancel the transaction or mark it as pending
-            if ($load['Transaction']['status'] == 1 || $load['Transaction']['status'] == 0){
+            $oldIDs = ArrayHelper::map($modelsParts, 'id', 'id');
+            $modelsParts = Model::createMultiple(TransactionsParts::classname(), $modelsParts);
+            Model::loadMultiple($modelsParts, Yii::$app->request->post());
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($modelsParts, 'id', 'id')));
+
+            if ($load['Transaction']['status'] == Transaction::STATUS_CANCELLED || $load['Transaction']['status'] == Transaction::STATUS_PENDING){
                 $model->userId = Yii::$app->user->id;
                 $model->transactionResponseDate = Yii::$app->formatter->asDate($load['Transaction']['transactionResponseDate'], 'yyyy-MM-dd');
                 
-                if ($model->save()){
-                    return $this->redirect(['index']);
-                }
-                else {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if (! empty($deletedIDs)) {
+                            TransactionsParts::deleteAll(['id' => $deletedIDs]);
+                        }
+
+                        foreach ($modelsParts as $modelPart) {
+                            $modelPart->transactionId = $model->id;
+                            $modelPart->transactionResponseDate = $model->transactionResponseDate;
+                            if (!($flag = $modelPart->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['index']);
+                    }
+                } 
+                catch (Exception $e) {
+                    $transaction->rollBack();
                     return $this->render('update', [
                         'model' => $model,
+                        'modelsParts' => (empty($modelsParts)) ? [new TransactionsParts] : $modelsParts
                     ]);
                 }
             }
             else {
-                // Check if there's "emough money in the account to make this transaction"
-                //$accountAdmin = AccountAdmin::find()->where(['id' => $load['Transaction']['accountAdminIdFrom']])->one();
-                
                 // Available money in all of the accounts
                 $er = ExchangeRate::find()->where(['id' => $model->exchangeId])->one();
                 
                 $accountAdmin = new AccountAdmin();
                 $available = $accountAdmin->getAmountSumByCurrency($er->currencyIdTo);
                 
-                //$transaction = new Transaction();
-                //$total = $transaction->getTransactionSumByAA($load['Transaction']['accountAdminIdFrom']);
-                
-                //if (($accountAdmin->maxAmount - $total['total']) >= $model->amountTo){
                 if ($available['total'] >= $model->amountTo){
                     $model->userId = Yii::$app->user->id;
                     $model->transactionResponseDate = Yii::$app->formatter->asDate($load['Transaction']['transactionResponseDate'], 'yyyy-MM-dd');
                     
-                    if ($model->save()){
-                        return $this->redirect(['index']);
-                    }
-                    else {
+                    $transaction = \Yii::$app->db->beginTransaction();
+                    try {
+                        if ($flag = $model->save(false)) {
+                            if (! empty($deletedIDs)) {
+                                TransactionsParts::deleteAll(['id' => $deletedIDs]);
+                            }
+    
+                            foreach ($modelsParts as $modelPart) {
+                                $modelPart->transactionId = $model->id;
+                                $modelPart->transactionResponseDate = $model->transactionResponseDate;
+                                if (!($flag = $modelPart->save(false))) {
+                                    $transaction->rollBack();
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        if ($flag) {
+                            $transaction->commit();
+                            return $this->redirect(['index']);
+                        }
+                    } 
+                    catch (Exception $e) {
+                        $transaction->rollBack();
                         return $this->render('update', [
                             'model' => $model,
+                            'modelsParts' => (empty($modelsParts)) ? [new TransactionsParts] : $modelsParts
                         ]);
                     }
                 }
@@ -136,6 +179,7 @@ class TransactionController extends Controller
                     
                     return $this->render('update', [
                         'model' => $model,
+                        'modelsParts' => (empty($modelsParts)) ? [new TransactionsParts] : $modelsParts
                     ]);
                 }
             }
@@ -143,6 +187,7 @@ class TransactionController extends Controller
         else {
             return $this->render('update', [
                 'model' => $model,
+                'modelsParts' => (empty($modelsParts)) ? [new TransactionsParts] : $modelsParts
             ]);
         }
     }
