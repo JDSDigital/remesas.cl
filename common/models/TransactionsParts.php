@@ -13,6 +13,7 @@ use Yii;
  * @property integer $adminBankTransaction
  * @property string $transactionResponseDate
  *
+ * @property AccountAdmin $accountAdminFrom
  * @property Transaction $transaction
  */
 class TransactionsParts extends \yii\db\ActiveRecord
@@ -38,6 +39,7 @@ class TransactionsParts extends \yii\db\ActiveRecord
             [['transactionId', 'accountAdminIdFrom', 'adminBankTransaction'], 'integer'],
             [['transactionResponseDate'], 'safe'],
             [['transactionId'], 'exist', 'skipOnError' => true, 'targetClass' => Transaction::className(), 'targetAttribute' => ['transactionId' => 'id']],
+            [['accountAdminIdFrom'], 'exist', 'skipOnError' => true, 'targetClass' => AccountAdmin::className(), 'targetAttribute' => ['accountAdminIdFrom' => 'id']],
         ];
     }
 
@@ -62,5 +64,13 @@ class TransactionsParts extends \yii\db\ActiveRecord
     public function getTransaction()
     {
         return $this->hasOne(Transactions::className(), ['id' => 'transactionId']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccountAdminFrom()
+    {
+        return $this->hasOne(AccountAdmin::className(), ['id' => 'accountAdminIdFrom']);
     }
 }

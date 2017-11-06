@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+use common\models\Transaction;
+
 /* @var $this yii\web\View */
 /* @var $model common\models\Transaction */
 
@@ -23,9 +25,9 @@ $this->title = "Transaccion #".$model->id;
                         'value'     => function ($model) {
                             $check = "Pendiente";
 
-                            if ($model->status == 1)
+                            if ($model->status == Transaction::STATUS_CANCELLED)
                                 $check = "Anulada";
-                            else if ($model->status == 2)
+                            else if ($model->status == Transaction::STATUS_DONE)
                                 $check = "Realizada";
 
                             return $check;
@@ -70,6 +72,27 @@ $this->title = "Transaccion #".$model->id;
                     [
                         'label'     => 'Observacion',
                         'value'     => ($model->observation != "") ? $model->observation : "---",
+                    ],
+                    [
+                        'label'     => 'Tranferencias',
+                        'format'    => 'raw',
+                        'value'     => function ($model){
+                                            $transactions = $model->transactionParts;
+                                            $list_transactions = "";
+                                            
+                                            if (sizeof($transactions) > 0){
+                                                $list_transactions = "<ul>";
+                                                foreach($transactions as $t){
+                                                    $list_transactions.= "<li>Desde ".$t->accountAdminFrom->bank->name." (".$t->adminBankTransaction.") . ".$t->amountTo." ".$model->currencyTo->symbol." </li>";
+                                                }
+                                                $list_transactions.= "</ul>";
+                                            }
+                                            else {
+                                                $list_transactions = "---";
+                                            }
+            
+                                            return $list_transactions;
+                                       },
                     ]
                 ],
             ]) ?>

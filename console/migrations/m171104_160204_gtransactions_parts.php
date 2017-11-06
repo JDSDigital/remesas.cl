@@ -27,10 +27,20 @@ class m171104_160204_gtransactions_parts extends Migration
             'gtransactions',
             'id'
         );
+        
+        // Admin's bank account
+        $this->addForeignKey(
+            'fk-gtransactions_parts-accountAdminIdFrom',
+            'gtransactions_parts',
+            'accountAdminIdFrom',
+            'gaccounts_admin',
+            'id'
+        );
     }
 
     public function down(){
         $this->dropForeignKey('fk-gtransactions_parts-transactionId', '{{%gtransactions_parts}}');
+        $this->dropForeignKey('fk-gtransactions_parts-accountAdminIdFrom', '{{%gtransactions_parts}}');
         $this->dropTable('{{%gtransactions_parts}}');
     }
 }
