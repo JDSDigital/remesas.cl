@@ -6,6 +6,8 @@ use yii\grid\ActionColumn;
 use common\models\Refund;
 //use yii\bootstrap\Modal;
 
+use common\models\Transaction;
+
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -110,14 +112,6 @@ $this->title = 'Geknology';
                             },
                         ],
                         [
-                            'label'     => 'Desde la cuenta',
-                            'attribute' => 'accountAdminDescFrom',
-                            'format'    => 'raw',
-                            'value'     => function ($model) {
-                                return Html::a(($model->accountAdminIdFrom != null && $model->accountAdminFrom->description != "") ? $model->accountAdminFrom->description : "---", ['update', 'id' => $model->id]);
-                            },
-                        ],
-                        [
                             'label'     => 'Ganancia',
                             'attribute' => 'winnings',
                             'format'    => 'raw',
@@ -140,9 +134,9 @@ $this->title = 'Geknology';
                             'value'     => function ($model) {
                                             $check = "Pendiente";
                                             
-                                            if ($model->status == 1)
+                                            if ($model->status == Transaction::STATUS_CANCELLED)
                                                 $check = "Anulada";
-                                            else if ($model->status == 2)
+                                            else if ($model->status == Transaction::STATUS_DONE)
                                                 $check = "Realizada";
                                             
                                             return Html::a($check, ['update', 'id' => $model->id]);
@@ -217,14 +211,6 @@ $this->title = 'Geknology';
                             },
                         ],
                         [
-                            'label'     => 'Desde la cuenta',
-                            'attribute' => 'accountAdminDescFrom',
-                            'format'    => 'raw',
-                            'value'     => function ($model) {
-                                return Html::a(($model->accountAdminIdFrom != null && $model->accountAdminFrom->description != "") ? $model->accountAdminFrom->description : "---", ['update', 'id' => $model->id]);
-                            },
-                        ],
-                        [
                             'label'     => 'Fecha Cierre',
                             'attribute' => 'transactionResponseDate',
                             'format'    => 'raw',
@@ -239,9 +225,9 @@ $this->title = 'Geknology';
                             'value'     => function ($model) {
                                             $check = "Pendiente";
                                             
-                                            if ($model->status == 1)
+                                            if ($model->status == Transaction::STATUS_CANCELLED)
                                                 $check = "Anulada";
-                                            else if ($model->status == 2)
+                                            else if ($model->status == Transaction::STATUS_DONE)
                                                 $check = "Realizada";
                                             
                                             return Html::a($check, ['update', 'id' => $model->id]);

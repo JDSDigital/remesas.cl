@@ -16,6 +16,7 @@ class m171104_160204_gtransactions_parts extends Migration
             'accountAdminIdFrom'        => $this->integer()->notNull()->comment("Admin Bank Account the admin transfered the money back to the client."),
             'adminBankTransaction'      => $this->integer()->notNull()->comment("Bank transaction Id"),
             'transactionResponseDate'   => $this->date()->notNull()->comment("Date when the transaction was responded."),
+            'amountTo'                  => $this->double(2)->notNull()->comment("Amount of money after being converted and transfered to the client."),
         ], $tableOptions);
         
         // Transaction

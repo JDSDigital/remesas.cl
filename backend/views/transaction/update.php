@@ -78,7 +78,8 @@ $this->title = 'Geknology';
                             'formId' => 'dynamic-form',
                             'formFields' => [
                                 'accountAdminIdFrom',
-                                'adminBankTransaction'
+                                'adminBankTransaction',
+                                'amountTo'
                             ],
                         ]); ?>
             
@@ -107,6 +108,9 @@ $this->title = 'Geknology';
                                     </div>
                                     <div class="row">
                                         <?= $form->field($modelPart, "[{$i}]adminBankTransaction")->label("Numero de Deposito o Transferencia") ?>
+                                    </div>
+                                    <div class="row">
+                                        <?= $form->field($modelPart, "[{$i}]amountTo")->label("Monto")->textInput(); ?>
                                     </div>
                                 </div>
                             </div>

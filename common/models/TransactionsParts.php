@@ -34,6 +34,7 @@ class TransactionsParts extends \yii\db\ActiveRecord
             ['accountAdminIdFrom', 'required', 'message' => 'Debe indicar la cuenta desde donde se realizó transferencia.'],
             ['adminBankTransaction', 'required', 'message' => 'Debe escribir el número de la transferencia.'],
             ['transactionResponseDate', 'required', 'message' => 'Debe indicar la fecha de la transferencia.'],
+            ['amountTo', 'required', 'message' => 'Debe indicar el monto de la transferencia.'],
             [['transactionId', 'accountAdminIdFrom', 'adminBankTransaction'], 'integer'],
             [['transactionResponseDate'], 'safe'],
             [['transactionId'], 'exist', 'skipOnError' => true, 'targetClass' => Transaction::className(), 'targetAttribute' => ['transactionId' => 'id']],
@@ -51,6 +52,7 @@ class TransactionsParts extends \yii\db\ActiveRecord
             'accountAdminIdFrom' => 'Account Admin Id From',
             'adminBankTransaction' => 'Admin Bank Transaction',
             'transactionResponseDate' => 'Transaction Response Date',
+            'amountTo' => 'Amount To',
         ];
     }
 
