@@ -15,6 +15,7 @@ $result = null;
 $amount = 1;
 
 $this->title = 'Paso 1: Verificar Disponibilidad';
+
 ?>
 
 <div class="site-index container pt30">

@@ -11,12 +11,12 @@ class BootstrapAsset extends AssetBundle
 {
     public $sourcePath = '@vendor/twbs/bootstrap';
     public $css = [
-        'dist/css/bootstrap.min.css',
+//        'dist/css/bootstrap.min.css',
 //        'dist/css/bootstrap-grid.min.css',
 //        'dist/css/bootstrap-reboot.min.css',
     ];
     public $js = [
-        'dist/js/bootstrap.min.js',
+//        'dist/js/bootstrap.min.js',
 //        'js/dist/alert.js',
 //        'js/dist/button.js',
 //        'js/dist/carousel.js',

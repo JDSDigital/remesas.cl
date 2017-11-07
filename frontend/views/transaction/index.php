@@ -19,7 +19,7 @@ $this->title = 'Paso 4: Adjuntar recibo';
         </div>
     	<div class="col-md-6 text-right">
             <p>
-                <?= Html::a('Solicitar transacción', ['#'], ['data-toggle' => 'modal', 'data-target' => '#modal-check', 'class' => 'btn btn-primary']) ?>
+                <?= Html::a('Solicitar transacción', ['create'], ['class' => 'btn btn-primary']) ?>
             </p>
         </div>
     </div>

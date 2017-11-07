@@ -36,12 +36,15 @@ $(function () {
     }
     
     // Modal  behavior for showing the transaction receipt
-    $("#modalButton").click(function(){
+    $("#modalButton").click(function(event){
+        event.preventDefault();
         var options = {
             title: 'Recibo de Transacción #'+$(this).attr('t'),
-            text: '<img width="700" src="'+$(this).attr('route')+'">',
+            text: '<img class="img-responsive" src="'+$(this).attr('route')+'">',
             html: true,
             customClass: 'modal-lg',
+            allowOutsideClick: true,
+            allowEscapeKey: true
         };
         swal(options);
     });

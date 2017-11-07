@@ -239,7 +239,7 @@ $this->title = 'Geknology';
                             'contentOptions' => ['style' => 'width: 80px;min-width: 80px'],
                             'buttons'=>[
                                 'receipt' => function ($url, $model, $key) {
-                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['#'],['title'=>'Ver recibo de la transaccion', 'id' => 'modalButton', 't' =>$model->id, 'route' => Yii::$app->urlManagerFrontend->createUrl('/uploads/t-'.$model->id.'.jpg')]);
+                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', [''],['title'=>'Ver recibo de la transaccion', 'id' => 'modalButton', 't' =>$model->id, 'route' => Yii::$app->urlManagerFrontend->createUrl('/uploads/t-'.$model->id.'.jpg')]);
                                 },
                                 'account_data' => function ($url, $model, $key) {
                                     return Html::a('<span class="glyphicon glyphicon-user"></span>', ['/client/accounts', 'id'=>$model->clientId, 'acc' => $model->accountClientId],['title'=>'Ver datos de la cuenta bancaria del usuario']);

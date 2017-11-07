@@ -16,8 +16,8 @@ class ThemeAsset extends AssetBundle
         'js-plugin/magnific-popup/magnific-popup.css',
         'js-plugin/isotope/css/style.css',
 
-        'js-plugin/supersized/css/supersized.css',
-	    'js-plugin/supersized/theme/supersized.shutter.css',
+//        'js-plugin/supersized/css/supersized.css',
+//	    'js-plugin/supersized/theme/supersized.shutter.css',
 
         'font-icons/custom-icons/css/custom-icons.css',
         'font-icons/custom-icons/css/custom-icons-ie7.css',
@@ -27,7 +27,7 @@ class ThemeAsset extends AssetBundle
         'css/custom.css',
     ];
     public $js = [
-        'js/modernizr-2.6.1.min.js',
+//        'js/modernizr-2.6.1.min.js',
 //        'js-plugin/supersized/js/supersized.3.2.7.min.js',
 //        'js-plugin/supersized/theme/supersized.shutter.min.js',
 

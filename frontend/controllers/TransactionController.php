@@ -142,7 +142,15 @@ class TransactionController extends Controller
                     if ($model->validate()){
                         if ($model->save()){
                             $upload_file->saveAs('uploads/t-'.$model->id.'.'.$upload_file->extension);
-                            
+
+                            /**
+                             * Unsets the session variables
+                             */
+
+                            Yii::$app->session->remove('amountFrom');
+                            Yii::$app->session->remove('currencyIdFrom');
+                            Yii::$app->session->remove('currencyIdTo');
+
                             // "Substract" the amountTo from the account
                             //$accountAdmin->maxAmount = $accountAdmin->maxAmount - $model->amountTo;
                             //$accountAdmin->save();
@@ -198,11 +206,8 @@ class TransactionController extends Controller
             }*/    
         }
         else {
-            $model->amountFrom = $amountFrom;
             return $this->render('create', [
                 'model' => $model,
-                'exchangeId' => $exchangeId,
-                'amountFrom' => $amountFrom
             ]);
         }
     }

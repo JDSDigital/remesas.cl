@@ -314,6 +314,14 @@ class SiteController extends Controller
                     $total = $transaction->getTransactionSumByAA();
                     
                     if ($available['total'] - $total['total'] >= $calculate){
+
+                        /**
+                         * Sets the amount from and the currencies id's as session variables
+                         */
+                        Yii::$app->session->set('amountFrom', $load['amount']);
+                        Yii::$app->session->set('currencyIdFrom', $load['currencyIdFrom']);
+                        Yii::$app->session->set('currencyIdTo', $load['currencyIdTo']);
+
                         return Yii::$app->formatter->asDecimal(Html::encode($calculate), 2)." ".$ct->symbol;
                     }
                     else {
