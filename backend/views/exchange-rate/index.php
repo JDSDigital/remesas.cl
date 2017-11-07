@@ -68,7 +68,7 @@ $this->title = 'Geknology';
                     },
                 ],
                 [
-                    'label'     => 'Tasa para la compra',
+                    'label'     => 'Tasa para la venta',
                     'attribute' => 'sellValue',
                     'format'    => 'raw',
                     'value'     => function ($model) {
@@ -76,7 +76,7 @@ $this->title = 'Geknology';
                     },
                 ],
                 [
-                    'label'     => 'Tasa para la venta',
+                    'label'     => 'Tasa para la compra',
                     'attribute' => 'buyValue',
                     'format'    => 'raw',
                     'value'     => function ($model) {
