@@ -43,6 +43,30 @@ return [
                     ],
                 ],
             ],
-        ]
+        ],
+        'errorHandler' => [
+            // web error handler
+            'class' => '\bedezign\yii2\audit\components\web\ErrorHandler',
+            // console error handler
+            //'class' => '\bedezign\yii2\audit\components\console\ErrorHandler',
+        ],
+        /*'log' => [
+            'targets' => [
+                [
+                    'class' => 'yii\log\DbTarget',
+                    'levels' => ['error', 'warning'],
+                ],
+                [
+                    'class' => 'yii\log\EmailTarget',
+                    'levels' => ['error'],
+                    'categories' => ['yii\db\*'],
+                    'message' => [
+                        'from' => ['log@example.com'],
+                        'to' => ['admin@example.com', 'developer@example.com'],
+                        'subject' => 'Database errors at example.com',
+                    ],
+                ],
+            ],
+        ],*/
     ],
 ];

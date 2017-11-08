@@ -38,6 +38,10 @@ class ComposerStaticInit1def23a7b20116ec662563a5f997ae37
         array (
             'libphonenumber\\' => 15,
         ),
+        'd' => 
+        array (
+            'dosamigos\\chartjs\\' => 18,
+        ),
         'c' => 
         array (
             'cebe\\markdown\\' => 14,
@@ -45,6 +49,7 @@ class ComposerStaticInit1def23a7b20116ec662563a5f997ae37
         'b' => 
         array (
             'borales\\extensions\\phoneInput\\' => 30,
+            'bedezign\\yii2\\audit\\' => 20,
         ),
         'W' => 
         array (
@@ -136,6 +141,10 @@ class ComposerStaticInit1def23a7b20116ec662563a5f997ae37
         array (
             0 => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src',
         ),
+        'dosamigos\\chartjs\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/2amigos/yii2-chartjs-widget/src',
+        ),
         'cebe\\markdown\\' => 
         array (
             0 => __DIR__ . '/..' . '/cebe/markdown',
@@ -143,6 +152,10 @@ class ComposerStaticInit1def23a7b20116ec662563a5f997ae37
         'borales\\extensions\\phoneInput\\' => 
         array (
             0 => __DIR__ . '/..' . '/borales/yii2-phone-input/src',
+        ),
+        'bedezign\\yii2\\audit\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bedezign/yii2-audit/src',
         ),
         'Webmozart\\Assert\\' => 
         array (

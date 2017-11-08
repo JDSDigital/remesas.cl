@@ -18,6 +18,9 @@ return [
         'gUsers' => [
             'class' => 'backend\modules\gUsers\Module',
         ],
+        'audit' => [
+            'class' => 'bedezign\yii2\audit\Audit',
+        ],
     ],
     'components' => [
         /*'assetManager' => [
@@ -47,7 +50,7 @@ return [
             'csrfParam' => '_backendCSRF',
             'baseUrl' => '/remesas.cl/admin', 
         ],
-        'log' => [
+        /*'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
@@ -55,10 +58,10 @@ return [
                     'levels' => ['error', 'warning'],
                 ],
             ],
-        ],
-        'errorHandler' => [
+        ],*/
+        /*'errorHandler' => [
             'errorAction' => 'site/error',
-        ],
+        ],*/
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,

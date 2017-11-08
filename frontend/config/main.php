@@ -39,7 +39,7 @@ return [
             'csrfParam' => '_frontendCSRF',
             'baseUrl' => '/remesas.cl',
         ],
-        'log' => [
+        /*'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
@@ -47,10 +47,10 @@ return [
                     'levels' => ['error', 'warning'],
                 ],
             ],
-        ],
-        'errorHandler' => [
+        ],*/
+        /*'errorHandler' => [
             'errorAction' => 'site/error',
-        ],
+        ],*/
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,

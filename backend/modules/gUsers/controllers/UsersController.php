@@ -40,6 +40,7 @@ class UsersController extends Controller
                     'logout' => ['post'],
                 ],
             ],
+            'bedezign\yii2\audit\AuditTrailBehavior',
         ];
     }
 
@@ -128,6 +129,18 @@ class UsersController extends Controller
                 $model->setPassword($model->password);
 
             $model->update();
+
+            /*if ($model->update()){
+                Yii::warning('Usuario ' . $model->username . ' actualizado por ' . Yii::$app->user->identity->username, 'gUsers');
+                    'gUsers',
+                    $this->id,
+                    $this->action->id,
+                    'Message',
+                    $var = null,
+                    $status = 'success',
+                    $contractId = null);
+            } else
+                Yii::error('Error al actualizar el usuario ' . $model->username . ' por ' . Yii::$app->user->identity->username, 'gUsers');*/
 
             return $this->redirect(['index']);
         } else {

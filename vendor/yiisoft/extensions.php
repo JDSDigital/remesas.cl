@@ -75,4 +75,23 @@ return array (
       '@wbraganca/dynamicform' => $vendorDir . '/wbraganca/yii2-dynamicform',
     ),
   ),
+  '2amigos/yii2-chartjs-widget' => 
+  array (
+    'name' => '2amigos/yii2-chartjs-widget',
+    'version' => '2.0.1.0',
+    'alias' => 
+    array (
+      '@dosamigos/chartjs' => $vendorDir . '/2amigos/yii2-chartjs-widget/src',
+    ),
+  ),
+  'bedezign/yii2-audit' => 
+  array (
+    'name' => 'bedezign/yii2-audit',
+    'version' => '1.0.11.0',
+    'alias' => 
+    array (
+      '@bedezign/yii2/audit' => $vendorDir . '/bedezign/yii2-audit/src',
+    ),
+    'bootstrap' => 'bedezign\\yii2\\audit\\Bootstrap',
+  ),
 );
