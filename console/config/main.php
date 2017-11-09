@@ -20,7 +20,7 @@ return [
             'class'         => 'yii\console\controllers\MigrateController',
             'migrationPath' => [
                 '@yii/rbac/migrations',
-                '@yii/log/migrations',
+//                '@yii/log/migrations',
                 '@bedezign/yii2/audit/migrations',
                 '@app/migrations',
             ],
