@@ -49,7 +49,7 @@ $this->title = 'Registrar Depósito / Transferencia';
                 
                 <?= $form->field($model, 'clientBankTransaction')->label("Numero de Depósito o Transferencia") ?>
                 
-                <?= $form->field($model, 'accountClientId')->label("Banco para recibir la transaccion")->dropDownList(
+                <?= $form->field($model, 'accountClientId')->label("Cuenta en la cual desea recibir la transaccion")->dropDownList(
                     ArrayHelper::map(AccountClient::find()->where(['clientId' => Yii::$app->user->identity->id])->orderBy('description')->all(), 'id', 'description'), ['class' => 'form-control']
                 )?>
 

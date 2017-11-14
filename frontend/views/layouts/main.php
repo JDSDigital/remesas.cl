@@ -77,14 +77,7 @@ AppAsset::register($this);
     ?>
 
     <div class="mt50">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <div class="container">
-            <div class="row">
-                <?= Alert::widget() ?>
-            </div>
-        </div>
+        <?= Alert::widget() ?>
         <?= $content ?>
     </div>
 </div>

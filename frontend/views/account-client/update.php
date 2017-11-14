@@ -21,7 +21,7 @@ $this->title = 'Crear cuenta bancaria';
         <div class="col-lg-5">
             <h1>Modificar Cuenta</h1>
             <?php $form = ActiveForm::begin(['id' => 'form-account-client']); ?>
-                <?= $form->field($model, 'description')->label("Descripcion")->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'description')->label("Titular de la cuenta")->textInput(['autofocus' => true]) ?>
                 <?= Html::label("País") ?>
                 <?= Html::dropDownList('countryId', $countryId, ArrayHelper::map(Country::find()->orderBy('name')->all(), 'id', 'name'), 
                                       [

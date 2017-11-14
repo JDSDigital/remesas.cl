@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Bank;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\grid\ActionColumn;
@@ -177,7 +178,7 @@ $this->title = 'Geknology';
                     'dataProvider'   => $dataProvider,
                     'layout'         => '{items}{pager}{summary}',
                     'options'        => [
-                        'class' => 'panel panel-flat pl20 pr20',
+                        'class' => 'panel panel-flat pl20 pr20 table-responsive',
                     ],
                     'tableOptions'   => [
                         'class' => 'table table-striped table-hover',
@@ -192,6 +193,20 @@ $this->title = 'Geknology';
                             'format'    => 'raw',
                             'value'     => function ($model) {
                                 return Html::a(Yii::$app->formatter->asDate($model->created_at, 'dd-MM-yyyy'), ['update', 'id' => $model->id]);
+                            },
+                        ],
+                        [
+                            'label'     => 'Banco',
+                            'format'    => 'raw',
+                            'value'     => function ($model) {
+                                return Html::a(Bank::findOne(['id' => $model->accountClient->bankId])->name, ['update', 'id' => $model->id]);
+                            },
+                        ],
+                        [
+                            'label'     => 'Titular',
+                            'format'    => 'raw',
+                            'value'     => function ($model) {
+                                return Html::a($model->accountClient->description, ['update', 'id' => $model->id]);
                             },
                         ],
                         [
@@ -214,6 +229,14 @@ $this->title = 'Geknology';
                             'format'    => 'raw',
                             'value'     => function ($model) {
                                 return Html::a(($model->amountTo != "") ? Yii::$app->formatter->asCurrency($model->amountTo, $model->currencyTo->symbol) : "---", ['update', 'id' => $model->id]);
+                            },
+                        ],
+                        [
+                            'label'     => 'Correo',
+                            'attribute' => 'amountTo',
+                            'format'    => 'raw',
+                            'value'     => function ($model) {
+                                return Html::a($model->client->email, ['update', 'id' => $model->id]);
                             },
                         ],
                         [

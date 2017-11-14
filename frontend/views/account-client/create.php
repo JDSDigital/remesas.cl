@@ -22,7 +22,7 @@ $this->title = 'Crear cuenta bancaria';
             <h1>Agregar Cuenta</h1>
             <h4>En esta sección puede agregar una cuenta a "Mis Cuentas", que son aquellas donde usted recibirá el dinero solicitado.</h4>
             <?php $form = ActiveForm::begin(['id' => 'form-account-client']); ?>
-                <?= $form->field($model, 'description')->label("Descripcion")->textInput(['autofocus' => true, 'placeholder' => 'Ejemplo: Banesco Mamá']) ?>
+                <?= $form->field($model, 'description')->label("Titular de la cuenta")->textInput(['autofocus' => true, 'placeholder' => 'Juan Perez']) ?>
                 <?= Html::label("País (de quien recibe la transferencia)") ?>
                 <?= Html::tag('h4', 'Los bancos se cargarán de forma automática al seleccionar el país.') ?>
                 <?= Html::dropDownList('countryId', $countryId, ArrayHelper::map(Country::find()->orderBy('name')->all(), 'id', 'name'), 

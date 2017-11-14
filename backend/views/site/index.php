@@ -2,7 +2,9 @@
 
 /* @var $this yii\web\View */
 
+use common\models\Bank;
 use common\models\Refund;
+use common\models\Transaction;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -166,7 +168,7 @@ $this->title = 'Geknology';
                 'dataProvider'   => $dataProvider,
                 'layout'         => '{items}{pager}{summary}',
                 'options'        => [
-                    'class' => 'panel panel-flat pl20 pr20',
+                    'class' => 'panel panel-flat pl20 pr20 table-responsive',
                 ],
                 'tableOptions'   => [
                     'class' => 'table table-striped table-hover',
@@ -180,15 +182,35 @@ $this->title = 'Geknology';
                         'attribute' => 'created_at',
                         'format'    => 'raw',
                         'value'     => function ($model) {
-                            return Yii::$app->formatter->asDate($model->created_at, 'dd-MM-yyyy');
+                            return Html::a(Yii::$app->formatter->asDate($model->created_at, 'dd-MM-yyyy'), ['update', 'id' => $model->id]);
                         },
                     ],
                     [
-                        'label'     => 'Cliente',
-                        'attribute' => 'clientName',
+                        'label'     => 'Banco',
                         'format'    => 'raw',
                         'value'     => function ($model) {
-                            return $model->client->name." ".$model->client->lastName;
+                            return Html::a(Bank::findOne(['id' => $model->accountClient->bankId])->name, ['update', 'id' => $model->id]);
+                        },
+                    ],
+                    [
+                        'label'     => 'Titular',
+                        'format'    => 'raw',
+                        'value'     => function ($model) {
+                            return Html::a($model->accountClient->description, ['update', 'id' => $model->id]);
+                        },
+                    ],
+                    [
+                        'label'     => 'RUT/Cédula',
+                        'format'    => 'raw',
+                        'value'     => function ($model) {
+                            return Html::a($model->accountClient->rut, ['update', 'id' => $model->id]);
+                        },
+                    ],
+                    [
+                        'label'     => 'Número de Cuenta',
+                        'format'    => 'raw',
+                        'value'     => function ($model) {
+                            return Html::a($model->accountClient->number, ['update', 'id' => $model->id]);
                         },
                     ],
                     [
@@ -196,15 +218,15 @@ $this->title = 'Geknology';
                         'attribute' => 'amountTo',
                         'format'    => 'raw',
                         'value'     => function ($model) {
-                            return ($model->amountTo != "") ? Yii::$app->formatter->asCurrency($model->amountTo, $model->currencyTo->symbol) : "---";
+                            return Html::a(($model->amountTo != "") ? Yii::$app->formatter->asCurrency($model->amountTo, $model->currencyTo->symbol) : "---", ['update', 'id' => $model->id]);
                         },
                     ],
                     [
-                        'label'     => 'Desde la cuenta',
-                        'attribute' => 'accountAdminDescFrom',
+                        'label'     => 'Correo',
+                        'attribute' => 'amountTo',
                         'format'    => 'raw',
                         'value'     => function ($model) {
-                            return ($model->accountAdminIdFrom != null && $model->accountAdminFrom->description != "") ? $model->accountAdminFrom->description : "---";
+                            return Html::a($model->client->email, ['update', 'id' => $model->id]);
                         },
                     ],
                     [
@@ -221,15 +243,15 @@ $this->title = 'Geknology';
                         'format'    => 'raw',
                         'value'     => function ($model) {
                             $check = "Pendiente";
-    
-                            if ($model->status == 1)
+
+                            if ($model->status == Transaction::STATUS_CANCELLED)
                                 $check = "Anulada";
-                            else if ($model->status == 2)
+                            else if ($model->status == Transaction::STATUS_DONE)
                                 $check = "Realizada";
-    
-                            return $check;
+
+                            return Html::a($check, ['update', 'id' => $model->id]);
                         },
-                    ]
+                    ],
                 ],
             ]);
         }
