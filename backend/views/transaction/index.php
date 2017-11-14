@@ -195,11 +195,17 @@ $this->title = 'Geknology';
                             },
                         ],
                         [
-                            'label'     => 'Cliente',
-                            'attribute' => 'clientName',
+                            'label'     => 'RUT/Cédula',
                             'format'    => 'raw',
                             'value'     => function ($model) {
-                                return Html::a($model->client->name." ".$model->client->lastName, ['update', 'id' => $model->id]);
+                                return Html::a($model->accountClient->rut, ['update', 'id' => $model->id]);
+                            },
+                        ],
+                        [
+                            'label'     => 'Número de Cuenta',
+                            'format'    => 'raw',
+                            'value'     => function ($model) {
+                                return Html::a($model->accountClient->number, ['update', 'id' => $model->id]);
                             },
                         ],
                         [

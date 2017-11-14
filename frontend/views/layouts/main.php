@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use common\models\Transaction;
 use frontend\models\ContactForm;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
@@ -62,10 +63,11 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Inicio de sesión', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-login']];
     } else {
         $menuItems[] = ['label' => 'Enviar Dinero', 'url' => ['//site/calculator']];
-//        $menuItems[] = ['label' => 'Mis Cuentas', 'url' => ['/account-client/index']];
-//        $menuItems[] = ['label' => 'Calculadora', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-calculator']];
-//        $menuItems[] = ['label' => 'Mis Transacciones', 'url' => ['/transaction/index']];
-        $menuItems[] = ['label' => 'Logout', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
+
+        if (Transaction::find()->where(['clientId' => Yii::$app->user->identity->id])->count() > 0)
+            $menuItems[] = ['label' => 'Transacciones', 'url' => ['/transaction/check'], 'linkOptions' => ['data-method' => 'post']];
+
+        $menuItems[] = ['label' => 'Logout (' . Yii::$app->user->identity->name . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right list-inline'],

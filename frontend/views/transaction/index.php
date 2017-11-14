@@ -150,5 +150,3 @@ $this->title = 'Paso 4: Adjuntar recibo';
             ],
         ]); ?>
 </div>
-
-<?= Yii::$app->controller->renderPartial('check'); ?>

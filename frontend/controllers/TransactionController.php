@@ -70,8 +70,7 @@ class TransactionController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        
-        
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -225,9 +224,27 @@ class TransactionController extends Controller
         return $this->redirect(['index']);
     }
 
+    /**
+     * User transactions gridview
+     *
+     * @return string
+     */
     public function actionCheck()
     {
-        $load = Yii::$app->request->post();
+
+        $searchModel = new TransactionSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->where('gtransactions.clientId = '.Yii::$app->user->id);
+
+        return $this->render('check', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+
+        /**
+         * Old Check Method
+         */
+        /*$load = Yii::$app->request->post();
 
         $er = ExchangeRate::find()->where(['id' => $load['CheckForm']['rate']])->one();
 
@@ -246,7 +263,7 @@ class TransactionController extends Controller
         } else {
             Yii::$app->getSession()->setFlash('error','La cantidad solicitada no se encuentra disponible. Por favor pruebe con un monto más bajo.');
             return $this->actionIndex();
-        }
+        }*/
     }
 
     /**
