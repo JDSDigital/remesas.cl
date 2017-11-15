@@ -24,6 +24,7 @@ class AppAsset extends AssetBundle
         'app\assets\BootstrapAsset',
         'app\assets\FontAwesomeAsset',
         'app\assets\ThemeAsset',
+        'app\assets\SweetAlertAsset',
 //        'yii\bootstrap\BootstrapAsset',
     ];
 }
