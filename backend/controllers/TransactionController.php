@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use Exception;
 use Yii;
 use common\models\AccountAdmin;
 use common\models\ExchangeRate;
@@ -101,9 +102,13 @@ class TransactionController extends Controller
 
             if ($load['Transaction']['status'] == Transaction::STATUS_CANCELLED || $load['Transaction']['status'] == Transaction::STATUS_PENDING){
                 $model->userId = Yii::$app->user->id;
-                $model->transactionResponseDate = Yii::$app->formatter->asDate($load['Transaction']['transactionResponseDate'], 'yyyy-MM-dd');
+
+                if ($model->transactionResponseDate == '')
+                    $model->transactionResponseDate = date('Y-m-d');
+                else
+                    $model->transactionResponseDate = Yii::$app->formatter->asDate($load['Transaction']['transactionResponseDate'], 'yyyy-MM-dd');
                 
-                $transaction = \Yii::$app->db->beginTransaction();
+                $transaction = Yii::$app->db->beginTransaction();
                 try {
                     if ($flag = $model->save(false)) {
                         if (! empty($deletedIDs)) {

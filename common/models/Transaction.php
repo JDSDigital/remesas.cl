@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 /**
@@ -220,16 +221,58 @@ class Transaction extends ActiveRecord
         $connection = Yii::$app->getDb();
         
         $with_account = " ";
-        if ($aa != null){
+        if ($aa != null) {
             $with_account = "t.accountAdminIdFrom = ".$aa." AND ";
         }
         
         $command = $connection->createCommand("
             SELECT sum(t.amountTo) AS total 
-            FROM gtransactions t WHERE ".$with_account." t.transactionResponseDate >= '".date('Y-m-d')."' AND t.transactionResponseDate < '".(date('Y-m-d', strtotime(' +1 day')))."'");
+            FROM gtransactions_parts t WHERE ".$with_account." t.transactionResponseDate >= '".date('Y-m-d')."' AND t.transactionResponseDate < '".(date('Y-m-d', strtotime(' +1 day')))."'");
 
         $result = $command->queryOne();
         return $result;
+    }
+
+    /**
+     *
+     * Get the total max amount grouped by currency
+     *
+     * @return array
+     */
+    public function getTotal()
+    {
+        $accounts = ArrayHelper::map(AccountAdmin::find()
+            ->select(['id', 'currencyId', 'maxAmount'])
+            ->where(['status' => 1])
+            ->all(), 'id', 'maxAmount', 'currencyId');
+        $response = [];
+
+        foreach ($accounts as $key => $account)
+            $response[$key] = array_sum($account);
+
+        return $response;
+    }
+
+    /**
+     *
+     * Get the total transferred money of a selected currency
+     *
+     * @return array
+     */
+    public function getTransactionSumByCurrency($id)
+    {
+        $transactions = Transaction::find()
+            ->select(['id', 'transactionResponseDate'])
+            ->where(['transactionResponseDate' => date('Y-m-d')])
+            ->andWhere(['currencyIdTo' => $id])
+            ->all();
+        $response = [];
+
+        foreach ($transactions as $transaction)
+            foreach ($transaction->transactionParts as $key => $transactionPart)
+                array_push($response, $transactionPart->amountTo);
+
+        return array_sum($response);
     }
 
     public function getCurrency()

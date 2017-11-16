@@ -65,8 +65,8 @@ $this->title = 'Geknology';
                 </div>
                 <?= $form->field($model, 'observation')->label("Observacion") ?>
             </div>
-        </div>
-        <div class="col-md-5">
+        <!--</div>
+        <div class="col-md-5">-->
             <div class="panel panel-default hideField" style="padding-top: 0">
                 <div class="panel-heading">
                     <h4><i class="glyphicon glyphicon-envelope"></i> Transferencias</h4>

@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Currency;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\grid\ActionColumn;
@@ -28,6 +29,28 @@ $this->title = 'Geknology';
             </div>
         </div>
     </div>
+        <div class="row">
+            <div class="panel panel-flat p15 mr40 ml40">
+                <table class="table">
+                    <tr>
+                        <th class="text-center" colspan="2"><h3>Total restante</h3></th>
+                    </tr>
+                    <?php
+                        $transaction = new Transaction();
+                        foreach (Currency::find()->asArray()->all() as $currency) :
+                    ?>
+                        <tr>
+                            <td align="right">
+                                <b><?= $currency['name'] ?>:</b>
+                            </td>
+                            <td>
+                                <?= Yii::$app->formatter->asCurrency($transaction->getTotal()[$currency['id']] - $transaction->getTransactionSumByCurrency($currency['id']), $currency['symbol']) ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        </div>
     <!-- /page header -->
     <div class="panel panel-flat">
         <?= Yii::$app->session->getFlash('success'); ?>
