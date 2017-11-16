@@ -83,6 +83,10 @@ class TransactionController extends Controller
      */
     public function actionCreate($amountFrom = null, $exchangeId = null, $amount = null){
 
+        if (!Yii::$app->session['amountFrom']) {
+            return $this->redirect(['//site/index']);
+        }
+
         $model = new Transaction();
 
         if ($model->load(Yii::$app->request->post())){

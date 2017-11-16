@@ -142,9 +142,13 @@ class TransactionController extends Controller
                 
                 if ($available['total'] >= $model->amountTo){
                     $model->userId = Yii::$app->user->id;
-                    $model->transactionResponseDate = Yii::$app->formatter->asDate($load['Transaction']['transactionResponseDate'], 'yyyy-MM-dd');
                     
-                    $transaction = \Yii::$app->db->beginTransaction();
+                    if ($model->transactionResponseDate == '')
+                        $model->transactionResponseDate = date('Y-m-d');
+                    else
+                        $model->transactionResponseDate = Yii::$app->formatter->asDate($load['Transaction']['transactionResponseDate'], 'yyyy-MM-dd');
+
+                    $transaction = Yii::$app->db->beginTransaction();
                     try {
                         if ($flag = $model->save(false)) {
                             if (! empty($deletedIDs)) {

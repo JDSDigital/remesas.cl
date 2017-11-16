@@ -79,7 +79,7 @@ class Transaction extends ActiveRecord
             ['accountClientId', 'required', 'message' => 'Debe seleccionar la cuenta a donde desea que le realicen la transferencia.'],
             ['amountFrom', 'required', 'message' => 'Indique el monto de dinero que desea convertir.'],
             ['transactionDate', 'required', 'message' => 'Indique la fecha en la cual realizó el depósito o transferencia.'],
-            ['transactionDate', 'default', 'value' => date('dd-MM-yyyy')],
+            ['transactionDate', 'default', 'value' => date('d-m-Y')],
             ['exchangeId', 'required', 'message' => 'Seleccione el tipo de cambio que desea realizar.'],
             ['clientBankTransaction', 'required', 'message' => 'Indique el número del depósito o la transferencia que realizó.'],
             [['clientId', 'sellRateValue', 'buyRateValue', 'currencyIdFrom', 'currencyIdTo', 'usedValue'], 'required'],
