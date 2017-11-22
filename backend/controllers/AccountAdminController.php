@@ -101,6 +101,7 @@ class AccountAdminController extends Controller
      * @return mixed
      */
     public function actionDelete($id){
+
         $model = $this->findModel($id);
         
         // Check if the account is related to any transaction
@@ -108,10 +109,8 @@ class AccountAdminController extends Controller
         
         if ($transactions > 0){
             Yii::$app->getSession()->setFlash('error','La cuenta bancaria no puede ser eliminada porque hay transacciones relacionadas con ella.');
-        }
-        else {
-            $this->findModel($id)->delete();
-        }
+        } else
+            $model->delete();
 
         return $this->redirect(['index']);
     }

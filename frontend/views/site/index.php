@@ -40,8 +40,8 @@ $this->title = 'Remesas.cl';
           <span class="glyphicon glyphicon-chevron-right"></span>
           <span class="sr-only">Next</span>
         </a>
-      </div>
     </div>
+
     <?= Yii::$app->controller->renderPartial('//site/about'); ?>
 
     <section id="paralaxSlice3" data-stellar-background-ratio="0.5" style="background-position: 50% 123px;">

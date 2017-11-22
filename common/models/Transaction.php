@@ -38,7 +38,7 @@ use yii\web\UploadedFile;
  * @property User $user
  * @property Currency $currencyFrom
  * @property Currency $currencyTo
- * @property TransactionsPars $transactionParts
+ * @property TransactionsParts $transactionParts
  */
 class Transaction extends ActiveRecord
 {
