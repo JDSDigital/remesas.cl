@@ -1,5 +1,6 @@
 <?php
 
+use kartik\widgets\FileInput;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
@@ -65,8 +66,17 @@ $this->title = 'Registrar Depósito / Transferencia';
                     ],
                 ]) ?>
                 
-                <?= $form->field($model, 'uploadFile')->fileInput() ?>
-                
+                <?= $form->field($model, 'uploadFile')->widget(FileInput::classname(), [
+                    'name' => 'add-receipt',
+                    'pluginOptions' => [
+                        'allowedFileExtensions'=>['jpg'],
+                        'maxFileSize'=>2800,
+                        'showUpload' => false,
+                        'showDelete' => true,
+                        'previewFileType' => 'image',
+                    ],
+                ]) ?>
+
                 <div class="form-group">
                     <?= Html::submitButton('Registrar', ['class' => 'btn btn-primary', 'name' => 'form-transaction-button']) ?>
                 </div>

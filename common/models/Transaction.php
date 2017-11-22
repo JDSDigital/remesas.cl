@@ -45,8 +45,7 @@ class Transaction extends ActiveRecord
     const STATUS_PENDING = 0;
     const STATUS_CANCELLED = 1;
     const STATUS_DONE = 2;
-    public $uploadFile;
-    
+
     /**
      * @inheritdoc
      */

@@ -138,13 +138,17 @@ class TransactionController extends Controller
             
                 // Transaction receipt
                 $upload_file = UploadedFile::getInstance($model, 'uploadFile');
-    
+
                 if (!empty($upload_file) && $upload_file->size !== 0){
-                    $model->uploadFile = $upload_file;
-                    
+
                     if ($model->validate()){
                         if ($model->save()){
-                            $upload_file->saveAs('uploads/t-'.$model->id.'.'.$upload_file->extension);
+
+                            $fileName = 't-' . $model->id . '.' . $upload_file->extension;
+                            $model->uploadFile = $fileName;
+                            $model->save();
+
+                            $upload_file->saveAs('uploads/' . $fileName);
 
                             /**
                              * Unsets the session variables

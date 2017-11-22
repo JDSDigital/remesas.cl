@@ -166,3 +166,8 @@ select.form-control:not([size]):not([multiple]) {
 .country.highlight {
     margin-bottom: 0;
 }
+#send-money-button {
+    background-color: #C8E729;
+    color: #4C011F;
+    border: 1px solid #4C011F;
+}

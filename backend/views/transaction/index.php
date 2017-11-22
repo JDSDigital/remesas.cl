@@ -163,7 +163,7 @@ $this->title = 'Geknology';
                             'contentOptions' => ['style' => 'width: 80px;min-width: 80px'],
                             'buttons'=>[
                                 'receipt' => function ($url, $model, $key) {
-                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['#'],['title'=>'Ver recibo de la transaccion', 'id' => 'modalButton', 't' =>$model->id, 'route' => Yii::$app->urlManagerFrontend->createUrl('/uploads/t-'.$model->id.'.jpg')]);
+                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['#'],['title'=>'Ver recibo de la transaccion', 'class' => 'modalButton', 't' =>$model->id, 'route' => Yii::$app->urlManagerFrontend->createUrl('/uploads/' . $model->uploadFile)]);
                                 },
                                 'account_data' => function ($url, $model, $key) {
                                     return Html::a('<span class="glyphicon glyphicon-user"></span>', ['/client/accounts', 'id'=>$model->clientId, 'acc' => $model->accountClientId],['title'=>'Ver datos de la cuenta bancaria del usuario']);
@@ -253,12 +253,12 @@ $this->title = 'Geknology';
                             'format'    => 'raw',
                             'value'     => function ($model) {
                                             $check = "Pendiente";
-                                            
+
                                             if ($model->status == Transaction::STATUS_CANCELLED)
                                                 $check = "Anulada";
                                             else if ($model->status == Transaction::STATUS_DONE)
                                                 $check = "Realizada";
-                                            
+
                                             return Html::a($check, ['update', 'id' => $model->id]);
                             },
                         ],
@@ -268,7 +268,7 @@ $this->title = 'Geknology';
                             'contentOptions' => ['style' => 'width: 80px;min-width: 80px'],
                             'buttons'=>[
                                 'receipt' => function ($url, $model, $key) {
-                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', [''],['title'=>'Ver recibo de la transaccion', 'id' => 'modalButton', 't' =>$model->id, 'route' => Yii::$app->urlManagerFrontend->createUrl('/uploads/t-'.$model->id.'.jpg')]);
+                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', [''],['title'=>'Ver recibo de la transaccion', 'class' => 'modalButton', 't' =>$model->id, 'route' => Yii::$app->urlManagerFrontend->createUrl('/uploads/' . $model->uploadFile)]);
                                 },
                                 'account_data' => function ($url, $model, $key) {
                                     return Html::a('<span class="glyphicon glyphicon-user"></span>', ['/client/accounts', 'id'=>$model->clientId, 'acc' => $model->accountClientId],['title'=>'Ver datos de la cuenta bancaria del usuario']);

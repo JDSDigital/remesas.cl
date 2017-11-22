@@ -59,14 +59,15 @@ AppAsset::register($this);
         
     ];
     if (Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'Enviar Dinero', 'linkOptions' => ['id' => 'send-money-button', 'data-toggle' => 'modal', 'data-target' => '#modal-login']];
         $menuItems[] = ['label' => 'Registro', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-signup']];
         $menuItems[] = ['label' => 'Inicio de sesión', 'linkOptions' => ['data-toggle' => 'modal', 'data-target' => '#modal-login']];
     } else {
-        $menuItems[] = ['label' => 'Enviar Dinero', 'url' => ['//site/calculator']];
 
         if (Transaction::find()->where(['clientId' => Yii::$app->user->identity->id])->count() > 0)
             $menuItems[] = ['label' => 'Transacciones', 'url' => ['/transaction/check'], 'linkOptions' => ['data-method' => 'post']];
 
+        $menuItems[] = ['label' => 'Enviar Dinero', 'url' => ['//site/calculator'], 'linkOptions' => ['id' => 'send-money-button']];
         $menuItems[] = ['label' => 'Logout (' . Yii::$app->user->identity->name . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
     }
     echo Nav::widget([

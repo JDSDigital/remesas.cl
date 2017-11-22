@@ -30,7 +30,12 @@ $this->title = 'Crear cuenta bancaria';
                                         'onchange'=>'
                                                 $.post( "listb?id="+$(this).val(), function( data ) {
                                                   $( "#accountclient-bankid" ).html( data );
-                                                });'
+                                                });
+                                                if (this.value == 1) {
+                                                    $("#accountclient-currencyid").val(1);
+                                                } else if (this.value == 2) {
+                                                    $("#accountclient-currencyid").val(2);
+                                                };'
                                       ]) 
                 ?>
                 <?= $form->field($model, 'bankId')->label("Banco")->dropDownList(ArrayHelper::map(Bank::find()->all(), 'id', 'name'), ['class' => 'form-control']); ?>

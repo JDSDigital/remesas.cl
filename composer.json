@@ -24,7 +24,8 @@
         "yiisoft/yii2-jui": "^2.0",
         "borales/yii2-phone-input": "^0.1.1",
         "wbraganca/yii2-dynamicform": "*",
-        "bedezign/yii2-audit": "^1.0"
+        "bedezign/yii2-audit": "^1.0",
+        "kartik-v/yii2-widgets": "^3.4"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
