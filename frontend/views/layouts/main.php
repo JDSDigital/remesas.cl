@@ -68,7 +68,7 @@ AppAsset::register($this);
             $menuItems[] = ['label' => 'Transacciones', 'url' => ['/transaction/check'], 'linkOptions' => ['data-method' => 'post']];
 
         $menuItems[] = ['label' => 'Enviar Dinero', 'url' => ['//site/calculator'], 'linkOptions' => ['id' => 'send-money-button']];
-        $menuItems[] = ['label' => 'Cerrar Sesión (' . Yii::$app->user->identity->name . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
+        $menuItems[] = ['label' => 'Salir (' . Yii::$app->user->identity->name . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right list-inline'],
