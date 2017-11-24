@@ -533,7 +533,7 @@ blockquote small, .ctaBox blockquote small{
 	line-height: 1em !important;
 	color: inherit !important;
 }
-blockquote:before {
+/*blockquote:before {
 	content:'\e928';
 	font-family: 'custom-icons';
 	margin-right:0.5em;
@@ -542,7 +542,7 @@ blockquote:after {
 	content:'\e929';
 	font-family: 'custom-icons';
 	margin-left:0.5em;
-}
+}*/
 
 blockquote.pull-right {border:none;}
 

@@ -68,7 +68,7 @@ AppAsset::register($this);
             $menuItems[] = ['label' => 'Transacciones', 'url' => ['/transaction/check'], 'linkOptions' => ['data-method' => 'post']];
 
         $menuItems[] = ['label' => 'Enviar Dinero', 'url' => ['//site/calculator'], 'linkOptions' => ['id' => 'send-money-button']];
-        $menuItems[] = ['label' => 'Logout (' . Yii::$app->user->identity->name . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
+        $menuItems[] = ['label' => 'Cerrar Sesión (' . Yii::$app->user->identity->name . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right list-inline'],
@@ -91,7 +91,6 @@ AppAsset::register($this);
                     <div class="col-sm-4">
                         <div class="footerWidget">
                             <?= Html::img(Yii::getAlias('@web') . '/images/logo-alt2.png', ['id' => 'footerLogo', 'class' => 'img-responsive', 'alt' => 'Remesas.cl']) ?>
-                            <p><a href="http://www.little-neko.com/" title="Little Neko, website template creation">Remesas.cl</a> is a web design and development studio. We build responsive HTML5 and CSS3 templates, integrating best web design practises and up-to-date web technologies to create great user experiences. We love what we do and we hope you too ! </p>
                         </div>
                     </div>
 
@@ -113,7 +112,7 @@ AppAsset::register($this);
                         <div class="footerWidget">
                             <h3>Follow us, we are social</h3>
                             <ul class="socialNetwork">
-                                <li><a href="#" class="tips" title="" data-original-title="follow me on Instagram"><i class="icon-dribbble iconRounded"></i></a></li>
+                                <li><a href="#" class="tips" title="" data-original-title="follow me on Instagram"><i class="fa fa-lg fa-instagram iconRounded"></i></a></li>
                                 <li><a href="#" class="tips" title="" data-original-title="follow me on Facebook"><i class="icon-facebook-1 iconRounded"></i></a></li>
                                 <li><a href="#" class="tips" title="" data-original-title="follow me on Twitter"><i class="icon-twitter-bird iconRounded"></i></a></li>
                                 <li><a href="#" class="tips" title="" data-original-title="follow me on Google+"><i class="icon-gplus-1 iconRounded"></i></a></li>

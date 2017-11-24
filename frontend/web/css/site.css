@@ -171,3 +171,6 @@ select.form-control:not([size]):not([multiple]) {
     color: #4C011F;
     border: 1px solid #4C011F;
 }
+.about-logo {
+    max-width: 300px !important;
+}

@@ -66,7 +66,7 @@ AppAsset::register($this);
 	<div class="row m0">
 		<!-- Main sidebar -->
 		<div class="col-md-2 p0">
-			<div class="sidebar sidebar-main">
+			<div class="sidebar sidebar-main" style="position: fixed; width: 220px">
 				<div class="sidebar-content">
 
 					<!-- User menu -->
@@ -95,7 +95,7 @@ AppAsset::register($this);
                                 if (Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'root'){
                                     $items = [
     									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['//site/index']],
-    									['label' => '<i class="icon-wrench"></i>Sistema', 'url' => ['//gSystem/system/index']],
+//    									['label' => '<i class="icon-wrench"></i>Sistema', 'url' => ['//gSystem/system/index']],
     									['label' => '<i class="icon-user"></i>Usuarios', 'url' => ['//gUsers/users/index']],
                                         ['label' => '<i class="fa fa-users"></i>Clientes', 'url' => ['//client/index']],
                                         ['label' => '<i class="fa fa-exchange"></i>Transacciones', 'url' => ['//transaction/index']],

@@ -45,8 +45,9 @@ return [
             ],
         ],
         'errorHandler' => [
+            'errorAction' => 'site/error',
             // web error handler
-            'class' => '\bedezign\yii2\audit\components\web\ErrorHandler',
+            // 'class' => '\bedezign\yii2\audit\components\web\ErrorHandler',
             // console error handler
             //'class' => '\bedezign\yii2\audit\components\console\ErrorHandler',
         ],

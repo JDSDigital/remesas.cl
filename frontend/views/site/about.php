@@ -10,21 +10,18 @@ use yii\helpers\Html;
 <section id="about" class="color0">
     <div class="title">
         <h1><?= Html::encode("Quienes Somos") ?></h1>
-        <h2 class="subTitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut massa ante.</h2>
+<!--        <h2 class="subTitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut massa ante.</h2>-->
     </div>
     <!-- section content -->
     <section class="pt30 pb30">
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
-                    <?= Html::img(Yii::getAlias('@web') . '/images/logo.jpg', ['class' => 'img-responsive']) ?>
+                    <?= Html::img(Yii::getAlias('@web') . '/images/logo.jpg', ['class' => 'img-responsive about-logo']) ?>
                 </div>
                 <div class="col-sm-4">
-                    <h2>Lorem ipsum dolor sit amet.</h2>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut massa ante. Mauris blandit, mauris ut luctus tempor, tellus sem semper purus, nec rhoncus sapien eros a dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed consequat aliquet augue non molestie. Praesent tempor lacus ut neque vehicula, ut dapibus massa congue. Duis posuere tellus eu risus pellentesque rutrum. Phasellus augue neque, finibus et mauris id, rutrum sollicitudin nisi.</p>
-
-                    <p>Nulla facilisi. Aenean cursus ex nec metus dictum, sit amet rhoncus leo auctor. Curabitur quis turpis urna. Nullam non dictum nulla. Nullam mattis convallis massa non ullamcorper. Nam venenatis odio a sollicitudin maximus. Vestibulum ut purus at quam pulvinar commodo. Curabitur id maximus erat.</p>
+                    <h2>REMESAS.CL | Chile.net.ve</h2>
+                    <p>Somos una familia de economistas que nos unimos para formar y legalizar un negocio de envío de remesas, estamos ubicados en Chile. Nuestros valores principales son el profesionalismo, la honestidad, la seguridad y la confianza. Nuestro objetivo es ayudar a los venezolanos que se encuentran en Chile para poder cambiar la moneda y enviar bolívares a sus familiares en Venezuela.</p>
                 </div>
                 <div class="col-sm-4">
                     <h2>Mauris blandit, mauris ut luctus tempor.</h2>

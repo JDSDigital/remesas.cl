@@ -42,7 +42,10 @@ $this->title = 'Remesas.cl';
         </a>
       </div>
     </div>
+
     <?= Yii::$app->controller->renderPartial('//site/about'); ?>
+
+    <?= Yii::$app->controller->renderPartial('//site/faq'); ?>
 
     <section id="paralaxSlice3" data-stellar-background-ratio="0.5" style="background-position: 50% 123px;">
         <div class="maskParent">
@@ -50,7 +53,8 @@ $this->title = 'Remesas.cl';
             <div class="paralaxText">
                 <i class="icon-star iconMedium"></i>
                 <blockquote class="mt15">
-                    Write drunk; edit sober.<br><small>ERNEST HEMINGWAY </small>
+                    Envío seguro de remesas
+                    <br><small>Cuidamos tu dinero </small>
                 </blockquote>
             </div>
         </div>

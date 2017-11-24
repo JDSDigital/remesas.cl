@@ -110,7 +110,7 @@ class AccountAdmin extends \yii\db\ActiveRecord
      */
     public function getTransactions()
     {
-        return $this->hasMany(Transaction::className(), ['accountAdminId' => 'id']);
+        return $this->hasMany(Transaction::className(), ['accountAdminIdTo' => 'id']);
     }
     
     /**
