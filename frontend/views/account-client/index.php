@@ -21,7 +21,7 @@ $this->title = 'Paso 2: Agregar Cuentas';
                 <?php
                     // Allow adding a new account only if the Client has added less than three accounts
                     if ($dataProvider->getTotalCount() < 3){
-                        echo Html::a('Agregar Cuenta Bancaria', ['create'], ['class' => 'btn btn-primary']);
+                        echo Html::a('Agregar Cuenta Bancaria', ['create'], ['class' => 'btn btn-lg btn-primary']);
                     }
                 ?>
             </p>
@@ -89,7 +89,7 @@ $this->title = 'Paso 2: Agregar Cuentas';
         ]); ?>
     <div class="row">
         <div class="col-lg-12 text-center">
-            <?= Html::a('Continuar', ['//site/accounts'], ['id' => 'btn-continue', 'class' => 'btn btn-success mb30 ' . ($dataProvider->getTotalCount() == 0 ? 'hidden' : '')])?>
+            <?= Html::a('Continuar', ['//site/accounts'], ['id' => 'btn-continue', 'class' => 'btn btn-lg btn-success mb30 ' . ($dataProvider->getTotalCount() == 0 ? 'hidden' : '')])?>
         </div>
     </div>
 </div>

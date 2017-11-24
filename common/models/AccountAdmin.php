@@ -112,6 +112,14 @@ class AccountAdmin extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Transaction::className(), ['accountAdminIdTo' => 'id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTransactionsParts()
+    {
+        return $this->hasMany(TransactionsParts::className(), ['accountAdminIdFrom' => 'id']);
+    }
     
     /**
      * Get active accounts

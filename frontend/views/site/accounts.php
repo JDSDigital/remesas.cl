@@ -47,7 +47,7 @@ $this->title = 'Paso 3: Transferir a las siguientes cuentas';
     </div>
     <div class="row">
         <div class="col-lg-12 text-center">
-            <?= Html::a('Continuar', ['//transaction/index'], ['id' => 'btn-continue', 'class' => 'btn btn-success mb30'])?>
+            <?= Html::a('Continuar', ['//transaction/index'], ['id' => 'btn-continue', 'class' => 'btn btn-lg btn-success mb30'])?>
         </div>
     </div>
 </div>

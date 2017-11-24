@@ -56,7 +56,8 @@ AppAsset::register($this);
         ['label' => 'Inicio', 'url' => (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index') ? '#index' : ['/site/index'], 'linkOptions' => ['id' => 'btn-index']],
         ['label' => 'Quienes Somos', 'url' => (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index') ? '#about' : ['/site/index'], 'linkOptions' => ['id' => 'btn-about']],
         ['label' => 'Contacto', 'url' => (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index') ? '#contact' : ['/site/index'], 'linkOptions' => ['id' => 'btn-contact']],
-        
+        ['label' => 'Preguntas Frecuentes', 'url' => (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index') ? '#contact' : ['/site/index'], 'linkOptions' => ['id' => 'btn-faq']],
+
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Enviar Dinero', 'linkOptions' => ['id' => 'send-money-button', 'data-toggle' => 'modal', 'data-target' => '#modal-login']];

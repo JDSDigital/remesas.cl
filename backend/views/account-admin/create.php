@@ -57,9 +57,7 @@ $this->title = 'Geknology';
                                     ) ?>
                                 </div>
                                 <div class="col-md-10">
-                                    <?= $form->field($model, 'number')->label("Número de cuenta")->widget(MaskedInput::className(), [
-                                        'mask' => '9999 9999 99 9999999999'
-                                    ]) ?>
+                                    <?= $form->field($model, 'number')->label("Número de cuenta")->textInput() ?>
                                 </div>
                             </div>
                         </div>

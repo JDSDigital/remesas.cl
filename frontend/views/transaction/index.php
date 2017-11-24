@@ -15,11 +15,11 @@ $this->title = 'Paso 4: Adjuntar recibo';
 <div class="container account-client-index pt30">
     <div class="row">
     	<div class="col-md-6 text-left">
-            <h1><?= Html::encode($this->title) ?><?= Html::a('Solicitar transacción', ['create'], ['class' => 'btn btn-primary']) ?></h1>
+            <h1><?= Html::encode($this->title) ?></h1>
         </div>
     	<div class="col-md-6 text-right">
             <p>
-                <?= Html::a('Solicitar transacción', ['create'], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Solicitar transacción', ['create'], ['class' => 'btn btn-lg btn-primary']) ?>
             </p>
         </div>
     </div>

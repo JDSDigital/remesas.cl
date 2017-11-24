@@ -106,8 +106,9 @@ class AccountAdminController extends Controller
         
         // Check if the account is related to any transaction
         $transactions = $model->getTransactions()->count();
-        
-        if ($transactions > 0){
+        $transactionsParts = $model->getTransactionsParts()->count();
+
+        if ($transactions > 0 || $transactionsParts > 0){
             Yii::$app->getSession()->setFlash('error','La cuenta bancaria no puede ser eliminada porque hay transacciones relacionadas con ella.');
         } else
             $model->delete();

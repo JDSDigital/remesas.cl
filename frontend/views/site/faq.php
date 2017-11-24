@@ -7,13 +7,17 @@ use yii\helpers\Html;
 //$this->title = 'Quienes Somos';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<section id="about" class="color0">
+<section id="faq" class="color0">
+    <div class="title">
+        <h1><?= Html::encode("Preguntas Frequentes") ?></h1>
+    </div>
     <!-- section content -->
     <section class="pt30 pb30">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="panel-group" id="accordion">
+
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -107,12 +111,12 @@ use yii\helpers\Html;
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
                                         <i class="icon-star-filled"></i>¿Aceptan efectivo?
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseSix" class="panel-collapse collapse">
+                            <div id="collapseSeven" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <p>No todas las transacciones son electrónicas, deposito o transferencia tanto de pesos como de bolívares no aceptamos efectivo de ningún tipo.</p>
                                 </div>
@@ -122,12 +126,12 @@ use yii\helpers\Html;
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
                                         <i class="icon-star-filled"></i>¿Trabajan con dólares?
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseSix" class="panel-collapse collapse">
+                            <div id="collapseEight" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <p>Por los momentos la empresa solo trabaja con bolívares y pesos chilenos.</p>
                                 </div>
@@ -137,12 +141,12 @@ use yii\helpers\Html;
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseNine">
                                         <i class="icon-star-filled"></i>¿Si la tasa sufre algunos cambios en el día eso me afecta?
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseSix" class="panel-collapse collapse">
+                            <div id="collapseNine" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <p>No la tasa se congela al momento de recibir la transferencia.</p>
                                 </div>

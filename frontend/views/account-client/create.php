@@ -51,13 +51,11 @@ $this->title = 'Crear cuenta bancaria';
                     'rut'  => 'Rut',
                     'vista'  => 'Vista',
                 ], ['class' => 'form-control']) ?>
-                <?= $form->field($model, 'number')->label("Número de cuenta")->widget(MaskedInput::className(), [
-                    'mask' => '9999 9999 99 9999999999'
-                ]) ?>
+                <?= $form->field($model, 'number')->label("Número de cuenta")->textInput(); ?>
                 
                 
                 <div class="form-group">
-                    <?= Html::submitButton('Crear Cuenta Bancaria', ['class' => 'btn btn-primary', 'name' => 'form-account-client-button']) ?>
+                    <?= Html::submitButton('Crear Cuenta Bancaria', ['class' => 'btn btn-lg btn-primary', 'name' => 'form-account-client-button']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>

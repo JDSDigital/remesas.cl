@@ -3,8 +3,9 @@ $(function () {
     $.post( "listb?id="+$('#countryId').val(), function( data ) {
       $( "#accountclient-bankid" ).html( data );
     });
-    
-    $('#form-calculator-button').on('click', function () {
+
+    $('#form-calculator-client').on('submit', function (e) {
+        e.preventDefault();
         var url = $(this).attr('url');
         var amount = $('#amount').val();
         var currencyIdFrom = $('#currencyIdFrom').val();
@@ -23,20 +24,89 @@ $(function () {
                 console.log(data);
                 switch(data){
                     case '1':
+                        var classHidden = $('#btn-continue').hasClass('hidden');
+                        if (classHidden === false)
+                            $('#btn-continue').addClass('hidden');
                         $('#result').html('Debe introducir una cantidad a convertir');
                         break;
                     case '2':
+                        var classHidden = $('#btn-continue').hasClass('hidden');
+                        if (classHidden === false)
+                            $('#btn-continue').addClass('hidden');
                         $('#result').html('Las monedas de conversión deben ser diferentes');
                         break;
                     case '3':
+                        var classHidden = $('#btn-continue').hasClass('hidden');
+                        if (classHidden === false)
+                            $('#btn-continue').addClass('hidden');
                         $('#result').html('Lo sentimos. La cantidad solicitada no se encuentra disponible.');
                         break;
                     case '4':
+                        var classHidden = $('#btn-continue').hasClass('hidden');
+                        if (classHidden === false)
+                            $('#btn-continue').addClass('hidden');
                         $('#result').html('Lo sentimos. La tasa de cambio solicitada no está disponible. Por favor intente más tarde.');
                         break;
                     default:
+                        var classHidden = $('#btn-continue').hasClass('hidden');
+                        if (classHidden === true)
+                            $('#btn-continue').removeClass('hidden');
                         $('#result').html(data);
-                        $('#btn-continue').removeClass('hidden');
+                        break;
+                }
+            }
+
+        });
+    });
+
+    $('#form-calculator-button').on('click', function () {
+
+        var url = $(this).attr('url');
+        var amount = $('#amount').val();
+        var currencyIdFrom = $('#currencyIdFrom').val();
+        var currencyIdTo = $('#currencyIdTo').val();
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: {
+                amount: amount,
+                currencyIdFrom: currencyIdFrom,
+                currencyIdTo: currencyIdTo,
+                _csrf: yii.getCsrfToken()
+            },
+            success: function (data) {
+                console.log(data);
+                switch(data){
+                    case '1':
+                        var classHidden = $('#btn-continue').hasClass('hidden');
+                        if (classHidden === false)
+                            $('#btn-continue').addClass('hidden');
+                        $('#result').html('Debe introducir una cantidad a convertir');
+                        break;
+                    case '2':
+                        var classHidden = $('#btn-continue').hasClass('hidden');
+                        if (classHidden === false)
+                            $('#btn-continue').addClass('hidden');
+                        $('#result').html('Las monedas de conversión deben ser diferentes');
+                        break;
+                    case '3':
+                        var classHidden = $('#btn-continue').hasClass('hidden');
+                        if (classHidden === false)
+                            $('#btn-continue').addClass('hidden');
+                        $('#result').html('Lo sentimos. La cantidad solicitada no se encuentra disponible.');
+                        break;
+                    case '4':
+                        var classHidden = $('#btn-continue').hasClass('hidden');
+                        if (classHidden === false)
+                            $('#btn-continue').addClass('hidden');
+                        $('#result').html('Lo sentimos. La tasa de cambio solicitada no está disponible. Por favor intente más tarde.');
+                        break;
+                    default:
+                        var classHidden = $('#btn-continue').hasClass('hidden');
+                        if (classHidden === true)
+                            $('#btn-continue').removeClass('hidden');
+                        $('#result').html(data);
                         break;
                 }
             }
@@ -57,6 +127,11 @@ $(function () {
     $("#btn-contact").on("click", function() {
         $('html, body').animate({
             scrollTop: $("#contact").offset().top
+        }, 1000);
+    });
+    $("#btn-faq").on("click", function() {
+        $('html, body').animate({
+            scrollTop: $("#faq").offset().top
         }, 1000);
     });
 });

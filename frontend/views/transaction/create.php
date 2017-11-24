@@ -78,7 +78,7 @@ $this->title = 'Registrar Depósito / Transferencia';
                 ]) ?>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Registrar', ['class' => 'btn btn-primary', 'name' => 'form-transaction-button']) ?>
+                    <?= Html::submitButton('Registrar', ['class' => 'btn btn-lg btn-primary', 'name' => 'form-transaction-button']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>
