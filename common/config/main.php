@@ -30,9 +30,9 @@ return [
 
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'mail.geknology.com',
-                'username' => 'testcore@geknology.com',
-                'password' => 'M@chupichu2012',
+                'host' => '',
+                'username' => '',
+                'password' => '',
                 'port' => '587',
                 'encryption' => 'tls',
                 'streamOptions' => [
