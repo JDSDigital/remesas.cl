@@ -8,7 +8,7 @@ use common\models\Refund;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Paso 4: Adjuntar recibo';
+$this->title = 'Paso 4: Solicitar Transferencia';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -19,7 +19,7 @@ $this->title = 'Paso 4: Adjuntar recibo';
         </div>
     	<div class="col-md-6 text-right">
             <p>
-                <?= Html::a('Solicitar transacción', ['create'], ['class' => 'btn btn-lg btn-primary']) ?>
+                <?= Html::a('Registrar Pago', ['create'], ['class' => 'btn btn-lg btn-primary']) ?>
             </p>
         </div>
     </div>

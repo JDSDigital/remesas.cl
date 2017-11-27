@@ -290,6 +290,10 @@ class SiteController extends Controller
                 
                 // Depending on the from currency
                 if ($er1 != null){
+
+                    /**
+                     * Check exchange rates depending on base currency (Pesos)
+                     */
                     
                     // Multiply
                     if ($model->currencyIdFrom == 1){

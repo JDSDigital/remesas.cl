@@ -7,7 +7,7 @@ use yii\grid\ActionColumn;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Paso 2: Agregar Cuentas';
+$this->title = 'Paso 2: Cuentas Bancarias';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container account-client-index pt30">
