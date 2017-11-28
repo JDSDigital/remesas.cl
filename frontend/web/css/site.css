@@ -172,5 +172,13 @@ select.form-control:not([size]):not([multiple]) {
     border: 1px solid #4C011F;
 }
 .about-logo {
-    max-width: 300px !important;
+    max-height: 200px !important;
+    margin: 0 auto;
+}
+.carousel-inner .item img {
+    width: 100vw;
+}
+.vertical-align {
+    display: flex !important;
+    align-items: center !important;
 }

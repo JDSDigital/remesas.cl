@@ -15,20 +15,20 @@ use yii\helpers\Html;
     <!-- section content -->
     <section class="pt30 pb30">
         <div class="container">
-            <div class="row">
+            <div class="row vertical-align">
                 <div class="col-sm-4">
                     <?= Html::img(Yii::getAlias('@web') . '/images/logo.jpg', ['class' => 'img-responsive about-logo']) ?>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-8">
                     <h2>REMESAS.CL | Chile.net.ve</h2>
                     <p>Somos una familia de economistas que nos unimos para formar y legalizar un negocio de envío de remesas, estamos ubicados en Chile. Nuestros valores principales son el profesionalismo, la honestidad, la seguridad y la confianza. Nuestro objetivo es ayudar a los venezolanos que se encuentran en Chile para poder cambiar la moneda y enviar bolívares a sus familiares en Venezuela.</p>
                 </div>
-                <div class="col-sm-4">
+                <!--<div class="col-sm-4">
                     <h2>Mauris blandit, mauris ut luctus tempor.</h2>
                     <p>Suspendisse cursus malesuada tempus. Fusce tellus lorem, posuere ut sagittis hendrerit, pellentesque eu est. Fusce non aliquet enim, ac posuere lectus. Duis sit amet libero pellentesque massa viverra mattis vitae maximus mi. Etiam vitae sem nec dolor iaculis eleifend at eu diam.</p>
                     <h3>Vestibulum ante ipsum primis in faucibus orci.</h3>
                     <p>Nunc a massa sed risus rhoncus imperdiet eu sed odio. Curabitur lacinia magna vel arcu vestibulum, eu porta massa eleifend. Mauris condimentum fringilla nulla, nec placerat leo hendrerit a.</p>
-                </div>
+                </div>-->
             </div>
         </div>
     </section>
