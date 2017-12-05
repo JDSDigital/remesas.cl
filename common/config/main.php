@@ -8,14 +8,13 @@ return [
         ],
         'urlManagerFrontend' => [
             'class' => 'yii\web\urlManager',
-            'baseUrl' => '/remesas.cl/',
+            'baseUrl' => '/',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],      
-        
         'urlManagerBackend' => [
             'class' => 'yii\web\urlManager',
-            'baseUrl' => '/remesas.cl/admin',
+            'baseUrl' => '/admin',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],

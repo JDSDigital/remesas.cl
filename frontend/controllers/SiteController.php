@@ -164,11 +164,11 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-            $email = \Yii::$app->mailer->compose()
+            $email = Yii::$app->mailer->compose()
                     ->setTo($user->email)
                     ->setFrom([Yii::$app->params['supportEmail'] => 'Geknology Core'])
                     ->setSubject('Confirmación de cuenta')
-                    ->setHtmlBody("Haga click en el siguiente enlace para activar su cuenta: <a href='http://geknology.com/remesas.cl/site/confirm?id=" . $user->id . "&key=" . $user->auth_key . "' target='_blank'>Activar</a>")
+                    ->setHtmlBody("Haga click en el siguiente enlace para activar su cuenta: " . Html::a('Activar', Url::to(['/site/confirm', 'id' => $user->id, 'key' => $user->auth_key], true), ['target' => '_blank']))
                     ->send();
                     
                     if($email){

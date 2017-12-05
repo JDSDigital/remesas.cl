@@ -12,18 +12,6 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
-//        'assetManager' => [
-//            'bundles' => [
-//                'yii\bootstrap\BootstrapAsset'       => [
-//                    'sourcePath' => null,
-//                    'css'        => [],
-//                ],
-//                'yii\bootstrap\BootstrapPluginAsset' => [
-//                    'sourcePath' => null,
-//                    'js'         => [],
-//                ],
-//            ],
-//        ],
         'user' => [
             'identityClass' => 'common\models\Client',
             'enableAutoLogin' => true,
@@ -37,20 +25,10 @@ return [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'zAyzmQadaHjjXHPsnlkV',
             'csrfParam' => '_frontendCSRF',
-            'baseUrl' => '/remesas.cl',
+
+            // This may be require for development. Disable for production
+            // 'baseUrl' => '/remesas.cl',
         ],
-        /*'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],*/
-        /*'errorHandler' => [
-            'errorAction' => 'site/error',
-        ],*/
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
