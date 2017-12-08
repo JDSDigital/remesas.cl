@@ -202,8 +202,9 @@ class TransactionSearch extends Transaction
         ]);
         
         $query->andFilterWhere(['>=', 'gtransactions.created_at', $params['startDate']]);
-        $query->andFilterWhere(['<', 'gtransactions.created_at', $params['endDate']+86400]);
-        
+//        $query->andFilterWhere(['<', 'gtransactions.created_at', $params['endDate']+86400]);
+        $query->andFilterWhere(['<', 'gtransactions.created_at', $params['endDate']]);
+
         if ($params['status'] != ""){
             $query->andFilterWhere(['gtransactions.status' => $params['status']]);
         }

@@ -62,6 +62,10 @@ $this->title = "Transaccion #".$model->id;
                         'value'     => $model->accountClient->description,
                     ],
                     [
+                        'label'     => 'Nombre de la persona que realizó la transferencia',
+                        'value'     => $model->userNameTransaction,
+                    ],
+                    [
                         'label'     => 'Numero Dep/Transf',
                         'value'     => $model->clientBankTransaction,
                     ],

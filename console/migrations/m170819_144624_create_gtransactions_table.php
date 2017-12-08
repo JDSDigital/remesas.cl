@@ -26,6 +26,7 @@ class m170819_144624_create_gtransactions_table extends Migration
             'currencyIdTo'            => $this->integer()->notNull()->comment("Currency Id To"),
             'exchangeId'              => $this->integer()->notNull()->comment("Exchange rate used for the transaction"),
             'userId'                  => $this->integer()->null()->comment("Admin user who completes and approves the transaction"),
+            'userNameTransaction'     => $this->string()->null()->comment("Name of the person that made the transfer"),
             'clientBankTransaction'   => $this->integer()->null()->comment("Bank transaction Id"),
             'adminBankTransaction'    => $this->integer()->null()->comment("Bank transaction Id"),
             'observation'             => $this->string()->null()->comment("Administrator observation."),

@@ -1,7 +1,7 @@
 <?php
 return [
     'adminEmail' => 'admin@example.com',
-    'supportEmail' => 'testcore@geknology.com',
+    'supportEmail' => 'noresponder@remesas.cl',
     'user.passwordResetTokenExpire' => 3600,
     'fileUploadUrl' => 'uploads/'
 ];
