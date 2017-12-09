@@ -63,7 +63,7 @@ class PasswordResetRequestForm extends Model
             )
             ->setFrom([Yii::$app->params['supportEmail'] => 'Remesas.cl'])
             ->setTo($this->email)
-            ->setSubject('Reseteo de contraseña para Remesas.cl')
+            ->setSubject('Reinicio de contraseña para Remesas.cl')
             ->send();
     }
 }

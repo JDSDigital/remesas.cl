@@ -19,15 +19,14 @@ use yii\captcha\Captcha;
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-4 pl30 pr30">
-                            <h4>Address:</h4>
+                            <h3><b>Direccion:</b></h3>
                             <address>
-                                Himalaya Company<br/>
-                                77 Mass. Ave., E14/E15<br/>
-                                Cambridge, MA 02139-4307 USA <br/>
+                                Santiago de Chile<br/>
+                                Chile<br/>
                             </address>
-                            <h4>Phone:</h4>
+                            <h3><b>Contacto:</b></h3>
                             <address>
-                                615.987.1234<br/>
+                                contacto@remesas.cl<br/>
                             </address>
                         </div>
                         <div class="col-sm-8">
@@ -61,7 +60,7 @@ use yii\captcha\Captcha;
                                 </div>
                                 <div class="col-md-12">
                                     <div class="result"></div>
-                                    <?= Html::submitButton('Submit', ['class' => 'btn btn-lg', 'name' => 'contact-button']) ?>
+                                    <?= Html::submitButton('Enviar', ['class' => 'btn btn-lg', 'name' => 'contact-button']) ?>
                                 </div>
                             <?php ActiveForm::end(); ?>
                         </div>

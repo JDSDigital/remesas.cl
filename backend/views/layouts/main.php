@@ -31,8 +31,8 @@ AppAsset::register($this);
 	<div class="row">
 		<?php
         NavBar::begin([
-            'brandLabel'   => Html::img(Yii::getAlias('@web') . '/images/logo-text.png', ['class' => 'img-fluid']),
-            'brandOptions' => ['class' => 'p5'],
+            'brandLabel'   => Html::img(Yii::getAlias('@web') . '/images/GeknologyBorde.png', ['class' => 'img-fluid']),
+            'brandOptions' => ['class' => 'p0'],
             'brandUrl'     => Yii::$app->homeUrl,
             'options'      => [
                 'class' => 'navbar bg-slate-800 navbar-fixed-top',
@@ -74,12 +74,12 @@ AppAsset::register($this);
 						<div class="category-content">
 							<div class="row">
 								<div class="col-xs-3">
-									<?= Html::a(Html::img(Yii::getAlias('@web') . '/images/user.png', ['class' => 'img-fluid']), ['users/profile']) ?>
+									<?= Html::img(Yii::getAlias('@web') . '/images/user.png', ['class' => 'img-fluid']) ?>
 								</div>
 								<div class="col-xs-8 my-auto">
 									<div class="media-body">
 										<span class="media-heading text-semibold m0">
-											<?= Html::a(Yii::$app->user->identity->username, ['users/profile'], ['class' => 'navigation p0']) ?>
+											<?= Yii::$app->user->identity->username ?>
 										</span>
 									</div>
 								</div>

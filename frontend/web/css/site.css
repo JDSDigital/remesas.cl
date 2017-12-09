@@ -182,3 +182,13 @@ select.form-control:not([size]):not([multiple]) {
     display: flex !important;
     align-items: center !important;
 }
+.rates-container {
+    /*border: 5px solid #4f001f;*/
+    /*padding: 30px;*/
+    margin-bottom: 50px;
+    /*color:#4f001f;*/
+    /*background-color:#c8e729;*/
+}
+blockquote small::after {
+    content: '\2014 \00A0';
+}

@@ -212,7 +212,7 @@ class SiteController extends Controller
 
                 return $this->goHome();
             } else {
-                Yii::$app->session->setFlash('error', 'Lo sentimos, no pudimos resetear la contraseña para esta dirección de correo.');
+                Yii::$app->session->setFlash('error', 'Lo sentimos, no pudimos reiniciar la contraseña para esta dirección de correo.');
             }
         }
 
@@ -350,7 +350,10 @@ class SiteController extends Controller
                 }
             }
         } else {
-            return $this->render('//site/calculator');
+            return $this->render('//site/calculator', [
+                'model' => $model,
+                'result' => $result,
+            ]);
         }
     }
 }

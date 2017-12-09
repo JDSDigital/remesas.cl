@@ -47,8 +47,10 @@ $this->title = 'Registrar Depósito / Transferencia';
                 <?= $form->field($model, 'accountAdminIdTo')->label("Cuenta a donde transfirió el dinero")->dropDownList(
                     ArrayHelper::map(AccountAdmin::find()->joinWith(['rates'])->where(['gaccounts_admin.status' => 1, 'gexchange_rates.status' => 1])->orderBy('description')->all(), 'id', 'description'), ['class' => 'form-control']
                 ) ?>
-                
-                <?= $form->field($model, 'userNameTransaction')->label("Nombre de la persona que realizó la transferencia") ?>
+
+                <?= Html::label("Nombre de la persona que realizó la transferencia") ?>
+                <?= Html::tag('h4', '(Titular de la cuenta)') ?>
+                <?= $form->field($model, 'userNameTransaction')->label(false) ?>
 
                 <?= $form->field($model, 'clientBankTransaction')->label("Numero de Depósito o Transferencia") ?>
 

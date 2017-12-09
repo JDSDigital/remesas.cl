@@ -20,8 +20,12 @@ use yii\helpers\Html;
                     <?= Html::img(Yii::getAlias('@web') . '/images/logo.jpg', ['class' => 'img-responsive about-logo']) ?>
                 </div>
                 <div class="col-sm-8">
-                    <h2>REMESAS.CL | Chile.net.ve</h2>
-                    <p>Somos una familia de economistas que nos unimos para formar y legalizar un negocio de envío de remesas, estamos ubicados en Chile. Nuestros valores principales son el profesionalismo, la honestidad, la seguridad y la confianza. Nuestro objetivo es ayudar a los venezolanos que se encuentran en Chile para poder cambiar la moneda y enviar bolívares a sus familiares en Venezuela.</p>
+                    <h2 class="text-center"><b>REMESAS.CL | Chile.net.ve</b></h2>
+                    <p><b class="text-uppercase">Somos</b> una familia de economistas que nos unimos para formar y legalizar un negocio de envío de remesas, ubicados actualmente en Chile.</p>
+
+                    <p>Nuestros <b class="text-uppercase">valores</b> principales son el profesionalismo, la honestidad, la seguridad y la confianza.</p>
+
+                    <p>Nuestro <b class="text-uppercase">objetivo</b> es ayudar a los Venezolanos que se encuentran en Chile para poder cambiar la moneda y enviar bolívares a sus familiares en Venezuela.</p>
                 </div>
                 <!--<div class="col-sm-4">
                     <h2>Mauris blandit, mauris ut luctus tempor.</h2>

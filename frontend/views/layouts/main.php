@@ -28,6 +28,7 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-site-verification" content="xy82MCBzLNyMLDhUy2RonqBGuuvETRJCni5weaBaYK4" />
     <?= Html::csrfMetaTags() ?>
 
     <!-- web font  -->
@@ -95,29 +96,22 @@ AppAsset::register($this);
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
-                        <div class="footerWidget">
+                    <div class="col-sm-3 col-sm-offset-1 text-left">
 
                             <h3>Remesas.cl</h3>
                             <address>
-                                <p>
-                                    <i class="icon-location"></i>&nbsp;77 Mass. Ave., E14/E15<br>
-                                    Cambridge, MA 02139-4307 USA <br>
-                                    <i class="icon-phone"></i>&nbsp;615.987.1234 <br>
-                                    <i class="icon-mail-alt"></i>&nbsp;<a href="mailto:admin@remesas.cl">admin@remesas.cl</a>
-                                </p>
+                                <h4>
+                                    Santiago de Chile<br>
+                                    Chile <br><br>
+                                    <a href="mailto:contacto@remesas.cl">contacto@remesas.cl</a>
+                                </h4>
                             </address>
-                        </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="footerWidget">
                             <h3>Follow us, we are social</h3>
                             <ul class="socialNetwork">
-                                <li><a href="#" class="tips" title="" data-original-title="follow me on Instagram"><i class="fa fa-lg fa-instagram iconRounded"></i></a></li>
-                                <li><a href="#" class="tips" title="" data-original-title="follow me on Facebook"><i class="icon-facebook-1 iconRounded"></i></a></li>
-                                <li><a href="#" class="tips" title="" data-original-title="follow me on Twitter"><i class="icon-twitter-bird iconRounded"></i></a></li>
-                                <li><a href="#" class="tips" title="" data-original-title="follow me on Google+"><i class="icon-gplus-1 iconRounded"></i></a></li>
-                                <li><a href="#" class="tips" title="" data-original-title="follow me on Linkedin"><i class="icon-linkedin-1 iconRounded"></i></a></li>
+                                <li><a href="https://www.instagram.com/remesas.cl/" class="tips" title="" data-original-title="follow me on Instagram" target="_blank"><i class="fa fa-lg fa-instagram iconRounded"></i></a></li>
                             </ul>
                         </div>
                     </div>

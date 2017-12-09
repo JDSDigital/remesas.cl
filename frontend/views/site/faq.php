@@ -9,7 +9,7 @@ use yii\helpers\Html;
 ?>
 <section id="faq" class="color0">
     <div class="title">
-        <h1><?= Html::encode("Preguntas Frequentes") ?></h1>
+        <h1><?= Html::encode("Preguntas Frecuentes") ?></h1>
     </div>
     <!-- section content -->
     <section class="pt30 pb30">

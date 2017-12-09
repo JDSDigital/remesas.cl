@@ -53,7 +53,7 @@ $this->title = 'Remesas.cl';
                 <i class="icon-star iconMedium"></i>
                 <blockquote class="mt15">
                     Envío seguro de remesas
-                    <br><small>Cuidamos tu dinero </small>
+                    <br><small>Cuidamos tu dinero </small><br>
                 </blockquote>
             </div>
         </div>

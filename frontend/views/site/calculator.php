@@ -10,12 +10,9 @@ use common\models\Currency;
 /* @var $this yii\web\View */
 /* @var $model common\models\AccountClient */
 
-$model = new ExchangeRate();
-$result = null;
 $amount = 1;
 
 $this->title = 'Paso 1: Verificar Disponibilidad';
-
 ?>
 
 <div class="site-index container pt30">
@@ -23,7 +20,16 @@ $this->title = 'Paso 1: Verificar Disponibilidad';
         <div class="col-lg-12">
             <h1><?= Html::encode($this->title) ?></h1>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4 col-lg-push-8">
+            <div class="rates-container">
+                <h1>Tasas del día:</h1>
+                <?php foreach ($model->getExchangeRates() as $rate) : ?>
+                    <h4><?= $rate->description ?>:</h4>
+                    <h2><b><?= ($rate->status) ? $rate->sellValue : 'No disponible' ?></b></h2>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="col-lg-6 col-lg-pull-4">
             <?php $form = ActiveForm::begin(['id' => 'form-calculator-client']); ?>
                 <?= Html::label("De", "currencyIdFrom") ?>
                 <?= Html::dropDownList('currencyIdFrom', $model->currencyIdFrom, ArrayHelper::map(Currency::find()->orderBy('name')->all(), 'id', 'name'), ['id' => 'currencyIdFrom', 'class' => 'form-control'])?>
