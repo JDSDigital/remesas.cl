@@ -26,7 +26,7 @@ $model = new PasswordResetRequestForm();
 
                 <?php $form = ActiveForm::begin([
                     'id' => 'request-password-reset-form',
-                    'action' => ['//site/requestPasswordReset'],
+                    'action' => ['//site/index'],
                 ]); ?>
 
                     <?= $form->field($model, 'email')->textInput() ?>

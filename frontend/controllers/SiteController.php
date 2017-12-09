@@ -30,6 +30,7 @@ class SiteController extends Controller
     const STATUS_CURRENCY = 2;
     const STATUS_AVAILABILITY = 3;
     const STATUS_RATES = 4;
+    const STATUS_MINIMUM = 5;
 
     /**
      * @inheritdoc
@@ -86,6 +87,17 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $contact = new ContactForm();
+        $passwordReset = new PasswordResetRequestForm();
+
+        if ($passwordReset->load(Yii::$app->request->post()) && $passwordReset->validate()) {
+            if ($passwordReset->sendEmail()) {
+                Yii::$app->session->setFlash('success', 'Revise su correo para las instrucciones.');
+
+                return $this->goHome();
+            } else {
+                Yii::$app->session->setFlash('error', 'Lo sentimos, no pudimos resetear la contraseña para esta dirección de correo.');
+            }
+        }
 
         return $this->render('index', [
             'contact' => $contact,
@@ -166,7 +178,7 @@ class SiteController extends Controller
             if ($user = $model->signup()) {
             $email = Yii::$app->mailer->compose()
                     ->setTo($user->email)
-                    ->setFrom([Yii::$app->params['supportEmail'] => 'Geknology Core'])
+                    ->setFrom([Yii::$app->params['supportEmail'] => 'Remesas.cl'])
                     ->setSubject('Confirmación de cuenta')
                     ->setHtmlBody("Haga click en el siguiente enlace para activar su cuenta: " . Html::a('Activar', Url::to(['/site/confirm', 'id' => $user->id, 'key' => $user->auth_key], true), ['target' => '_blank']))
                     ->send();
@@ -196,17 +208,15 @@ class SiteController extends Controller
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', 'Revise su correo para las instrucciones.');
 
                 return $this->goHome();
             } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
+                Yii::$app->session->setFlash('error', 'Lo sentimos, no pudimos resetear la contraseña para esta dirección de correo.');
             }
         }
 
-        return $this->render('requestPasswordResetToken', [
-            'model' => $model,
-        ]);
+        return $this->render('index');
     }
 
     /**
@@ -225,7 +235,7 @@ class SiteController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password saved.');
+            Yii::$app->session->setFlash('success', 'Nueva contraseña guardada.');
 
             return $this->goHome();
         }
@@ -269,14 +279,14 @@ class SiteController extends Controller
 
         // Get $_POST data
         $load = Yii::$app->request->post();
-        
+
         if ($load != null){
             $model->currencyIdFrom = $load['currencyIdFrom'];
             $model->currencyIdTo = $load['currencyIdTo'];
 
             if ($load['amount'] == ""){
                 return self::STATUS_QUANTITY;
-            } else if ($load['currencyIdFrom'] == $load['currencyIdTo']){
+            } else if ($load['currencyIdFrom'] == $load['currencyIdTo']) {
                 return self::STATUS_CURRENCY;
             } else {
                 // Search for an exchange rate with these conditions
@@ -311,8 +321,12 @@ class SiteController extends Controller
                     // Search for the available money on the accounts
                     // Available money in all of the accounts
                     $accountAdmin = new AccountAdmin();
+                    $minimum = $accountAdmin->getMinimumAmount($load['currencyIdFrom']);
                     $available = $accountAdmin->getAmountSumByCurrency($load['currencyIdTo']);
-                    
+
+                    if ($load['amount'] < $minimum)
+                        return self::STATUS_MINIMUM;
+
                     // Substract the money of the transactions received during this day
                     $transaction = new Transaction();
                     $total = $transaction->getTransactionSumByAA();

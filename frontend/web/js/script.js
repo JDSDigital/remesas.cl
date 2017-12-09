@@ -21,7 +21,7 @@ $(function () {
                 _csrf: yii.getCsrfToken()
             },
             success: function (data) {
-                console.log(data);
+
                 switch(data){
                     case '1':
                         var classHidden = $('#btn-continue').hasClass('hidden');
@@ -46,6 +46,12 @@ $(function () {
                         if (classHidden === false)
                             $('#btn-continue').addClass('hidden');
                         $('#result').html('Lo sentimos. La tasa de cambio solicitada no está disponible. Por favor intente más tarde.');
+                        break;
+                    case '5':
+                        var classHidden = $('#btn-continue').hasClass('hidden');
+                        if (classHidden === false)
+                            $('#btn-continue').addClass('hidden');
+                        $('#result').html('Lo sentimos. No podemos transferir esa cantidad. Pruebe con un monto mas alto.');
                         break;
                     default:
                         var classHidden = $('#btn-continue').hasClass('hidden');
@@ -76,7 +82,7 @@ $(function () {
                 _csrf: yii.getCsrfToken()
             },
             success: function (data) {
-                console.log(data);
+
                 switch(data){
                     case '1':
                         var classHidden = $('#btn-continue').hasClass('hidden');
@@ -101,6 +107,12 @@ $(function () {
                         if (classHidden === false)
                             $('#btn-continue').addClass('hidden');
                         $('#result').html('Lo sentimos. La tasa de cambio solicitada no está disponible. Por favor intente más tarde.');
+                        break;
+                    case '5':
+                        var classHidden = $('#btn-continue').hasClass('hidden');
+                        if (classHidden === false)
+                            $('#btn-continue').addClass('hidden');
+                        $('#result').html('Lo sentimos. No podemos transferir esa cantidad. Pruebe con un monto mas alto.');
                         break;
                     default:
                         var classHidden = $('#btn-continue').hasClass('hidden');

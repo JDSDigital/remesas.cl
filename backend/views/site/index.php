@@ -58,6 +58,14 @@ $this->title = 'Geknology';
                         },
                     ],
                     [
+                        'label'     => 'Transferido Por',
+                        'attribute' => 'userNameTransaction',
+                        'format'    => 'raw',
+                        'value'     => function ($model) {
+                            return Html::a($model->userNameTransaction, ['update', 'id' => $model->id]);
+                        },
+                    ],
+                    [
                         'label'     => 'De',
                         'attribute' => 'currencyNameFrom',
                         'format'    => 'raw',
@@ -105,14 +113,14 @@ $this->title = 'Geknology';
                             return ($model->accountAdminIdFrom != null && $model->accountAdminFrom->description != "") ? $model->accountAdminFrom->description : "---";
                         },
                     ],
-                    [
+                    /*[
                         'label'     => 'Ganancia',
                         'attribute' => 'winnings',
                         'format'    => 'raw',
                         'value'     => function ($model) {
                             return ($model->winnings != "") ? Yii::$app->formatter->asCurrency($model->winnings, 'CLP') : "---";
                         },
-                    ],
+                    ],*/
                     [
                         'label'     => 'Fecha Cierre',
                         'attribute' => 'transactionResponseDate',

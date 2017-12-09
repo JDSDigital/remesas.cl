@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "gaccounts_admin".
@@ -174,6 +175,18 @@ class AccountAdmin extends \yii\db\ActiveRecord
         
         $result = $command->queryOne();
         return $result;
+    }
+
+    /**
+     * Get the minimum amount available for transfer
+     *
+     * @param $currency
+     */
+    public function getMinimumAmount($currency)
+    {
+        $minimum = self::find()->select('min(minAmount)')->where(['currencyId' => $currency])->asArray()->one();
+
+        return $minimum['min(minAmount)'];
     }
 
     /**

@@ -29,9 +29,9 @@ return [
 
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => '',
-                'username' => '',
-                'password' => '',
+                'host' => 'mail.geknology.com',
+                'username' => 'noresponder@remesas.cl',
+                'password' => 'Remesas2017',
                 'port' => '587',
                 'encryption' => 'tls',
                 'streamOptions' => [
