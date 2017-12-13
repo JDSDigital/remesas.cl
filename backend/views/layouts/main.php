@@ -31,7 +31,7 @@ AppAsset::register($this);
 	<div class="row">
 		<?php
         NavBar::begin([
-            'brandLabel'   => Html::img(Yii::getAlias('@web') . '/images/GeknologyBorde.png', ['class' => 'img-fluid']),
+            'brandLabel'   => Html::img(Yii::getAlias('@web') . '/images/logo-new.png', ['class' => 'img-fluid']),
             'brandOptions' => ['class' => 'p0'],
             'brandUrl'     => Yii::$app->homeUrl,
             'options'      => [
@@ -91,7 +91,7 @@ AppAsset::register($this);
 					<div class="sidebar-category sidebar-category-visible">
 						<div class="category-content p0">
 							<?php
-                            
+
                                 if (Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'root'){
                                     $items = [
     									['label' => '<i class="icon-home4"></i>Inicio', 'url' => ['//site/index']],
@@ -106,11 +106,11 @@ AppAsset::register($this);
                                         ['label' => '<i class="fa fa-bank"></i>Bancos', 'url' => ['//bank/index']],
                                         //['label' => '<i class="icon-user"></i>Monedas', 'url' => ['//currency/index']],
     								];
-                                    
+
                                     if (Yii::$app->user->identity->role == 'root'){
-                                        array_push($items, ['label' => '<i class="icon-user"></i>Países', 'url' => ['//country/index']], 
+                                        array_push($items, ['label' => '<i class="icon-user"></i>Países', 'url' => ['//country/index']],
                                                              ['label' => '<i class="icon-user"></i>Monedas', 'url' => ['//currency/index']]);
-                                    }  
+                                    }
                                 }
                                 else if (Yii::$app->user->identity->role == 'user'){
                                     $items = [

@@ -225,10 +225,6 @@ select.form-control:not([size]):not([multiple]) {
 .ui-datepicker table td.ui-datepicker-today .ui-state-highlight, .ui-datepicker table td.ui-datepicker-current-day .ui-state-active {
     color: #000;
 }
-/*.modal-lg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-}*/
-.sweet-alert {
+.navbar-brand {
+    height: auto !important;
 }
