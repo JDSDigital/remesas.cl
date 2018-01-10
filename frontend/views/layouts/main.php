@@ -108,8 +108,8 @@ AppAsset::register($this);
                             </address>
                     </div>
                     <div class="col-sm-4">
-                        <div class="footerWidget">
-                            <h3>Follow us, we are social</h3>
+                        <div class="footerWidget" style="float:left">
+                            <h3>¡Síguenos!</h3>
                             <ul class="socialNetwork">
                                 <li><a href="https://www.instagram.com/remesas.cl/" class="tips" title="" data-original-title="follow me on Instagram" target="_blank"><i class="fa fa-lg fa-instagram iconRounded"></i></a></li>
                             </ul>
