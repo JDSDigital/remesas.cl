@@ -13,6 +13,10 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
+$this->registerMetaTag(['name' => 'author', 'content' => 'geknology.com']);
+$this->registerMetaTag(['name' => 'description', 'content' => 'Envío seguro de remesas. Cuidamos tu dinero.']);
+$this->registerMetaTag(['name' => 'keywords', 'content' => 'remesas, pesos, bolivares, dinero, seguro, confianza.']);
+
 $this->registerLinkTag(['rel' => 'apple-touch-icon', 'sizes' => '180x180', 'href' => Yii::getAlias('@web') . '/images/favicons/apple-touch-icon.png']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'sizes' => '32x32', 'href' => Yii::getAlias('@web') . '/images/favicons/favicon-32x32.png']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'sizes' => '16x16', 'href' => Yii::getAlias('@web') . '/images/favicons/favicon-16x16.png']);
