@@ -1,8 +1,6 @@
 <?php
 
 use bedezign\yii2\audit\Audit;
-use common\models\User;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -14,7 +12,6 @@ use bedezign\yii2\audit\models\AuditEntrySearch;
 $this->title = Yii::t('audit', 'Entries');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('audit', 'Audit'), 'url' => ['default/index']];
 $this->params['breadcrumbs'][] = $this->title;
-$users = ArrayHelper::map(User::find()->asArray()->all(), 'id', 'username');
 ?>
 <div class="audit-entry-index">
 
@@ -28,11 +25,10 @@ $users = ArrayHelper::map(User::find()->asArray()->all(), 'id', 'username');
             'id',
             [
                 'attribute' => 'user_id',
-                'filter' => $users,
                 'label' => Yii::t('audit', 'User'),
                 'class' => 'yii\grid\DataColumn',
-                'value' => function ($data) use ($users) {
-                    return $users[Audit::getInstance()->getUserIdentifier($data->user_id)];
+                'value' => function ($data) {
+                    return Audit::getInstance()->getUserIdentifier($data->user_id);
                 },
                 'format' => 'raw',
             ],

@@ -1,9 +1,9 @@
 /*!
- * bootstrap-fileinput v4.4.6
+ * bootstrap-fileinput v4.4.7
  * http://plugins.krajee.com/file-input
  *
  * Author: Kartik Visweswaran
- * Copyright: 2014 - 2017, Kartik Visweswaran, Krajee.com
+ * Copyright: 2014 - 2018, Kartik Visweswaran, Krajee.com
  *
  * Licensed under the BSD 3-Clause
  * https://github.com/kartik-v/bootstrap-fileinput/blob/master/LICENSE.md
@@ -575,11 +575,6 @@
                 self.$caption.attr('placeholder', self.msgPlaceholder.replace('{files}', f));
             }
             self.$captionIcon = self.$captionContainer.find('.file-caption-icon');
-            if (self.mainClass.indexOf('input-group-lg') > -1) {
-                $h.addCss(self.$captionIcon, 'icon-lg');
-            } else {
-                self.$captionIcon.removeClass('icon-lg');
-            }
             self.$previewContainer = $h.getElement(options, 'elPreviewContainer', $cont.find('.file-preview'));
             self.$preview = $h.getElement(options, 'elPreviewImage', $cont.find('.file-preview-thumbnails'));
             self.$previewStatus = $h.getElement(options, 'elPreviewStatus', $cont.find('.file-preview-status'));
@@ -617,7 +612,7 @@
                 '<div class="kv-upload-progress kv-hidden"></div><div class="clearfix"></div>\n' +
                 '<div class="input-group {class}">\n' +
                 '  {caption}\n' +
-                '<div class="input-group-btn">\n' +
+                '<div class="input-group-btn input-group-append">\n' +
                 '      {remove}\n' +
                 '      {cancel}\n' +
                 '      {upload}\n' +
@@ -689,8 +684,8 @@
                 'title="{removeTitle}" {dataUrl}{dataKey}>{removeIcon}</button>\n';
             tActionUpload = '<button type="button" class="kv-file-upload {uploadClass}" title="{uploadTitle}">' +
                 '{uploadIcon}</button>';
-            tActionDownload = '<button type="button" class="kv-file-download {downloadClass}" title="{downloadTitle}" ' +
-                'data-url="{downloadUrl}" data-caption="{caption}">{downloadIcon}</button>';
+            tActionDownload = '<a class="kv-file-download {downloadClass}" title="{downloadTitle}" ' +
+                'href="{downloadUrl}" download="{caption}" target="_blank">{downloadIcon}</a>';
             tActionZoom = '<button type="button" class="kv-file-zoom {zoomClass}" ' +
                 'title="{zoomTitle}">{zoomIcon}</button>';
             tActionDrag = '<span class="file-drag-handle {dragClass}" title="{dragTitle}">{dragIcon}</span>';
@@ -1028,9 +1023,9 @@
                         self.initialPreviewThumbTags = [];
                         return;
                     }
-                    self.previewCache.data.content.splice(index, 1);
-                    self.previewCache.data.config.splice(index, 1);
-                    self.previewCache.data.tags.splice(index, 1);
+                    self.previewCache.data.content = $h.spliceArray(self.previewCache.data.content, index);
+                    self.previewCache.data.config = $h.spliceArray(self.previewCache.data.config, index);
+                    self.previewCache.data.tags = $h.spliceArray(self.previewCache.data.tags, index);
                 },
                 out: function () {
                     var html = '', caption, len = self.previewCache.count(), i;
@@ -1478,17 +1473,14 @@
                 scroll: false,
                 draggable: selector,
                 onSort: function (e) {
-                    var oldIndex = e.oldIndex, newIndex = e.newIndex, $frame, $dragEl;
+                    var oldIndex = e.oldIndex, newIndex = e.newIndex, $frame, $dragEl, i = 0;
                     self.initialPreview = $h.moveArray(self.initialPreview, oldIndex, newIndex);
                     self.initialPreviewConfig = $h.moveArray(self.initialPreviewConfig, oldIndex, newIndex);
                     self.previewCache.init();
-                    for (var i = 0; i < self.initialPreviewConfig.length; i++) {
-                        if (self.initialPreviewConfig[i] !== null) {
-                            $dragEl = $(e.item);
-                            $frame = $dragEl.closest($h.FRAMES);
-                            $frame.attr('data-fileindex', 'init_' + i).attr('data-fileindex', 'init_' + i);
-                        }
-                    }
+                    self.getFrames('.file-preview-initial').each(function() {
+                        $(this).attr('data-fileindex', 'init_' + i);
+                        i++;
+                    });
                     self._raise('filesorted', {
                         previewId: $(e.item).attr('id'),
                         'oldIndex': oldIndex,
@@ -2629,9 +2621,9 @@
                     $frame.fadeOut('slow', function () {
                         index = parseInt(($frame.attr('data-fileindex')).replace('init_', ''));
                         self.previewCache.unset(index);
+                        self._deleteFileIndex($frame);
                         n = self.previewCache.count();
                         cap = n > 0 ? self._getMsgSelected(n) : '';
-                        self._deleteFileIndex($frame);
                         self._setCaption(cap);
                         self._raise('filedeleted', [vKey, jqXHR, extraData]);
                         $h.cleanZoomCache($preview.find('#zoom-' + $frame.attr('id')));
@@ -2676,16 +2668,6 @@
                             $.ajax(settings);
                         }
                     }
-                });
-            });
-            self.getFrames(' .kv-file-download').each(function () {
-                var $el = $(this);
-                self._handler($el, 'click', function () {
-                    var a = document.createElement('a');
-                    a.href = $el.attr('data-url');
-                    a.download = $el.attr('data-caption');
-                    a.target = '_blank';
-                    a.click();
                 });
             });
         },
@@ -2857,254 +2839,6 @@
         },
         _slugDefault: function (text) {
             return $h.isEmpty(text) ? '' : String(text).replace(/[\[\]\/\{}:;#%=\(\)\*\+\?\\\^\$\|<>&"']/g, '_');
-        },
-        _readFiles: function (files) {
-            this.reader = new FileReader();
-            var self = this, $el = self.$element, $preview = self.$preview, reader = self.reader,
-                $container = self.$previewContainer, $status = self.$previewStatus, msgLoading = self.msgLoading,
-                msgProgress = self.msgProgress, previewInitId = self.previewInitId, numFiles = files.length,
-                settings = self.fileTypeSettings, ctr = self.filestack.length, readFile,
-                fileTypes = self.allowedFileTypes, typLen = fileTypes ? fileTypes.length : 0,
-                fileExt = self.allowedFileExtensions, strExt = $h.isEmpty(fileExt) ? '' : fileExt.join(', '),
-                maxPreviewSize = self.maxFilePreviewSize && parseFloat(self.maxFilePreviewSize),
-                canPreview = $preview.length && (!maxPreviewSize || isNaN(maxPreviewSize)),
-                throwError = function (msg, file, previewId, index) {
-                    var p1 = $.extend(true, {}, self._getOutData({}, {}, files), {id: previewId, index: index}),
-                        p2 = {id: previewId, index: index, file: file, files: files}, $thumb;
-                    self._previewDefault(file, previewId, true);
-                    if (self.isAjaxUpload) {
-                        self.addToStack(undefined);
-                        setTimeout(function () {
-                            readFile(index + 1);
-                        }, 100);
-                    } else {
-                        numFiles = 0;
-                    }
-                    self._initFileActions();
-                    $thumb = $('#' + previewId);
-                    $thumb.find('.kv-file-upload').hide();
-                    if (self.removeFromPreviewOnError) {
-                        $thumb.remove();
-                    }
-                    self.isError = self.isAjaxUpload ? self._showUploadError(msg, p1) : self._showError(msg, p2);
-                    self._updateFileDetails(numFiles);
-                };
-
-            self.loadedImages = [];
-            self.totalImagesCount = 0;
-
-            $.each(files, function (key, file) {
-                var func = self.fileTypeSettings.image;
-                if (func && func(file.type)) {
-                    self.totalImagesCount++;
-                }
-            });
-            readFile = function (i) {
-                if ($h.isEmpty($el.attr('multiple'))) {
-                    numFiles = 1;
-                }
-                if (i >= numFiles) {
-                    if (self.isAjaxUpload && self.filestack.length > 0) {
-                        self._raise('filebatchselected', [self.getFileStack()]);
-                    } else {
-                        self._raise('filebatchselected', [files]);
-                    }
-                    $container.removeClass('file-thumb-loading');
-                    $status.html('');
-                    return;
-                }
-                var node = ctr + i, previewId = previewInitId + "-" + node, file = files[i], fSizeKB, j, msg,
-                    fnText = settings.text, fnImage = settings.image, fnHtml = settings.html, typ, chk, typ1, typ2,
-                    caption = file.name ? self.slug(file.name) : '', fileSize = (file.size || 0) / 1000,
-                    fileExtExpr = '', previewData = $h.objUrl.createObjectURL(file), fileCount = 0, strTypes = '',
-                    func, knownTypes = 0, isText, isHtml, isImage, txtFlag, processFileLoaded = function () {
-                        var msg = msgProgress.setTokens({
-                            'index': i + 1,
-                            'files': numFiles,
-                            'percent': 50,
-                            'name': caption
-                        });
-                        setTimeout(function () {
-                            $status.html(msg);
-                            self._updateFileDetails(numFiles);
-                            readFile(i + 1);
-                        }, 100);
-                        self._raise('fileloaded', [file, previewId, i, reader]);
-                    };
-                if (typLen > 0) {
-                    for (j = 0; j < typLen; j++) {
-                        typ1 = fileTypes[j];
-                        typ2 = self.msgFileTypes[typ1] || typ1;
-                        strTypes += j === 0 ? typ2 : ', ' + typ2;
-                    }
-                }
-                if (caption === false) {
-                    readFile(i + 1);
-                    return;
-                }
-                if (caption.length === 0) {
-                    msg = self.msgInvalidFileName.replace('{name}', $h.htmlEncode(file.name));
-                    throwError(msg, file, previewId, i);
-                    return;
-                }
-                if (!$h.isEmpty(fileExt)) {
-                    fileExtExpr = new RegExp('\\.(' + fileExt.join('|') + ')$', 'i');
-                }
-                fSizeKB = fileSize.toFixed(2);
-                if (self.maxFileSize > 0 && fileSize > self.maxFileSize) {
-                    msg = self.msgSizeTooLarge.setTokens({
-                        'name': caption,
-                        'size': fSizeKB,
-                        'maxSize': self.maxFileSize
-                    });
-                    throwError(msg, file, previewId, i);
-                    return;
-                }
-                if (self.minFileSize !== null && fileSize <= $h.getNum(self.minFileSize)) {
-                    msg = self.msgSizeTooSmall.setTokens({
-                        'name': caption,
-                        'size': fSizeKB,
-                        'minSize': self.minFileSize
-                    });
-                    throwError(msg, file, previewId, i);
-                    return;
-                }
-                if (!$h.isEmpty(fileTypes) && $h.isArray(fileTypes)) {
-                    for (j = 0; j < fileTypes.length; j += 1) {
-                        typ = fileTypes[j];
-                        func = settings[typ];
-                        fileCount += !func || (typeof func !== 'function') ? 0 : (func(file.type, file.name) ? 1 : 0);
-                    }
-                    if (fileCount === 0) {
-                        msg = self.msgInvalidFileType.setTokens({'name': caption, 'types': strTypes});
-                        throwError(msg, file, previewId, i);
-                        return;
-                    }
-                }
-                if (fileCount === 0 && !$h.isEmpty(fileExt) && $h.isArray(fileExt) && !$h.isEmpty(fileExtExpr)) {
-                    chk = $h.compare(caption, fileExtExpr);
-                    fileCount += $h.isEmpty(chk) ? 0 : chk.length;
-                    if (fileCount === 0) {
-                        msg = self.msgInvalidFileExtension.setTokens({'name': caption, 'extensions': strExt});
-                        throwError(msg, file, previewId, i);
-                        return;
-                    }
-                }
-                if (!self.showPreview) {
-                    if (self.isAjaxUpload) {
-                        self.addToStack(file);
-                    }
-                    setTimeout(function () {
-                        readFile(i + 1);
-                        self._updateFileDetails(numFiles);
-                    }, 100);
-                    self._raise('fileloaded', [file, previewId, i, reader]);
-                    return;
-                }
-                if (!canPreview && fileSize > maxPreviewSize) {
-                    self.addToStack(file);
-                    $container.addClass('file-thumb-loading');
-                    self._previewDefault(file, previewId);
-                    self._initFileActions();
-                    self._updateFileDetails(numFiles);
-                    readFile(i + 1);
-                    return;
-                }
-                if ($preview.length && FileReader !== undefined) {
-                    isText = fnText(file.type, caption);
-                    isHtml = fnHtml(file.type, caption);
-                    isImage = fnImage(file.type, caption);
-                    $status.html(msgLoading.replace('{index}', i + 1).replace('{files}', numFiles));
-                    $container.addClass('file-thumb-loading');
-                    reader.onerror = function (evt) {
-                        self._errorHandler(evt, caption);
-                    };
-                    reader.onload = function (theFile) {
-                        var hex, fileInfo, uint, byte, bytes = [], contents, mime, readTextImage = function (textFlag) {
-                            var newReader = new FileReader();
-                            newReader.onerror = function (theFileNew) {
-                                self._errorHandler(theFileNew, caption);
-                            };
-                            newReader.onload = function (theFileNew) {
-                                self._previewFile(i, file, theFileNew, previewId, previewData, fileInfo);
-                                self._initFileActions();
-                                processFileLoaded();
-                            };
-                            if (textFlag) {
-                                newReader.readAsText(file, self.textEncoding);
-                            } else {
-                                newReader.readAsDataURL(file);
-                            }
-                        };
-                        fileInfo = {'name': caption, 'type': file.type};
-                        $.each(settings, function (key, func) {
-                            if (key !== 'object' && key !== 'other' && func(file.type, caption)) {
-                                knownTypes++;
-                            }
-                        });
-                        if (knownTypes === 0) {// auto detect mime types from content if no known file types detected
-                            uint = new Uint8Array(theFile.target.result);
-                            for (j = 0; j < uint.length; j++) {
-                                byte = uint[j].toString(16);
-                                bytes.push(byte);
-                            }
-                            hex = bytes.join('').toLowerCase().substring(0, 8);
-                            mime = $h.getMimeType(hex, '', '');
-                            if ($h.isEmpty(mime)) { // look for ascii text content
-                                contents = $h.arrayBuffer2String(reader.result);
-                                mime = $h.isSvg(contents) ? 'image/svg+xml' : $h.getMimeType(hex, contents, file.type);
-                            }
-                            fileInfo = {'name': caption, 'type': mime};
-                            isText = fnText(mime, '');
-                            isHtml = fnHtml(mime, '');
-                            isImage = fnImage(mime, '');
-                            txtFlag = isText || isHtml;
-                            if (txtFlag || isImage) {
-                                readTextImage(txtFlag);
-                                return;
-                            }
-                        }
-                        self._previewFile(i, file, theFile, previewId, previewData, fileInfo);
-                        self._initFileActions();
-                        processFileLoaded();
-                    };
-                    reader.onprogress = function (data) {
-                        if (data.lengthComputable) {
-                            var fact = (data.loaded / data.total) * 100, progress = Math.ceil(fact);
-                            msg = msgProgress.setTokens({
-                                'index': i + 1,
-                                'files': numFiles,
-                                'percent': progress,
-                                'name': caption
-                            });
-                            setTimeout(function () {
-                                $status.html(msg);
-                            }, 100);
-                        }
-                    };
-
-                    if (isText || isHtml) {
-                        reader.readAsText(file, self.textEncoding);
-                    } else {
-                        if (isImage) {
-                            reader.readAsDataURL(file);
-                        } else {
-                            reader.readAsArrayBuffer(file);
-                        }
-                    }
-                } else {
-                    self._previewDefault(file, previewId);
-                    setTimeout(function () {
-                        readFile(i + 1);
-                        self._updateFileDetails(numFiles);
-                    }, 100);
-                    self._raise('fileloaded', [file, previewId, i, reader]);
-                }
-                self.addToStack(file);
-            };
-
-            readFile(0);
-            self._updateFileDetails(numFiles, false);
         },
         _updateFileDetails: function (numFiles) {
             var self = this, $el = self.$element, fileStack = self.getFileStack(),
@@ -3750,7 +3484,7 @@
                 }
             }
             if (self.isPreviewable) {
-                self._readFiles(tfiles);
+                self.readFiles(tfiles);
             } else {
                 self._updateFileDetails(1);
             }
@@ -3837,6 +3571,254 @@
         getFilesCount: function () {
             var self = this, len = self.isAjaxUpload ? self.getFileStack().length : self.$element.get(0).files.length;
             return self._getFileCount(len);
+        },
+        readFiles: function (files) {
+            this.reader = new FileReader();
+            var self = this, $el = self.$element, $preview = self.$preview, reader = self.reader,
+                $container = self.$previewContainer, $status = self.$previewStatus, msgLoading = self.msgLoading,
+                msgProgress = self.msgProgress, previewInitId = self.previewInitId, numFiles = files.length,
+                settings = self.fileTypeSettings, ctr = self.filestack.length, readFile,
+                fileTypes = self.allowedFileTypes, typLen = fileTypes ? fileTypes.length : 0,
+                fileExt = self.allowedFileExtensions, strExt = $h.isEmpty(fileExt) ? '' : fileExt.join(', '),
+                maxPreviewSize = self.maxFilePreviewSize && parseFloat(self.maxFilePreviewSize),
+                canPreview = $preview.length && (!maxPreviewSize || isNaN(maxPreviewSize)),
+                throwError = function (msg, file, previewId, index) {
+                    var p1 = $.extend(true, {}, self._getOutData({}, {}, files), {id: previewId, index: index}),
+                        p2 = {id: previewId, index: index, file: file, files: files}, $thumb;
+                    self._previewDefault(file, previewId, true);
+                    if (self.isAjaxUpload) {
+                        self.addToStack(undefined);
+                        setTimeout(function () {
+                            readFile(index + 1);
+                        }, 100);
+                    } else {
+                        numFiles = 0;
+                    }
+                    self._initFileActions();
+                    $thumb = $('#' + previewId);
+                    $thumb.find('.kv-file-upload').hide();
+                    if (self.removeFromPreviewOnError) {
+                        $thumb.remove();
+                    }
+                    self.isError = self.isAjaxUpload ? self._showUploadError(msg, p1) : self._showError(msg, p2);
+                    self._updateFileDetails(numFiles);
+                };
+
+            self.loadedImages = [];
+            self.totalImagesCount = 0;
+
+            $.each(files, function (key, file) {
+                var func = self.fileTypeSettings.image;
+                if (func && func(file.type)) {
+                    self.totalImagesCount++;
+                }
+            });
+            readFile = function (i) {
+                if ($h.isEmpty($el.attr('multiple'))) {
+                    numFiles = 1;
+                }
+                if (i >= numFiles) {
+                    if (self.isAjaxUpload && self.filestack.length > 0) {
+                        self._raise('filebatchselected', [self.getFileStack()]);
+                    } else {
+                        self._raise('filebatchselected', [files]);
+                    }
+                    $container.removeClass('file-thumb-loading');
+                    $status.html('');
+                    return;
+                }
+                var node = ctr + i, previewId = previewInitId + "-" + node, file = files[i], fSizeKB, j, msg,
+                    fnText = settings.text, fnImage = settings.image, fnHtml = settings.html, typ, chk, typ1, typ2,
+                    caption = file.name ? self.slug(file.name) : '', fileSize = (file.size || 0) / 1000,
+                    fileExtExpr = '', previewData = $h.objUrl.createObjectURL(file), fileCount = 0, strTypes = '',
+                    func, knownTypes = 0, isText, isHtml, isImage, txtFlag, processFileLoaded = function () {
+                        var msg = msgProgress.setTokens({
+                            'index': i + 1,
+                            'files': numFiles,
+                            'percent': 50,
+                            'name': caption
+                        });
+                        setTimeout(function () {
+                            $status.html(msg);
+                            self._updateFileDetails(numFiles);
+                            readFile(i + 1);
+                        }, 100);
+                        self._raise('fileloaded', [file, previewId, i, reader]);
+                    };
+                if (typLen > 0) {
+                    for (j = 0; j < typLen; j++) {
+                        typ1 = fileTypes[j];
+                        typ2 = self.msgFileTypes[typ1] || typ1;
+                        strTypes += j === 0 ? typ2 : ', ' + typ2;
+                    }
+                }
+                if (caption === false) {
+                    readFile(i + 1);
+                    return;
+                }
+                if (caption.length === 0) {
+                    msg = self.msgInvalidFileName.replace('{name}', $h.htmlEncode(file.name));
+                    throwError(msg, file, previewId, i);
+                    return;
+                }
+                if (!$h.isEmpty(fileExt)) {
+                    fileExtExpr = new RegExp('\\.(' + fileExt.join('|') + ')$', 'i');
+                }
+                fSizeKB = fileSize.toFixed(2);
+                if (self.maxFileSize > 0 && fileSize > self.maxFileSize) {
+                    msg = self.msgSizeTooLarge.setTokens({
+                        'name': caption,
+                        'size': fSizeKB,
+                        'maxSize': self.maxFileSize
+                    });
+                    throwError(msg, file, previewId, i);
+                    return;
+                }
+                if (self.minFileSize !== null && fileSize <= $h.getNum(self.minFileSize)) {
+                    msg = self.msgSizeTooSmall.setTokens({
+                        'name': caption,
+                        'size': fSizeKB,
+                        'minSize': self.minFileSize
+                    });
+                    throwError(msg, file, previewId, i);
+                    return;
+                }
+                if (!$h.isEmpty(fileTypes) && $h.isArray(fileTypes)) {
+                    for (j = 0; j < fileTypes.length; j += 1) {
+                        typ = fileTypes[j];
+                        func = settings[typ];
+                        fileCount += !func || (typeof func !== 'function') ? 0 : (func(file.type, file.name) ? 1 : 0);
+                    }
+                    if (fileCount === 0) {
+                        msg = self.msgInvalidFileType.setTokens({'name': caption, 'types': strTypes});
+                        throwError(msg, file, previewId, i);
+                        return;
+                    }
+                }
+                if (fileCount === 0 && !$h.isEmpty(fileExt) && $h.isArray(fileExt) && !$h.isEmpty(fileExtExpr)) {
+                    chk = $h.compare(caption, fileExtExpr);
+                    fileCount += $h.isEmpty(chk) ? 0 : chk.length;
+                    if (fileCount === 0) {
+                        msg = self.msgInvalidFileExtension.setTokens({'name': caption, 'extensions': strExt});
+                        throwError(msg, file, previewId, i);
+                        return;
+                    }
+                }
+                if (!self.showPreview) {
+                    if (self.isAjaxUpload) {
+                        self.addToStack(file);
+                    }
+                    setTimeout(function () {
+                        readFile(i + 1);
+                        self._updateFileDetails(numFiles);
+                    }, 100);
+                    self._raise('fileloaded', [file, previewId, i, reader]);
+                    return;
+                }
+                if (!canPreview && fileSize > maxPreviewSize) {
+                    self.addToStack(file);
+                    $container.addClass('file-thumb-loading');
+                    self._previewDefault(file, previewId);
+                    self._initFileActions();
+                    self._updateFileDetails(numFiles);
+                    readFile(i + 1);
+                    return;
+                }
+                if ($preview.length && FileReader !== undefined) {
+                    isText = fnText(file.type, caption);
+                    isHtml = fnHtml(file.type, caption);
+                    isImage = fnImage(file.type, caption);
+                    $status.html(msgLoading.replace('{index}', i + 1).replace('{files}', numFiles));
+                    $container.addClass('file-thumb-loading');
+                    reader.onerror = function (evt) {
+                        self._errorHandler(evt, caption);
+                    };
+                    reader.onload = function (theFile) {
+                        var hex, fileInfo, uint, byte, bytes = [], contents, mime, readTextImage = function (textFlag) {
+                            var newReader = new FileReader();
+                            newReader.onerror = function (theFileNew) {
+                                self._errorHandler(theFileNew, caption);
+                            };
+                            newReader.onload = function (theFileNew) {
+                                self._previewFile(i, file, theFileNew, previewId, previewData, fileInfo);
+                                self._initFileActions();
+                                processFileLoaded();
+                            };
+                            if (textFlag) {
+                                newReader.readAsText(file, self.textEncoding);
+                            } else {
+                                newReader.readAsDataURL(file);
+                            }
+                        };
+                        fileInfo = {'name': caption, 'type': file.type};
+                        $.each(settings, function (key, func) {
+                            if (key !== 'object' && key !== 'other' && func(file.type, caption)) {
+                                knownTypes++;
+                            }
+                        });
+                        if (knownTypes === 0) {// auto detect mime types from content if no known file types detected
+                            uint = new Uint8Array(theFile.target.result);
+                            for (j = 0; j < uint.length; j++) {
+                                byte = uint[j].toString(16);
+                                bytes.push(byte);
+                            }
+                            hex = bytes.join('').toLowerCase().substring(0, 8);
+                            mime = $h.getMimeType(hex, '', '');
+                            if ($h.isEmpty(mime)) { // look for ascii text content
+                                contents = $h.arrayBuffer2String(reader.result);
+                                mime = $h.isSvg(contents) ? 'image/svg+xml' : $h.getMimeType(hex, contents, file.type);
+                            }
+                            fileInfo = {'name': caption, 'type': mime};
+                            isText = fnText(mime, '');
+                            isHtml = fnHtml(mime, '');
+                            isImage = fnImage(mime, '');
+                            txtFlag = isText || isHtml;
+                            if (txtFlag || isImage) {
+                                readTextImage(txtFlag);
+                                return;
+                            }
+                        }
+                        self._previewFile(i, file, theFile, previewId, previewData, fileInfo);
+                        self._initFileActions();
+                        processFileLoaded();
+                    };
+                    reader.onprogress = function (data) {
+                        if (data.lengthComputable) {
+                            var fact = (data.loaded / data.total) * 100, progress = Math.ceil(fact);
+                            msg = msgProgress.setTokens({
+                                'index': i + 1,
+                                'files': numFiles,
+                                'percent': progress,
+                                'name': caption
+                            });
+                            setTimeout(function () {
+                                $status.html(msg);
+                            }, 100);
+                        }
+                    };
+
+                    if (isText || isHtml) {
+                        reader.readAsText(file, self.textEncoding);
+                    } else {
+                        if (isImage) {
+                            reader.readAsDataURL(file);
+                        } else {
+                            reader.readAsArrayBuffer(file);
+                        }
+                    }
+                } else {
+                    self._previewDefault(file, previewId);
+                    setTimeout(function () {
+                        readFile(i + 1);
+                        self._updateFileDetails(numFiles);
+                    }, 100);
+                    self._raise('fileloaded', [file, previewId, i, reader]);
+                }
+                self.addToStack(file);
+            };
+
+            readFile(0);
+            self._updateFileDetails(numFiles, false);
         },
         lock: function () {
             var self = this;

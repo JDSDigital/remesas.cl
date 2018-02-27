@@ -31,18 +31,7 @@ If you use PHP SoapServer with framework, try to block call to this method in te
 * xmlResponse - last SOAP response (DOMDocument)
 
 
-
 ## Actions
-
-### assertArraySubset
- 
-Checks that array contains subset.
-
- * `param array`  $subset
- * `param array`  $array
- * `param bool`   $strict
- * `param string` $message
-
 
 ### dontSeeSoapResponseContainsStructure
  
@@ -243,4 +232,4 @@ $I->sendSoapRequest('UpdateUser', \Codeception\Utils\Soap::request()->user
  * `param` $request
  * `param` $body
 
-<p>&nbsp;</p><div class="alert alert-warning">Module reference is taken from the source code. <a href="https://github.com/Codeception/Codeception/tree/2.3/src/Codeception/Module/SOAP.php">Help us to improve documentation. Edit module reference</a></div>
+<p>&nbsp;</p><div class="alert alert-warning">Module reference is taken from the source code. <a href="https://github.com/Codeception/Codeception/tree/2.4/src/Codeception/Module/SOAP.php">Help us to improve documentation. Edit module reference</a></div>

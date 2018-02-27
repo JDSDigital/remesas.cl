@@ -230,7 +230,6 @@ $this->getModule('WebDriver')->webDriver->getKeyboard()->sendKeys('hello, webdri
 ```
 
 
-
 ## Actions
 
 ### _backupSession
@@ -240,6 +239,53 @@ $this->getModule('WebDriver')->webDriver->getKeyboard()->sendKeys('hello, webdri
 Returns current WebDriver session for saving
 
  * `return` RemoteWebDriver
+
+
+### _capabilities
+
+*hidden API method, expected to be used from Helper classes*
+ 
+Change capabilities of WebDriver. Should be executed before starting a new browser session.
+This method expects a function to be passed which returns array or [WebDriver Desired Capabilities](https://github.com/facebook/php-webdriver/blob/community/lib/Remote/DesiredCapabilities.php) object.
+Additional [Chrome options](https://github.com/facebook/php-webdriver/wiki/ChromeOptions) (like adding extensions) can be passed as well.
+
+```php
+<?php // in helper
+public function _before(TestInterface $test)
+{
+    $this->getModule('WebDriver')->_capabilities(function($currentCapabilities) {
+        // or new \Facebook\WebDriver\Remote\DesiredCapabilities();
+        return \Facebook\WebDriver\Remote\DesiredCapabilities::firefox();
+    });
+}
+```
+
+to make this work load `\Helper\Acceptance` before `WebDriver` in `acceptance.suite.yml`:
+
+```yaml
+modules:
+    enabled:
+        - \Helper\Acceptance
+        - WebDriver
+```
+
+For instance, [**BrowserStack** cloud service](https://www.browserstack.com/automate/capabilities) may require a test name to be set in capabilities.
+This is how it can be done via `_capabilities` method from `Helper\Acceptance`:
+
+```php
+<?php // inside Helper\Acceptance
+public function _before(TestInterface $test)
+{
+     $name = $test->getMetadata()->getName();
+     $this->getModule('WebDriver')->_capabilities(function($currentCapabilities) use ($name) {
+         $currentCapabilities['name'] = $name;
+         return $currentCapabilities;
+     });
+}
+```
+In this case, please ensure that `\Helper\Acceptance` is loaded before WebDriver so new capabilities could be applied.
+
+ * `param \Closure` $capabilityFunction
 
 
 ### _closeSession
@@ -463,16 +509,6 @@ $I->appendField('#myTextField', 'appended');
 @throws \Codeception\Exception\ElementNotFound
 
 
-### assertArraySubset
- 
-Checks that array contains subset.
-
- * `param array`  $subset
- * `param array`  $array
- * `param bool`   $strict
- * `param string` $message
-
-
 ### attachFile
  
 Attaches a file relative to the Codeception `_data` directory to the given file upload field.
@@ -504,6 +540,19 @@ $I->checkOption('#agree');
 ```
 
  * `param` $option
+
+
+### clearField
+ 
+lears given field which isn't empty.
+
+`` php
+?php
+I->clearField('#username');
+>
+``
+
+param $field
 
 
 ### click
@@ -797,6 +846,16 @@ Checks that the page source doesn't contain the given string.
  * `param` $text
 
 
+### dontSeeInPopup
+ 
+Checks that the active JavaScript popup,
+as created by `window.alert`|`window.confirm`|`window.prompt`, does NOT contain the given string.
+
+ * `param` $text
+
+@throws \Codeception\Exception\ModuleException
+
+
 ### dontSeeInSource
  
 Checks that the current page contains the given string in its
@@ -871,6 +930,25 @@ $I->dragAndDrop('#drag', '#drop');
  * `param string` $target (CSS ID or XPath)
 
 
+### executeAsyncJS
+ 
+Executes asynchronous JavaScript.
+A callback should be executed by JavaScript to exit from a script.
+Callback is passed as a last element in `arguments` array.
+Additional arguments can be passed as array in second parameter.
+
+```js
+// wait for 1200 milliseconds my running `setTimeout`
+* $I->executeAsyncJS('setTimeout(arguments[0], 1200)');
+
+$seconds = 1200; // or seconds are passed as argument
+$I->executeAsyncJS('setTimeout(arguments[1], arguments[0])', [$seconds]);
+```
+
+ * `param` $script
+ * `param array` $arguments
+
+
 ### executeInSelenium
  
 Low-level API method.
@@ -899,10 +977,14 @@ This example uses jQuery to get a value and assigns that value to a PHP variable
 ```php
 <?php
 $myVar = $I->executeJS('return $("#myField").val()');
-?>
+
+// additional arguments can be passed as array
+// Example shows `Hello World` alert:
+$I->executeJS("window.alert(arguments[0])", ['Hello world']);
 ```
 
  * `param` $script
+ * `param array` $arguments
 
 
 ### fillField
@@ -931,7 +1013,6 @@ $I->grabAttributeFrom('#tooltip', 'title');
 ?>
 ```
 
-
  * `param` $cssOrXpath
  * `param` $attribute
 
@@ -949,7 +1030,7 @@ You can set additional cookie params like `domain`, `path` in array passed as la
 
 ### grabFromCurrentUrl
  
-Executes the given regular expression against the current URI and returns the first match.
+Executes the given regular expression against the current URI and returns the first capturing group.
 If no parameters are provided, the full URI is returned.
 
 ``` php
@@ -1903,7 +1984,7 @@ Unselect an option in the given select box.
  
 Wait for $timeout seconds.
 
- * `param int` $timeout secs
+ * `param int|float` $timeout secs
 @throws \Codeception\Exception\TestRuntimeException
 
 
@@ -2014,4 +2095,4 @@ $I->waitForText('foo', 30, '.title'); // secs
  * `param string` $selector optional
 @throws \Exception
 
-<p>&nbsp;</p><div class="alert alert-warning">Module reference is taken from the source code. <a href="https://github.com/Codeception/Codeception/tree/2.3/src/Codeception/Module/WebDriver.php">Help us to improve documentation. Edit module reference</a></div>
+<p>&nbsp;</p><div class="alert alert-warning">Module reference is taken from the source code. <a href="https://github.com/Codeception/Codeception/tree/2.4/src/Codeception/Module/WebDriver.php">Help us to improve documentation. Edit module reference</a></div>

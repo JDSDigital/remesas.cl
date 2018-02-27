@@ -132,7 +132,6 @@ Failed asserting that string matches format description.
 +++ Actual
 @@ @@
 -FOO
--
 +...BAR...
 
 %s:%i

@@ -2,6 +2,7 @@
 namespace Codeception;
 
 use Codeception\Lib\ModuleContainer;
+use Codeception\Step\Argument\FormattedOutput;
 use Codeception\Step\Meta as MetaStep;
 use Codeception\Util\Locator;
 
@@ -153,7 +154,9 @@ abstract class Step
                 }
             }
         } elseif (is_object($argument)) {
-            if (method_exists($argument, '__toString')) {
+            if ($argument instanceof FormattedOutput) {
+                $argument = $argument->getOutput();
+            } elseif (method_exists($argument, '__toString')) {
                 $argument = (string)$argument;
             } elseif (get_class($argument) == 'Facebook\WebDriver\WebDriverBy') {
                 $argument = Locator::humanReadableString($argument);
@@ -171,9 +174,9 @@ abstract class Step
             return 'Closure';
         } elseif ((isset($argument->__mocked))) {
             return $this->formatClassName($argument->__mocked);
-        } else {
-            return $this->formatClassName(get_class($argument));
         }
+
+        return $this->formatClassName(get_class($argument));
     }
 
     protected function formatClassName($classname)
@@ -295,7 +298,10 @@ abstract class Step
                 continue;
             }
 
-            $this->metaStep = new Step\Meta($step['function'], array_values($step['args']));
+            // in case arguments were passed by reference, copy args array to ensure dereference.  array_values() does not dereference values
+            $this->metaStep = new Step\Meta($step['function'], array_map(function ($i) {
+                return $i;
+            }, array_values($step['args'])));
             $this->metaStep->setTraceInfo($step['file'], $step['line']);
 
             // pageobjects or other classes should not be included with "I"

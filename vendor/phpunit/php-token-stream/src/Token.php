@@ -349,27 +349,28 @@ class PHP_Token_FUNCTION extends PHP_TokenWithScopeAndVisibility
 
         $tokens = $this->tokenStream->tokens();
 
-        for ($i = $this->id + 1; $i < count($tokens); $i++) {
-            if ($tokens[$i] instanceof PHP_Token_STRING) {
-                $this->name = (string) $tokens[$i];
+        $i = $this->id + 1;
 
-                break;
-            } elseif ($tokens[$i] instanceof PHP_Token_AMPERSAND &&
-                     $tokens[$i + 1] instanceof PHP_Token_STRING) {
-                $this->name = (string) $tokens[$i + 1];
+        if ($tokens[$i] instanceof PHP_Token_WHITESPACE) {
+            $i++;
+        }
 
-                break;
-            } elseif ($tokens[$i] instanceof PHP_Token_OPEN_BRACKET) {
-                $this->anonymous = true;
+        if ($tokens[$i] instanceof PHP_Token_AMPERSAND) {
+            $i++;
+        }
 
-                $this->name = sprintf(
-                    'anonymousFunction:%s#%s',
-                    $this->getLine(),
-                    $this->getId()
-                );
+        if ($tokens[$i + 1] instanceof PHP_Token_OPEN_BRACKET) {
+            $this->name = (string) $tokens[$i];
+        } elseif ($tokens[$i + 1] instanceof PHP_Token_WHITESPACE && $tokens[$i + 2] instanceof PHP_Token_OPEN_BRACKET) {
+            $this->name = (string) $tokens[$i];
+        } else {
+            $this->anonymous = true;
 
-                break;
-            }
+            $this->name = sprintf(
+                'anonymousFunction:%s#%s',
+                $this->getLine(),
+                $this->getId()
+            );
         }
 
         if (!$this->isAnonymous()) {
@@ -1346,114 +1347,5 @@ class PHP_Token_SPACESHIP extends PHP_Token
 }
 
 class PHP_Token_YIELD_FROM extends PHP_Token
-{
-}
-
-// Tokens introduced in HackLang / HHVM
-class PHP_Token_ASYNC extends PHP_Token
-{
-}
-
-class PHP_Token_AWAIT extends PHP_Token
-{
-}
-
-class PHP_Token_COMPILER_HALT_OFFSET extends PHP_Token
-{
-}
-
-class PHP_Token_ENUM extends PHP_Token
-{
-}
-
-class PHP_Token_EQUALS extends PHP_Token
-{
-}
-
-class PHP_Token_IN extends PHP_Token
-{
-}
-
-class PHP_Token_JOIN extends PHP_Token
-{
-}
-
-class PHP_Token_LAMBDA_ARROW extends PHP_Token
-{
-}
-
-class PHP_Token_LAMBDA_CP extends PHP_Token
-{
-}
-
-class PHP_Token_LAMBDA_OP extends PHP_Token
-{
-}
-
-class PHP_Token_ONUMBER extends PHP_Token
-{
-}
-
-class PHP_Token_NULLSAFE_OBJECT_OPERATOR extends PHP_Token
-{
-}
-
-class PHP_Token_SHAPE extends PHP_Token
-{
-}
-
-class PHP_Token_SUPER extends PHP_Token
-{
-}
-
-class PHP_Token_TYPE extends PHP_Token
-{
-}
-
-class PHP_Token_TYPELIST_GT extends PHP_Token
-{
-}
-
-class PHP_Token_TYPELIST_LT extends PHP_Token
-{
-}
-
-class PHP_Token_WHERE extends PHP_Token
-{
-}
-
-class PHP_Token_XHP_ATTRIBUTE extends PHP_Token
-{
-}
-
-class PHP_Token_XHP_CATEGORY extends PHP_Token
-{
-}
-
-class PHP_Token_XHP_CATEGORY_LABEL extends PHP_Token
-{
-}
-
-class PHP_Token_XHP_CHILDREN extends PHP_Token
-{
-}
-
-class PHP_Token_XHP_LABEL extends PHP_Token
-{
-}
-
-class PHP_Token_XHP_REQUIRED extends PHP_Token
-{
-}
-
-class PHP_Token_XHP_TAG_GT extends PHP_Token
-{
-}
-
-class PHP_Token_XHP_TAG_LT extends PHP_Token
-{
-}
-
-class PHP_Token_XHP_TEXT extends PHP_Token
 {
 }

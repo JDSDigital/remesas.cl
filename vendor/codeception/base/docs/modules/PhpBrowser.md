@@ -13,17 +13,15 @@ If test fails stores last shown page in 'output' dir.
 * Maintainer: **davert**
 * Stability: **stable**
 * Contact: codeception@codeception.com
-* Works with [Guzzle](http://guzzlephp.org/)
 
-*Please review the code of non-stable modules and provide patches if you have issues.*
 
 ## Configuration
 
 * url *required* - start url of your app
+* headers - default headers are set before each test.
 * handler (default: curl) -  Guzzle handler to use. By default curl is used, also possible to pass `stream`, or any valid class name as [Handler](http://docs.guzzlephp.org/en/latest/handlers-and-middleware.html#handlers).
 * middleware - Guzzle middlewares to add. An array of valid callables is required.
 * curl - curl options
-* headers - ...
 * cookies - ...
 * auth - ...
 * verify - ...
@@ -64,7 +62,6 @@ Properties:
 
 * `guzzle` - contains [Guzzle](http://guzzlephp.org/) client instance: `\GuzzleHttp\Client`
 * `client` - Symfony BrowserKit instance.
-
 
 
 ## Actions
@@ -240,16 +237,6 @@ $I->amOnUrl('http://codeception.com');
 $I->amOnPage('/quickstart'); // moves to http://codeception.com/quickstart
 ?>
 ```
-
-
-### assertArraySubset
- 
-Checks that array contains subset.
-
- * `param array`  $subset
- * `param array`  $array
- * `param bool`   $strict
- * `param string` $message
 
 
 ### attachFile
@@ -623,7 +610,6 @@ $I->grabAttributeFrom('#tooltip', 'title');
 ?>
 ```
 
-
  * `param` $cssOrXpath
  * `param` $attribute
 
@@ -641,7 +627,7 @@ You can set additional cookie params like `domain`, `path` in array passed as la
 
 ### grabFromCurrentUrl
  
-Executes the given regular expression against the current URI and returns the first match.
+Executes the given regular expression against the current URI and returns the first capturing group.
 If no parameters are provided, the full URI is returned.
 
 ``` php
@@ -725,6 +711,17 @@ Example:
 <?php
 $I->haveHttpHeader('X-Requested-With', 'Codeception');
 $I->amOnPage('test-headers.php');
+?>
+```
+
+To use special chars in Header Key use HTML Character Entities:
+Example:
+Header with underscore - 'Client_Id'
+should be represented as - 'Client&#x0005F;Id' or 'Client&#95;Id'
+
+```php
+<?php
+$I->haveHttpHeader('Client&#95;Id', 'Codeception');
 ?>
 ```
 
@@ -1369,4 +1366,4 @@ $I->uncheckOption('#notify');
 
  * `param` $option
 
-<p>&nbsp;</p><div class="alert alert-warning">Module reference is taken from the source code. <a href="https://github.com/Codeception/Codeception/tree/2.3/src/Codeception/Module/PhpBrowser.php">Help us to improve documentation. Edit module reference</a></div>
+<p>&nbsp;</p><div class="alert alert-warning">Module reference is taken from the source code. <a href="https://github.com/Codeception/Codeception/tree/2.4/src/Codeception/Module/PhpBrowser.php">Help us to improve documentation. Edit module reference</a></div>

@@ -35,18 +35,7 @@ to interact with a Redis server.
 
 @author Marc Verney <marc@marcverney.net>
 
-
 ## Actions
-
-### assertArraySubset
- 
-Checks that array contains subset.
-
- * `param array`  $subset
- * `param array`  $array
- * `param bool`   $strict
- * `param string` $message
-
 
 ### cleanup
  
@@ -163,7 +152,6 @@ $I->grabFromRedis('example:hash', 'foo');
 ```
 
  * `param string` $key The key name
-
 
 @throws ModuleException if the key does not exist
 
@@ -294,4 +282,4 @@ $I->sendCommandToRedis('flushdb');
  * `param string` $command The command name
 
 
-<p>&nbsp;</p><div class="alert alert-warning">Module reference is taken from the source code. <a href="https://github.com/Codeception/Codeception/tree/2.3/src/Codeception/Module/Redis.php">Help us to improve documentation. Edit module reference</a></div>
+<p>&nbsp;</p><div class="alert alert-warning">Module reference is taken from the source code. <a href="https://github.com/Codeception/Codeception/tree/2.4/src/Codeception/Module/Redis.php">Help us to improve documentation. Edit module reference</a></div>

@@ -34,7 +34,7 @@ use yii\helpers\Url;
 class ActionColumn extends Column
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $headerOptions = ['class' => 'action-column'];
     /**
@@ -129,7 +129,7 @@ class ActionColumn extends Column
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -145,13 +145,13 @@ class ActionColumn extends Column
         $this->initDefaultButton('view', 'eye-open');
         $this->initDefaultButton('update', 'pencil');
         $this->initDefaultButton('delete', 'trash', [
-            'data-confirm' => Yii::t('yii', '¿Seguro que deseas borrar este elemento?'),
+            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
             'data-method' => 'post',
         ]);
     }
 
     /**
-     * Initializes the default button rendering callback for single button
+     * Initializes the default button rendering callback for single button.
      * @param string $name Button name as it's written in template
      * @param string $iconName The part of Bootstrap glyphicon class that makes it unique
      * @param array $additionalOptions Array of additional options
@@ -163,13 +163,13 @@ class ActionColumn extends Column
             $this->buttons[$name] = function ($url, $model, $key) use ($name, $iconName, $additionalOptions) {
                 switch ($name) {
                     case 'view':
-                        $title = Yii::t('yii', 'Ver');
+                        $title = Yii::t('yii', 'View');
                         break;
                     case 'update':
-                        $title = Yii::t('yii', 'Actualizar');
+                        $title = Yii::t('yii', 'Update');
                         break;
                     case 'delete':
-                        $title = Yii::t('yii', 'Borrar');
+                        $title = Yii::t('yii', 'Delete');
                         break;
                     default:
                         $title = ucfirst($name);
@@ -198,16 +198,16 @@ class ActionColumn extends Column
     {
         if (is_callable($this->urlCreator)) {
             return call_user_func($this->urlCreator, $action, $model, $key, $index, $this);
-        } else {
-            $params = is_array($key) ? $key : ['id' => (string) $key];
-            $params[0] = $this->controller ? $this->controller . '/' . $action : $action;
-
-            return Url::toRoute($params);
         }
+
+        $params = is_array($key) ? $key : ['id' => (string) $key];
+        $params[0] = $this->controller ? $this->controller . '/' . $action : $action;
+
+        return Url::toRoute($params);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function renderDataCellContent($model, $key, $index)
     {
@@ -225,9 +225,9 @@ class ActionColumn extends Column
             if ($isVisible && isset($this->buttons[$name])) {
                 $url = $this->createUrl($name, $model, $key, $index);
                 return call_user_func($this->buttons[$name], $url, $model, $key);
-            } else {
-                return '';
             }
+
+            return '';
         }, $this->template);
     }
 }

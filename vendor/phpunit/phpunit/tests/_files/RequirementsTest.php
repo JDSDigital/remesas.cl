@@ -80,7 +80,8 @@ class RequirementsTest extends TestCase
     }
 
     /**
-     * @requires OS Linux
+     * @requires OS SunOS
+     * @requires OSFAMILY Solaris
      */
     public function testEleven()
     {
@@ -95,6 +96,7 @@ class RequirementsTest extends TestCase
      * @requires extension testExtOne
      * @requires extension testExtTwo
      * @requires extension testExtThree 2.0
+     * @requires setting not_a_setting Off
      */
     public function testAllPossibleRequirements()
     {
@@ -146,6 +148,13 @@ class RequirementsTest extends TestCase
      * @requires OS DOESNOTEXIST
      */
     public function testAlwaysSkip3()
+    {
+    }
+
+    /**
+     * @requires OSFAMILY DOESNOTEXIST
+     */
+    public function testAlwaysSkip4()
     {
     }
 
@@ -434,6 +443,12 @@ class RequirementsTest extends TestCase
      * @requires   PHPUnit ~^12345
      */
     public function testVersionConstraintInvalidPhpUnitConstraint()
+    {
+    }
+    /**
+     * @requires setting display_errors On
+     */
+    public function testSettingDisplayErrorsOn()
     {
     }
 }

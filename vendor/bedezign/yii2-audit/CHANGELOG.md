@@ -1,5 +1,35 @@
 # Changelog
 
+## 1.1.1 February 4, 2018
+
+* Enh [#225](https://github.com/bedezign/yii2-audit/issues/225): German translation
+* Enh [#236](https://github.com/bedezign/yii2-audit/pull/236): Chinese translation
+* Bug [#221](https://github.com/bedezign/yii2-audit/issues/221): Verify component existence in the console, terminate execution with more flair if not.
+
+## 1.1.0 January 20, 2018
+
+* Enh [#231](https://github.com/bedezign/yii2-audit/issues/231): This release is identical to 1.0.13 except that **it requires Yii 2.0.13** to make it compatible with PHP 7.2. It will still work on older PHP versions.
+
+## 1.0.13 January 20, 2018
+
+* Bug [#216](https://github.com/bedezign/yii2-audit/issues/216): Migration failed for MSSQL on alter_audit_mail
+* Enh [#219](https://github.com/bedezign/yii2-audit/pull/219): Refactored chart panels
+* Enh: Use `HTTP_X_FORWARDED_FOR` as IP when it is set
+* Enh [#217](https://github.com/bedezign/yii2-audit/pull/217), [#218](https://github.com/bedezign/yii2-audit/pull/218): Optimized database queries for panels
+* Enh: Made `php-mime-mail-parser` optional (mail panel will now work without, with less functionality). This means you don't need the `mailparse` extension anymore to install Audit.
+* Bug [#233](https://github.com/bedezign/yii2-audit/issues/233): Made DbPanel work with versions that have the [duplicate queries count](https://github.com/yiisoft/yii2-debug/pull/293)
+* A new version will be released shortly (1.1.0) that will be PHP >= 7.2 and  Yii >= 2.0.13. As of PHP 7.2 `object` is reserved as a type hint keyword and thus the Yii `Object` class was renamed to `BaseObject`. For PHP < 7.2 a workaround was added that still provides an `Object` class. This means that Audit v1.0 will work for Yii >= 2.0.13, as long as you do not use PHP >= 7.2
+
+
+## 1.0.12 August 27, 2017
+
+* Enh [#188](https://github.com/bedezign/yii2-audit/issues/188): Ignore attributes when they contain arrays
+* Enh [#191](https://github.com/bedezign/yii2-audit/issues/191): add an option to disable most common timestamp fields
+* Bug [#204](https://github.com/bedezign/yii2-audit/pull/204): Fixed typo in Turkisch translations
+* Enh: Now using PhpMimeMailParser to display the email HTML
+* Enh: Improved IP detection for users behind a proxy
+* Enh [#214](https://github.com/bedezign/yii2-audit/issues/191): Reduced amount of queries to display the main screen
+
 ## 1.0.11 April 15, 2017
 
 * Bug: use correct database when running migrations if the database component is not "db"
@@ -28,12 +58,12 @@
 
 * Bug [#172](https://github.com/bedezign/yii2-audit/issues/172): Declaration of getUrl() compatible with yii\debug\Panel::getUrl()
 * Enh [#171](https://github.com/bedezign/yii2-audit/issues/171): Override to save related record label instead of id in AuditTrail
-* Bug [#168](https://github.com/bedezign/yii2-audit/issues/168): On certain errors the ProfilePanel data is not saved 
+* Bug [#168](https://github.com/bedezign/yii2-audit/issues/168): On certain errors the ProfilePanel data is not saved
 * Enh [#167](https://github.com/bedezign/yii2-audit/issues/167): Get parent model for audit trail
 
 ## 1.0.7 July 27, 2016
 
-* Bug [#162](https://github.com/bedezign/yii2-audit/issues/162): fix charts 
+* Bug [#162](https://github.com/bedezign/yii2-audit/issues/162): fix charts
 * Bug [#160](https://github.com/bedezign/yii2-audit/issues/160): error when config is setup but tables are not present
 * Bug [#145](https://github.com/bedezign/yii2-audit/issues/145): Bootstrap Array to String conversion fix
 * Bug [#153](https://github.com/bedezign/yii2-audit/issues/153): save user_id on finalize function

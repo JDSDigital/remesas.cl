@@ -6,7 +6,8 @@ ChartJs Widget
 [![Build Status](https://img.shields.io/travis/2amigos/yii2-chartjs-widget/master.svg?style=flat-square)](https://travis-ci.org/2amigos/yii2-chartjs-widget)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/2amigos/yii2-chartjs-widget.svg?style=flat-square)](https://scrutinizer-ci.com/g/2amigos/yii2-chartjs-widget/code-structure)
 [![Quality Score](https://img.shields.io/scrutinizer/g/2amigos/yii2-chartjs-widget.svg?style=flat-square)](https://scrutinizer-ci.com/g/2amigos/yii2-chartjs-widget)
-[![Total Downloads](https://img.shields.io/packagist/dt/2amigos/yii2-chartjs-widget.svg?style=flat-square)](https://packagist.org/packages/2amigos/yii2-chartjs-widget)
+[![Total Downloads](https://img.shields.io/packagist/dt/2amigos/yii2-chartjs-widget.svg?style=flat-square)](https://packagist.org/packages/2amigos/yii2-chartjs-widget) 
+[![StyleCI](https://styleci.io/repos/16515084/shield?branch=master)](https://styleci.io/repos/16515084)
 
 Renders a [ChartJs plugin](http://www.chartjs.org/docs/) widget
 
@@ -48,7 +49,7 @@ documentation for the different types supported by the plugin.
 use dosamigos\chartjs\ChartJs;
 
 <?= ChartJs::widget([
-    'type' => 'Line',
+    'type' => 'line',
     'options' => [
         'height' => 400,
         'width' => 400
@@ -57,17 +58,23 @@ use dosamigos\chartjs\ChartJs;
         'labels' => ["January", "February", "March", "April", "May", "June", "July"],
         'datasets' => [
             [
-                'fillColor' => "rgba(220,220,220,0.5)",
-                'strokeColor' => "rgba(220,220,220,1)",
-                'pointColor' => "rgba(220,220,220,1)",
-                'pointStrokeColor' => "#fff",
+                'label' => "My First dataset",
+                'backgroundColor' => "rgba(179,181,198,0.2)",
+                'borderColor' => "rgba(179,181,198,1)",
+                'pointBackgroundColor' => "rgba(179,181,198,1)",
+                'pointBorderColor' => "#fff",
+                'pointHoverBackgroundColor' => "#fff",
+                'pointHoverBorderColor' => "rgba(179,181,198,1)",
                 'data' => [65, 59, 90, 81, 56, 55, 40]
             ],
             [
-                'fillColor' => "rgba(151,187,205,0.5)",
-                'strokeColor' => "rgba(151,187,205,1)",
-                'pointColor' => "rgba(151,187,205,1)",
-                'pointStrokeColor' => "#fff",
+                'label' => "My Second dataset",
+                'backgroundColor' => "rgba(255,99,132,0.2)",
+                'borderColor' => "rgba(255,99,132,1)",
+                'pointBackgroundColor' => "rgba(255,99,132,1)",
+                'pointBorderColor' => "#fff",
+                'pointHoverBackgroundColor' => "#fff",
+                'pointHoverBorderColor' => "rgba(255,99,132,1)",
                 'data' => [28, 48, 40, 19, 96, 27, 100]
             ]
         ]
@@ -98,5 +105,5 @@ License
 The BSD License (BSD). Please see [License File](LICENSE.md) for more information.
 
 > [![2amigOS!](http://www.gravatar.com/avatar/55363394d72945ff7ed312556ec041e0.png)](http://www.2amigos.us)  
-<i>Web development has never been so fun!</i>  
-[www.2amigos.us](http://www.2amigos.us)
+> <i>Custom Software | Web & Mobile Software Development</i>  
+> [www.2amigos.us](https://2amigos.us)

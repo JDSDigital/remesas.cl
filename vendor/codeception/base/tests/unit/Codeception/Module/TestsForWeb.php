@@ -8,7 +8,7 @@
  *
  */
 
-abstract class TestsForWeb extends \Codeception\TestCase\Test
+abstract class TestsForWeb extends \Codeception\Test\Unit
 {
     /**
      * @var \Codeception\Module\PhpBrowser
@@ -92,7 +92,7 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
 
     public function testDontSeeIsCaseInsensitiveForUnicodeText()
     {
-        $this->setExpectedException("PHPUnit_Framework_AssertionFailedError");
+        $this->setExpectedException("PHPUnit\Framework\AssertionFailedError");
         $this->module->amOnPage('/info');
         $this->module->dontSee('ссылочка');
     }
@@ -128,7 +128,7 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
     public function testSeeLinkFailsIfTextDoesNotMatch()
     {
         $this->setExpectedException(
-            'PHPUnit_Framework_AssertionFailedError',
+            'PHPUnit\Framework\AssertionFailedError',
             "No links containing text 'Codeception' were found in page /external_url"
         );
         $this->module->amOnPage('/external_url');
@@ -138,7 +138,7 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
     public function testSeeLinkFailsIfHrefDoesNotMatch()
     {
         $this->setExpectedException(
-            'PHPUnit_Framework_AssertionFailedError',
+            'PHPUnit\Framework\AssertionFailedError',
             "No links containing text 'Next' and URL '/fsdfsdf/' were found in page /external_url"
         );
         $this->module->amOnPage('/external_url');
@@ -148,7 +148,7 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
     public function testDontSeeLinkFailsIfTextMatches()
     {
         $this->setExpectedException(
-            'PHPUnit_Framework_AssertionFailedError',
+            'PHPUnit\Framework\AssertionFailedError',
             "Link containing text 'Next' was found in page /external_url"
         );
         $this->module->amOnPage('/external_url');
@@ -158,7 +158,7 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
     public function testDontSeeLinkFailsIfTextAndUrlMatches()
     {
         $this->setExpectedException(
-            'PHPUnit_Framework_AssertionFailedError',
+            'PHPUnit\Framework\AssertionFailedError',
             "Link containing text 'Next' and URL 'http://codeception.com/' was found in page /external_url"
         );
         $this->module->amOnPage('/external_url');
@@ -174,7 +174,7 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
     public function testDontSeeLinkMatchesRelativeLink()
     {
         $this->setExpectedException(
-            'PHPUnit_Framework_AssertionFailedError',
+            'PHPUnit\Framework\AssertionFailedError',
             "Link containing text 'Sign in!' and URL '/login' was found in page /info"
         );
         $this->module->amOnPage('/info');
@@ -541,9 +541,11 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
     {
         $this->module->amOnPage('/form/field_values');
         $this->module->seeInField('select1', 'see test one');
+        $this->module->seeInField('select1', 'Selected');
         $this->module->dontSeeInField('select1', 'not seen one');
         $this->module->dontSeeInField('select1', 'not seen two');
         $this->module->dontSeeInField('select1', 'not seen three');
+        $this->module->dontSeeInField('select1', 'Not selected');
     }
 
     public function testSeeInFieldEmptyValueForUnselectedSelect()
@@ -609,7 +611,7 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
     public function testSeeInFormFieldsFails()
     {
         $this->module->amOnPage('/form/field_values');
-        $this->setExpectedException("PHPUnit_Framework_AssertionFailedError");
+        $this->setExpectedException("PHPUnit\Framework\AssertionFailedError");
         $params = [
             'radio1' => 'something I should not see',
             'checkbox1' => true,
@@ -647,7 +649,7 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
     public function testDontSeeInFormFieldsFails()
     {
         $this->module->amOnPage('/form/field_values');
-        $this->setExpectedException("PHPUnit_Framework_AssertionFailedError");
+        $this->setExpectedException("PHPUnit\Framework\AssertionFailedError");
         $params = [
             'checkbox[]' => [
                 'wont see this anyway',
@@ -659,6 +661,15 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
             ]
         ];
         $this->module->dontSeeInFormFields('form', $params);
+    }
+
+    public function testSeeInFormFieldsWithAssociativeArrays()
+    {
+        $this->module->amOnPage('/form/example17');
+        $this->module->seeInFormFields('form', [
+            'FooBar' => ['bar' => 'baz'],
+            'Food'   => ['beer' => ['yum' => ['yeah' => 'mmhm']]],
+        ]);
     }
 
     public function testSeeInFieldWithNonLatin()
@@ -766,7 +777,7 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
     // regression test. https://github.com/Codeception/Codeception/issues/587
     public function testSeeElementOnPageFails()
     {
-        $this->setExpectedException("PHPUnit_Framework_AssertionFailedError");
+        $this->setExpectedException("PHPUnit\Framework\AssertionFailedError");
         $this->module->amOnPage('/form/field');
         $this->module->dontSeeElement('input[name=name]');
     }
@@ -1032,6 +1043,8 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
         $this->assertEquals('Davert', $form['name']);
         $this->assertEquals('Is Codeception maintainer', $form['description']);
         $this->assertFalse(isset($form['disabled_fieldset']));
+        $this->assertFalse(isset($form['disabled_fieldset_textarea']));
+        $this->assertFalse(isset($form['disabled_fieldset_select']));
         $this->assertFalse(isset($form['disabled_field']));
         $this->assertEquals('kill_all', $form['action']);
     }
@@ -1065,6 +1078,15 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
         $this->module->submitForm('form', []);
         $form = data::get('form');
         $this->assertEquals('this & that', $form['test']);
+    }
+
+    public function testSubmitFormWithArrayField()
+    {
+        $this->module->amOnPage('/form/example17');
+        $this->module->submitForm('form', []);
+        $data = data::get('form');
+        $this->assertSame('baz', $data['FooBar']['bar']);
+        $this->assertArrayNotHasKey('FooBar[bar]', $data);
     }
 
     public function testSubmitFormMultiSelectWithArrayParameter()
@@ -1175,7 +1197,7 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
 
     protected function shouldFail()
     {
-        $this->setExpectedException('PHPUnit_Framework_AssertionFailedError');
+        $this->setExpectedException('PHPUnit\Framework\AssertionFailedError');
     }
 
     /**
@@ -1268,6 +1290,13 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
         ));
         $form = data::get('form');
         $this->assertFalse(isset($form['checkbox1']), 'Checkbox value sent');
+    }
+
+    public function testSubmitFormWithCheckboxesWithoutValue()
+    {
+        $this->module->amOnPage('/form/checkbox_default_value');
+        $this->module->submitForm('form', ['checkbox1' => true]);
+        $this->assertSame('on', data::get('query')['checkbox1']);
     }
 
     public function testSubmitFormWithButtons()
@@ -1669,5 +1698,14 @@ abstract class TestsForWeb extends \Codeception\TestCase\Test
 
         $this->module->amOnPage('/form/file');
         $this->module->attachFile('Avatar', $filename);
+    }
+
+    public function testPasswordArgument()
+    {
+        $this->module->amOnPage('/form/password_argument');
+        $this->module->fillField('password', new \Codeception\Step\Argument\PasswordArgument('thisissecret'));
+        $this->module->click('Submit');
+        $data = data::get('form');
+        $this->assertEquals('thisissecret', $data['password']);
     }
 }

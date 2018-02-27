@@ -385,14 +385,16 @@ class WebDriver extends CodeceptionModule implements
      * <?php // inside Helper\Acceptance
      * public function _before(TestInterface $test)
      * {
-     *      $name = \Codeception\Test\Descriptor::getTestAsString($test->toString());
+     *      $name = $test->getMetadata()->getName();
      *      $this->getModule('WebDriver')->_capabilities(function($currentCapabilities) use ($name) {
      *          $currentCapabilities['name'] = $name;
-     *          return new DesiredCapabilities($currentCapabilities);
+     *          return $currentCapabilities;
      *      });
      * }
      * ```
+     * In this case, please ensure that `\Helper\Acceptance` is loaded before WebDriver so new capabilities could be applied.
      *
+     * @api
      * @param \Closure $capabilityFunction
      */
     public function _capabilities(\Closure $capabilityFunction)
@@ -412,9 +414,17 @@ class WebDriver extends CodeceptionModule implements
         }
         $this->setBaseElement();
 
+        if (method_exists($this->webDriver, 'getCapabilities')) {
+            $browser = $this->webDriver->getCapabilities()->getBrowserName();
+            $capabilities = $this->webDriver->getCapabilities()->toArray();
+        } else {
+            //Used with facebook/php-webdriver <1.3.0 (usually on PHP 5.4)
+            $browser = $this->config['browser'];
+            $capabilities = $this->config['capabilities'];
+        }
         $test->getMetadata()->setCurrent([
-            'browser' => $this->webDriver->getCapabilities()->getBrowserName(),
-            'capabilities' => $this->webDriver->getCapabilities()->toArray()
+            'browser' => $browser,
+            'capabilities' => $capabilities,
         ]);
     }
 
@@ -489,7 +499,7 @@ class WebDriver extends CodeceptionModule implements
     public function _failed(TestInterface $test, $fail)
     {
         $this->debugWebDriverLogs($test);
-        $filename = preg_replace('~\W~', '.', Descriptor::getTestSignature($test));
+        $filename = preg_replace('~\W~', '.', Descriptor::getTestSignatureUnique($test));
         $outputDir = codecept_output_dir();
         $this->_saveScreenshot($report = $outputDir . mb_strcut($filename, 0, 245, 'utf-8') . '.fail.png');
         $test->getMetadata()->addReport('png', $report);
@@ -1001,7 +1011,7 @@ class WebDriver extends CodeceptionModule implements
             ".//input[./@type = 'image'][contains(./@alt, $locator)]",
             ".//button[contains(normalize-space(string(.)), $locator)]",
             ".//input[./@type = 'submit' or ./@type = 'image' or ./@type = 'button'][./@name = $locator]",
-            ".//button[./@name = $locator]"
+            ".//button[./@name = $locator or ./@title = $locator]"
         );
 
         $els = $page->findElements(WebDriverBy::xpath($xpath));
@@ -1205,22 +1215,52 @@ class WebDriver extends CodeceptionModule implements
             throw new ElementNotFound($formSelector, "Form via CSS or XPath");
         }
         $form = reset($form);
+
+        $els = [];
         foreach ($params as $name => $values) {
-            $els = $form->findElements(WebDriverBy::name($name));
-            if (empty($els)) {
-                throw new ElementNotFound($name);
-            }
+            $this->pushFormField($els, $form, $name, $values);
+        }
+
+        foreach ($els as $arrayElement) {
+            list($el, $values) = $arrayElement;
+
             if (!is_array($values)) {
                 $values = [$values];
             }
+
             foreach ($values as $value) {
-                $ret = $this->proceedSeeInField($els, $value);
+                $ret = $this->proceedSeeInField($el, $value);
                 if ($assertNot) {
                     $this->assertNot($ret);
                 } else {
                     $this->assert($ret);
                 }
             }
+        }
+    }
+
+    /**
+     * Map an array element passed to seeInFormFields to its corresponding WebDriver element,
+     * recursing through array values if the field is not found.
+     *
+     * @param array $els The previously found elements.
+     * @param RemoteWebElement $form The form in which to search for fields.
+     * @param string $name The field's name.
+     * @param mixed $values
+     * @return void
+     */
+    protected function pushFormField(&$els, $form, $name, $values)
+    {
+        $el = $form->findElements(WebDriverBy::name($name));
+
+        if ($el) {
+            $els[] = [$el, $values];
+        } elseif (is_array($values)) {
+            foreach ($values as $key => $value) {
+                $this->pushFormField($els, $form, "{$name}[$key]", $value);
+            }
+        } else {
+            throw new ElementNotFound($name);
         }
     }
 
@@ -1581,9 +1621,26 @@ class WebDriver extends CodeceptionModule implements
     {
         $el = $this->findField($field);
         $el->clear();
-        $el->sendKeys($value);
+        $el->sendKeys((string) $value);
     }
 
+    /**
+    * Clears given field which isn't empty.
+    *
+    * ``` php
+    * <?php
+    * $I->clearField('#username');
+    * ?>
+    * ```
+    *
+    * @param $field
+    */    
+    public function clearField($field)
+    {
+        $el = $this->findField($field);
+        $el->clear();
+    }
+        
     public function attachFile($field, $filename)
     {
         $el = $this->findField($field);
@@ -1860,7 +1917,29 @@ class WebDriver extends CodeceptionModule implements
         $alert = $this->webDriver->switchTo()->alert();
         try {
             $this->assertContains($text, $alert->getText());
-        } catch (\PHPUnit_Framework_AssertionFailedError $e) {
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+            $alert->dismiss();
+            throw $e;
+        }
+    }
+
+    /**
+     * Checks that the active JavaScript popup,
+     * as created by `window.alert`|`window.confirm`|`window.prompt`, does NOT contain the given string.
+     *
+     * @param $text
+     *
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function dontSeeInPopup($text)
+    {
+        if ($this->isPhantom()) {
+            throw new ModuleException($this, 'PhantomJS does not support working with popups');
+        }
+        $alert = $this->webDriver->switchTo()->alert();
+        try {
+            $this->assertNotContains($text, $alert->getText());
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
             $alert->dismiss();
             throw $e;
         }
@@ -2282,7 +2361,7 @@ class WebDriver extends CodeceptionModule implements
     /**
      * Wait for $timeout seconds.
      *
-     * @param int $timeout secs
+     * @param int|float $timeout secs
      * @throws \Codeception\Exception\TestRuntimeException
      */
     public function wait($timeout)
@@ -2294,7 +2373,7 @@ class WebDriver extends CodeceptionModule implements
                 Please note that wait method accepts number of seconds as parameter."
             );
         }
-        sleep($timeout);
+        usleep($timeout * 1000000);
     }
 
     /**
@@ -2424,15 +2503,42 @@ class WebDriver extends CodeceptionModule implements
      * ```php
      * <?php
      * $myVar = $I->executeJS('return $("#myField").val()');
-     * ?>
+     *
+     * // additional arguments can be passed as array
+     * // Example shows `Hello World` alert:
+     * $I->executeJS("window.alert(arguments[0])", ['Hello world']);
      * ```
      *
      * @param $script
+     * @param array $arguments
      * @return mixed
      */
-    public function executeJS($script)
+    public function executeJS($script, array $arguments = [])
     {
-        return $this->webDriver->executeScript($script);
+        return $this->webDriver->executeScript($script, $arguments);
+    }
+
+    /**
+     * Executes asynchronous JavaScript.
+     * A callback should be executed by JavaScript to exit from a script.
+     * Callback is passed as a last element in `arguments` array.
+     * Additional arguments can be passed as array in second parameter.
+     *
+     * ```js
+     * // wait for 1200 milliseconds my running `setTimeout`
+     * * $I->executeAsyncJS('setTimeout(arguments[0], 1200)');
+     *
+     * $seconds = 1200; // or seconds are passed as argument
+     * $I->executeAsyncJS('setTimeout(arguments[1], arguments[0])', [$seconds]);
+     * ```
+     *
+     * @param $script
+     * @param array $arguments
+     * @return mixed
+     */
+    public function executeAsyncJS($script, array $arguments = [])
+    {
+        return $this->webDriver->executeAsyncScript($script, $arguments);
     }
 
     /**
@@ -2858,10 +2964,10 @@ class WebDriver extends CodeceptionModule implements
                 } elseif ($type == 'radio') {
                     $this->selectOption($field, $value);
                     return;
-                } else {
-                    $el->sendKeys($value);
-                    return;
                 }
+
+                $el->sendKeys($value);
+                return;
         }
 
         throw new ElementNotFound($field, "Field by name, label, CSS or XPath");
@@ -2937,6 +3043,7 @@ class WebDriver extends CodeceptionModule implements
         if (!isset($this->sessionSnapshots[$name])) {
             return false;
         }
+        $this->webDriver->manage()->deleteAllCookies();
         foreach ($this->sessionSnapshots[$name] as $cookie) {
             $this->webDriver->manage()->addCookie($cookie);
         }

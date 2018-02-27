@@ -7,8 +7,6 @@ use bedezign\yii2\audit\components\web\Controller;
 use bedezign\yii2\audit\models\AuditEntry;
 use bedezign\yii2\audit\models\AuditEntrySearch;
 use Yii;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 
@@ -18,31 +16,6 @@ use yii\web\NotFoundHttpException;
  */
 class EntryController extends Controller
 {
-
-    /**
-     * @inheritdoc
-     */
-   /* public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow'   => true,
-                        'roles'   => ['@'],
-                    ],
-                ],
-            ],
-            'verbs'  => [
-                'class'   => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }*/
-
     /**
      * @var array fake summary data so the debug panels work
      */

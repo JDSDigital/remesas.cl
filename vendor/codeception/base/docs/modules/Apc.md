@@ -22,18 +22,7 @@ Performs a cleanup by flushing all values after each test run.
 Be sure you don't use the production server to connect.
 
 
-
 ## Actions
-
-### assertArraySubset
- 
-Checks that array contains subset.
-
- * `param array`  $subset
- * `param array`  $array
- * `param bool`   $strict
- * `param string` $message
-
 
 ### dontSeeInApc
  
@@ -123,4 +112,4 @@ $I->seeInApc('users_count', 200);
  * `param string|string[]` $key
  * `param mixed` $value
 
-<p>&nbsp;</p><div class="alert alert-warning">Module reference is taken from the source code. <a href="https://github.com/Codeception/Codeception/tree/2.3/src/Codeception/Module/Apc.php">Help us to improve documentation. Edit module reference</a></div>
+<p>&nbsp;</p><div class="alert alert-warning">Module reference is taken from the source code. <a href="https://github.com/Codeception/Codeception/tree/2.4/src/Codeception/Module/Apc.php">Help us to improve documentation. Edit module reference</a></div>
