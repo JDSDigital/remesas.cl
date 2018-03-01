@@ -17,6 +17,7 @@ class m171104_160204_gtransactions_parts extends Migration
             'adminBankTransaction'      => $this->integer()->notNull()->comment("Bank transaction Id"),
             'transactionResponseDate'   => $this->date()->notNull()->comment("Date when the transaction was responded."),
             'amountTo'                  => $this->double(2)->notNull()->comment("Amount of money after being converted and transfered to the client."),
+            'uploadFile'                => $this->string()->null()->comment("Receipt file name"),
         ], $tableOptions);
         
         // Transaction

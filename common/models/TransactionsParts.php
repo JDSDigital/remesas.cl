@@ -41,7 +41,20 @@ class TransactionsParts extends \yii\db\ActiveRecord
             [['transactionResponseDate'], 'safe'],
             [['transactionId'], 'exist', 'skipOnError' => true, 'targetClass' => Transaction::className(), 'targetAttribute' => ['transactionId' => 'id']],
             [['accountAdminIdFrom'], 'exist', 'skipOnError' => true, 'targetClass' => AccountAdmin::className(), 'targetAttribute' => ['accountAdminIdFrom' => 'id']],
+            [['uploadFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png'],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if($this->uploadFile == '' || $this->uploadFile == null) {
+            $this->uploadFile = $this->getOldAttribute('uploadFile');
+        }
+
+        return true;
     }
 
     /**
@@ -56,6 +69,7 @@ class TransactionsParts extends \yii\db\ActiveRecord
             'adminBankTransaction' => 'Admin Bank Transaction',
             'transactionResponseDate' => 'Transaction Response Date',
             'amountTo' => 'Amount To',
+            'uploadFile' => 'Adjuntar foto del comprobante',
         ];
     }
 

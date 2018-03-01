@@ -192,3 +192,10 @@ select.form-control:not([size]):not([multiple]) {
 blockquote small::after {
     content: '\2014 \00A0';
 }
+.transaction-list {
+    padding: 0;
+    list-style-type: none;
+}
+.transaction-list li {
+    margin-bottom: 10px;
+}

@@ -15,6 +15,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 
 /**
  * TransactionController implements the CRUD actions for Transaction model.
@@ -100,90 +101,14 @@ class TransactionController extends Controller
             Model::loadMultiple($modelsParts, Yii::$app->request->post());
             $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($modelsParts, 'id', 'id')));
 
-            if ($load['Transaction']['status'] == Transaction::STATUS_CANCELLED || $load['Transaction']['status'] == Transaction::STATUS_PENDING){
-                $model->userId = Yii::$app->user->id;
-
-                if ($model->transactionResponseDate == '')
-                    $model->transactionResponseDate = date('Y-m-d');
-                else
-                    $model->transactionResponseDate = Yii::$app->formatter->asDate($load['Transaction']['transactionResponseDate'], 'yyyy-MM-dd');
-                
-                $transaction = Yii::$app->db->beginTransaction();
-                try {
-                    if ($flag = $model->save(false)) {
-                        if (! empty($deletedIDs)) {
-                            TransactionsParts::deleteAll(['id' => $deletedIDs]);
-                        }
-
-                        foreach ($modelsParts as $modelPart) {
-                            $modelPart->transactionId = $model->id;
-                            $modelPart->transactionResponseDate = $model->transactionResponseDate;
-                            if (!($flag = $modelPart->save(false))) {
-                                $transaction->rollBack();
-                                break;
-                            }
-                        }
-                    }
-                    
-                    if ($flag) {
-                        $transaction->commit();
-                        return $this->redirect(['index']);
-                    }
-                } 
-                catch (Exception $e) {
-                    $transaction->rollBack();
-                    return $this->render('update', [
-                        'model' => $model,
-                        'modelsParts' => (empty($modelsParts)) ? [new TransactionsParts] : $modelsParts
-                    ]);
-                }
-            }
-            else {
+            if ($load['Transaction']['status'] == Transaction::STATUS_DONE){
                 // Available money in all of the accounts
                 $er = ExchangeRate::find()->where(['id' => $model->exchangeId])->one();
                 
                 $accountAdmin = new AccountAdmin();
                 $available = $accountAdmin->getAmountSumByCurrency($er->currencyIdTo);
                 
-                if ($available['total'] >= $model->amountTo){
-                    $model->userId = Yii::$app->user->id;
-                    
-                    if ($model->transactionResponseDate == '')
-                        $model->transactionResponseDate = date('Y-m-d');
-                    else
-                        $model->transactionResponseDate = Yii::$app->formatter->asDate($load['Transaction']['transactionResponseDate'], 'yyyy-MM-dd');
-
-                    $transaction = Yii::$app->db->beginTransaction();
-                    try {
-                        if ($flag = $model->save(false)) {
-                            if (! empty($deletedIDs)) {
-                                TransactionsParts::deleteAll(['id' => $deletedIDs]);
-                            }
-    
-                            foreach ($modelsParts as $modelPart) {
-                                $modelPart->transactionId = $model->id;
-                                $modelPart->transactionResponseDate = $model->transactionResponseDate;
-                                if (!($flag = $modelPart->save(false))) {
-                                    $transaction->rollBack();
-                                    break;
-                                }
-                            }
-                        }
-                        
-                        if ($flag) {
-                            $transaction->commit();
-                            return $this->redirect(['index']);
-                        }
-                    } 
-                    catch (Exception $e) {
-                        $transaction->rollBack();
-                        return $this->render('update', [
-                            'model' => $model,
-                            'modelsParts' => (empty($modelsParts)) ? [new TransactionsParts] : $modelsParts
-                        ]);
-                    }
-                }
-                else {
+                if (!$available['total'] >= $model->amountTo){
                     Yii::$app->getSession()->setFlash('error','La cantidad solicitada no se encuentra disponible en la cuenta seleccionada.');
                     
                     return $this->render('update', [
@@ -191,6 +116,56 @@ class TransactionController extends Controller
                         'modelsParts' => (empty($modelsParts)) ? [new TransactionsParts] : $modelsParts
                     ]);
                 }
+            }
+            
+            $model->userId = Yii::$app->user->id;
+
+            if ($model->transactionResponseDate == '')
+                $model->transactionResponseDate = date('Y-m-d');
+            else
+                $model->transactionResponseDate = Yii::$app->formatter->asDate($load['Transaction']['transactionResponseDate'], 'yyyy-MM-dd');
+
+            try {
+                if ($model->save()) {
+                    if (! empty($deletedIDs)) {
+                        TransactionsParts::deleteAll(['id' => $deletedIDs]);
+                    }
+
+                    foreach ($modelsParts as $i => $modelPart) {
+                        $modelPart->transactionId = $model->id;
+                        $modelPart->transactionResponseDate = $model->transactionResponseDate;
+                        
+                        // Upload Receipt
+                        $upload_file = UploadedFile::getInstance($modelPart, "[{$i}]uploadFile");
+
+                        if (!empty($upload_file) && $upload_file->size !== 0){
+                            $fileName = $model->id . '-' . $i . '.' . $upload_file->extension;
+                            $modelPart->uploadFile = $fileName;
+                            $upload_file->saveAs('uploads/' . $fileName);
+                        }
+                        
+                        if (!$modelPart->save()) {
+                            foreach ($modelPart->errors as $error)
+                                Yii::$app->session->setFlash('error', $error);
+                        }
+                    }
+
+                    return $this->redirect(['index']);
+                } else {
+                    foreach ($model->errors as $error)
+                        Yii::$app->session->setFlash('error', $error);
+
+                    return $this->render('update', [
+                        'model' => $model,
+                        'modelsParts' => (empty($modelsParts)) ? [new TransactionsParts] : $modelsParts
+                    ]);
+                }
+            }
+            catch (Exception $e) {
+                return $this->render('update', [
+                    'model' => $model,
+                    'modelsParts' => (empty($modelsParts)) ? [new TransactionsParts] : $modelsParts
+                ]);
             }
         }
         else {

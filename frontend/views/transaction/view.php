@@ -78,16 +78,16 @@ $this->title = "Transaccion #".$model->id;
                         'value'     => ($model->observation != "") ? $model->observation : "---",
                     ],
                     [
-                        'label'     => 'Tranferencias',
+                        'label'     => 'Transferencias',
                         'format'    => 'raw',
                         'value'     => function ($model){
                                             $transactions = $model->transactionParts;
                                             $list_transactions = "";
                                             
                                             if (sizeof($transactions) > 0){
-                                                $list_transactions = "<ul>";
+                                                $list_transactions = "<ul class='transaction-list'>";
                                                 foreach($transactions as $t){
-                                                    $list_transactions.= "<li>Desde ".$t->accountAdminFrom->bank->name." (".$t->adminBankTransaction.") . ".$t->amountTo." ".$model->currencyTo->symbol." </li>";
+                                                    $list_transactions.= "<li>" . Html::a('(Ver comprobante)', [''], ['id' => $t->uploadFile, 'class' => 'show-receipt']) . " - Desde ".$t->accountAdminFrom->bank->name." (".$t->adminBankTransaction.") . ".$t->amountTo." ".$model->currencyTo->symbol." </li>";
                                                 }
                                                 $list_transactions.= "</ul>";
                                             }
@@ -103,3 +103,23 @@ $this->title = "Transaccion #".$model->id;
         </div>
     </div>
 </div>
+<?php
+$url = str_replace('frontend', 'backend', Yii::getAlias('@web'));
+$js = <<<JS
+    $('.show-receipt').on('click', function(e) {
+        e.preventDefault();
+        var id = this.id;
+        var options = {
+            title: 'Recibo de Transacción',
+            text: '<img class="img-responsive" src="$url/uploads/'+id+'">',
+            html: true,
+            //customClass: 'modal-lg',
+            allowOutsideClick: true,
+            allowEscapeKey: true
+        };
+        swal(options);
+    })
+JS;
+
+$this->registerJs($js);
+?>

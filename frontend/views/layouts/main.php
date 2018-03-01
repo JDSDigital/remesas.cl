@@ -155,6 +155,20 @@ AppAsset::register($this);
 <?= Yii::$app->controller->renderPartial('//site/signup'); ?>
 <!-- /. End Modal3 -->
 
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/5a1eb322bb0c3f433d4cbf42/default';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
+
 <?php
 //$this->registerJsFile('@web/js-plugin/parallax/js/jquery.scrollTo-1.4.3.1-min.js',	['depends' => [\yii\web\JqueryAsset::className()]]);
 //$this->registerJsFile('@web/js-plugin/parallax/js/jquery.localscroll-1.2.7-min.js',	['depends' => [\yii\web\JqueryAsset::className()]]);

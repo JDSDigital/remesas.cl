@@ -1,4 +1,5 @@
 <?php
+use kartik\widgets\FileInput;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\jui\DatePicker;
@@ -67,21 +68,22 @@ $this->title = 'Geknology';
                     <div class="panel-heading"><h4><i class="glyphicon glyphicon-envelope"></i> Transferencias</h4></div>
                     <div class="panel-body">
                          <?php DynamicFormWidget::begin([
-                            'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
-                            'widgetBody' => '.container-items', // required: css class selector
-                            'widgetItem' => '.item', // required: css class
-                            'limit' => 4, // the maximum times, an element can be cloned (default 999)
-                            'min' => 1, // 0 or 1 (default 1)
-                            'insertButton' => '.add-item', // css class
-                            'deleteButton' => '.remove-item', // css class
-                            'model' => $modelsParts[0],
-                            'formId' => 'dynamic-form',
-                            'formFields' => [
-                                'accountAdminIdFrom',
-                                'adminBankTransaction',
-                                'amountTo'
-                            ],
-                        ]); ?>
+                             'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
+                             'widgetBody'      => '.container-items', // required: css class selector
+                             'widgetItem'      => '.item', // required: css class
+                             'limit'           => 4, // the maximum times, an element can be cloned (default 999)
+                             'min'             => 1, // 0 or 1 (default 1)
+                             'insertButton'    => '.add-item', // css class
+                             'deleteButton'    => '.remove-item', // css class
+                             'model'           => $modelsParts[0],
+                             'formId'          => 'dynamic-form',
+                             'formFields'      => [
+                                 'accountAdminIdFrom',
+                                 'adminBankTransaction',
+                                 'amountTo',
+                                 'uploadFile',
+                             ],
+                         ]); ?>
 
                         <div class="container-items"><!-- widgetContainer -->
                         <?php foreach ($modelsParts as $i => $modelPart): ?>
@@ -111,6 +113,13 @@ $this->title = 'Geknology';
                                     </div>
                                     <div class="row">
                                         <?= $form->field($modelPart, "[{$i}]amountTo")->label("Monto")->textInput(); ?>
+                                    </div>
+                                    <div class="row">
+                                        <?php
+                                            if ($modelPart->uploadFile != null)
+                                                echo Html::a('<i class="fa fa-eye"></i> Ver comprobante anexo', ['/uploads/' . $modelPart->uploadFile], ['target' => '_blank', 'class' => 'btn btn-info btn-transaction']);
+                                        ?>
+                                        <?= $form->field($modelPart, "[{$i}]uploadFile")->fileInput() ?>
                                     </div>
                                 </div>
                             </div>

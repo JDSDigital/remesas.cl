@@ -115,6 +115,10 @@ class TransactionSearch extends Transaction
                     'desc' => ['c.lastName' => SORT_DESC],
                     'label' => 'Apellido del Cliente'
                 ],*/
+            ],
+            'defaultOrder' => [
+                'status' => SORT_ASC,
+                'id' => SORT_DESC,
             ]
         ]);
 

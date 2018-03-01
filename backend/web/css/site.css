@@ -228,3 +228,8 @@ select.form-control:not([size]):not([multiple]) {
 .navbar-brand {
     height: auto !important;
 }
+.btn-transaction {
+    color: white !important;
+    margin-bottom: 20px !important;
+    width: 100%;
+}
