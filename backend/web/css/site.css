@@ -233,3 +233,10 @@ select.form-control:not([size]):not([multiple]) {
     margin-bottom: 20px !important;
     width: 100%;
 }
+.navbar {
+    background-color: white;
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+}
+button.btn.btn-link.logout {
+    color: #000 !important;
+}
